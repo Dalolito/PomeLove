@@ -1,0 +1,21 @@
+{
+  "header": {
+    "title": "POMELOVE KOREA",
+    "subtitle": "High Quality Pomeranian",
+    "experience": "Specialized breeders with 15+ years of experience"
+  },
+  "navigation": {
+    "home": "Home",
+    "catalog": "Find a puppy",
+    "about": "About us",
+    "gallery": "Gallery",
+    "contact": "Contact"
+  },
+  "buttons": {
+    "search_puppy": "Find a puppy",
+    "about_us": "About us"
+  },
+  "home": {
+    "available_now": "Available now"
+  }
+}
