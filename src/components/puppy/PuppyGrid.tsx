@@ -1,3 +1,5 @@
+'use client';
+
 import PuppyCard, { Puppy } from './PuppyCard';
 import Container from '@/components/ui/Container';
 
