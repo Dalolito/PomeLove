@@ -1,44 +1,10 @@
-import type { Metadata } from "next";
-
-export async function generateMetadata({
-  params,
-}: {
-  params: { locale: string };
-}): Promise<Metadata> {
-  const dict = await getDictionary(params.locale);
-  
-  return {
-    title: `${dict.header.title} - ${dict.header.subtitle}`,
-    description: dict.header.experience,
-    openGraph: {
-      title: dict.header.subtitle,
-      description: dict.header.experience,
-      locale: params.locale,
-    },
-  };
-}
-
-async function getDictionary(locale: string) {
-  try {
-    const dict = await import(`@/dictionaries/${locale}.json`)
-    return dict.default
-  } catch {
-    const dict = await import('@/dictionaries/es.json')
-    return dict.default
+interface HeaderProps {
+    title: string;
+    currentLocale: string;
   }
-}
-
-export default async function LocaleLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: { locale: string };
-}) {
-  const dict = await getDictionary(params.locale)
   
-  return (
-    <>
+  export default function Header({ title, currentLocale }: HeaderProps) {
+    return (
       <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
@@ -48,16 +14,16 @@ export default async function LocaleLayout({
                 <span className="text-white font-bold text-sm">P</span>
               </div>
               <h1 className="text-lg font-bold text-slate-800 tracking-tight">
-                {dict.header.title}
+                {title}
               </h1>
             </div>
-
+  
             <div className="flex items-center gap-3">
               
               <div className="flex items-center bg-gray-100 rounded-lg p-1">
                 <button 
                   className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                    params.locale === 'es' 
+                    currentLocale === 'es' 
                       ? 'bg-white text-slate-700 shadow-sm' 
                       : 'text-slate-500 hover:text-slate-700'
                   }`}
@@ -66,7 +32,7 @@ export default async function LocaleLayout({
                 </button>
                 <button 
                   className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                    params.locale === 'en' 
+                    currentLocale === 'en' 
                       ? 'bg-white text-slate-700 shadow-sm' 
                       : 'text-slate-500 hover:text-slate-700'
                   }`}
@@ -84,10 +50,5 @@ export default async function LocaleLayout({
           </div>
         </div>
       </header>
-
-      <main className="min-h-screen">
-        {children}
-      </main>
-    </>
-  );
-}
+    );
+  }
