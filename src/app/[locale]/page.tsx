@@ -4,7 +4,7 @@ async function getDictionary() {
     return dict.default
   }
   
-  export default async function HomePage() {
+  export default async function LocalePage() {
     const dict = await getDictionary()
   
     return (

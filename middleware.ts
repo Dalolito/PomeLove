@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server'
 function i18nMiddleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
-  if (pathname.startsWith('/es/')) {
+  if (pathname.startsWith('/es/') || pathname === '/es') {
     return null
   }
 
@@ -12,11 +12,7 @@ function i18nMiddleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/es/', request.url))
   }
 
-  if (!pathname.startsWith('/es/')) {
-    return NextResponse.redirect(new URL(`/es${pathname}`, request.url))
-  }
-
-  return null
+  return NextResponse.redirect(new URL(`/es${pathname}`, request.url))
 }
 
 function securityMiddleware(request: NextRequest) {
