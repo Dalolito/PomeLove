@@ -2,21 +2,18 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname
-
-  if (pathname.startsWith('/es/')) {
-    return NextResponse.next()
-  }
-
-  if (pathname === '/') {
+  console.log('🚀 MIDDLEWARE FUNCIONANDO!', request.nextUrl.pathname)
+  
+  // Por ahora solo redirigir / a /es/
+  if (request.nextUrl.pathname === '/') {
+    console.log('🔄 Redirigiendo a /es/')
     return NextResponse.redirect(new URL('/es/', request.url))
   }
-
-  return NextResponse.redirect(new URL(`/es${pathname}`, request.url))
+  
+  return NextResponse.next()
 }
 
+// Configuración más simple
 export const config = {
-  matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
-  ],
+  matcher: ['/', '/((?!_next).*)',],
 }
