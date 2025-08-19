@@ -1,108 +1,109 @@
 'use client';
 
-import { useState, useImperativeHandle, forwardRef } from 'react';
+import { Disclosure } from '@headlessui/react';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { useRouter } from 'next/navigation';
+
+interface MenuItem {
+  key: string;
+  href: string;
+  icon: string;
+}
 
 interface HamburgerMenuProps {
-  size?: 'sm' | 'md' | 'lg';
-  color?: 'dark' | 'light' | 'primary';
-  animationSpeed?: 'fast' | 'normal' | 'slow';
-  className?: string;
+  currentLocale: string;
+  dict: any;
 }
 
-export interface HamburgerMenuRef {
-  toggle: () => void;
-  open: () => void;
-  close: () => void;
-  isOpen: () => boolean;
-}
+export default function HamburgerMenu({ currentLocale, dict }: HamburgerMenuProps) {
+  const router = useRouter();
 
-const HamburgerMenu = forwardRef<HamburgerMenuRef, HamburgerMenuProps>(({
-  size = 'md',
-  color = 'dark',
-  animationSpeed = 'normal',
-  className = ''
-}, ref) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const menuItems: MenuItem[] = [
+    {
+      key: 'home',
+      href: `/${currentLocale}`,
+      icon: '🏠'
+    },
+    {
+      key: 'catalog',
+      href: `/${currentLocale}/catalog`,
+      icon: '🐕'
+    },
+    {
+      key: 'about',
+      href: `/${currentLocale}/about`,
+      icon: 'ℹ️'
+    }
+  ];
 
-  const toggle = () => {
-    setIsOpen(!isOpen);
+  const handleMenuItemClick = (href: string, close: () => void) => {
+    router.push(href);
+    close(); // Close the menu after navigation
   };
-
-  const open = () => {
-    setIsOpen(true);
-  };
-
-  const close = () => {
-    setIsOpen(false);
-  };
-
-  const getIsOpen = () => {
-    return isOpen;
-  };
-
-
-  useImperativeHandle(ref, () => ({
-    toggle,
-    open,
-    close,
-    isOpen: getIsOpen
-  }));
 
   return (
-    <button
-      onClick={toggle}
-      className={`
-        flex flex-col rounded-lg hover:bg-gray-100 transition-colors duration-200
-        focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50
-        ${size === 'sm' ? 'gap-1 p-2' : size === 'lg' ? 'gap-1.5 p-3' : 'gap-1 p-2'}
-        ${className}
-      `}
-      aria-label={isOpen ? "Close menu" : "Open menu"}
-      aria-expanded={isOpen}
-      title={isOpen ? "Close menu" : "Open menu"}
-    >
-      {/* Top line */}
-      <div
-        className={`
-          ${size === 'sm' ? 'w-4' : size === 'lg' ? 'w-6' : 'w-5'} h-0.5 
-          ${color === 'light' ? 'bg-white' : color === 'primary' ? 'bg-red-500' : 'bg-slate-600'} 
-          rounded-full transition-all origin-center
-          ${animationSpeed === 'fast' ? 'duration-150' : animationSpeed === 'slow' ? 'duration-500' : 'duration-300'}
-          ${isOpen 
-            ? 'rotate-45 translate-y-1.5' 
-            : 'rotate-0 translate-y-0'
-          }
-        `}
-      />
-      
-      {/* Middle line */}
-      <div
-        className={`
-          ${size === 'sm' ? 'w-4' : size === 'lg' ? 'w-6' : 'w-5'} h-0.5 
-          ${color === 'light' ? 'bg-white' : color === 'primary' ? 'bg-red-500' : 'bg-slate-600'} 
-          rounded-full transition-all
-          ${animationSpeed === 'fast' ? 'duration-150' : animationSpeed === 'slow' ? 'duration-500' : 'duration-300'}
-          ${isOpen ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}
-        `}
-      />
-      
-      {/* Bottom line */}
-      <div
-        className={`
-          ${size === 'sm' ? 'w-4' : size === 'lg' ? 'w-6' : 'w-5'} h-0.5 
-          ${color === 'light' ? 'bg-white' : color === 'primary' ? 'bg-red-500' : 'bg-slate-600'} 
-          rounded-full transition-all origin-center
-          ${animationSpeed === 'fast' ? 'duration-150' : animationSpeed === 'slow' ? 'duration-500' : 'duration-300'}
-          ${isOpen 
-            ? '-rotate-45 -translate-y-1.5' 
-            : 'rotate-0 translate-y-0'
-          }
-        `}
-      />
-    </button>
+    <Disclosure as="div">
+      {({ open, close }) => (
+        <>
+          {/* Hamburger button */}
+          <Disclosure.Button className="inline-flex items-center justify-center rounded-lg p-2 text-slate-600 hover:bg-gray-100 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+            <span className="sr-only">
+              {open ? 'Close main menu' : 'Open main menu'}
+            </span>
+            {open ? (
+              <XMarkIcon className="block h-5 w-5" aria-hidden="true" />
+            ) : (
+              <Bars3Icon className="block h-5 w-5" aria-hidden="true" />
+            )}
+          </Disclosure.Button>
+
+          {/* Mobile menu panel */}
+          <div className="relative">
+            <Disclosure.Panel 
+              as="div"
+              className="absolute top-full right-0 z-50 w-80 bg-white shadow-xl border border-gray-100 rounded-lg mt-2"
+            >
+              
+              {/* Menu header */}
+              <div className="px-6 py-4 border-b border-gray-100">
+                <h3 className="text-lg font-semibold text-slate-800">
+                  {dict.navigation?.menu || 'Menu'}
+                </h3>
+              </div>
+
+              {/* Menu items */}
+              <nav className="p-4">
+                <div className="space-y-2">
+                  {menuItems.map((item) => (
+                    <button
+                      key={item.key}
+                      onClick={() => handleMenuItemClick(item.href, close)}
+                      className="w-full flex items-center gap-4 p-3 text-left hover:bg-gray-50 rounded-lg transition-colors group"
+                    >
+                      <span className="text-xl group-hover:scale-110 transition-transform">
+                        {item.icon}
+                      </span>
+                      <span className="text-slate-700 font-medium group-hover:text-slate-900">
+                        {dict.navigation?.[item.key] || item.key}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </nav>
+
+              {/* Menu footer */}
+              <div className="px-6 py-4 border-t border-gray-100 bg-gray-50 rounded-b-lg">
+                <p className="text-sm text-slate-500 text-center">
+                  {dict.header?.title || 'PuppyShop'}
+                </p>
+                <p className="text-xs text-slate-400 text-center mt-1">
+                  {dict.header?.experience || 'Premium quality'}
+                </p>
+              </div>
+            </Disclosure.Panel>
+          </div>
+        </>
+      )}
+    </Disclosure>
   );
-});
-
-HamburgerMenu.displayName = 'HamburgerMenu';
-
-export default HamburgerMenu;
+}

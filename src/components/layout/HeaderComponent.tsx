@@ -1,26 +1,13 @@
-'use client';
-
-import { useRef } from 'react';
-import HamburgerMenu, { HamburgerMenuRef } from './HamburgerMenuComponent';
+import HamburgerMenu from './HamburgerMenuComponent';
 import LanguageButtonComponent from './LanguageButtonComponent';
 
 interface HeaderProps {
   title: string;
   currentLocale: string;
+  dict: any;
 }
 
-export default function Header({ title, currentLocale }: HeaderProps) {
-  const hamburgerRef = useRef<HamburgerMenuRef>(null);
-
-  const handleMenuToggle = () => {
-    hamburgerRef.current?.toggle();
-  };
-
-  const switchLanguage = (locale: string) => {
-    // TODO: Implement language switching logic
-    console.log('Switching to:', locale);
-  };
-
+export default function Header({ title, currentLocale, dict }: HeaderProps) {
   return (
     <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4">
@@ -37,20 +24,17 @@ export default function Header({ title, currentLocale }: HeaderProps) {
           </div>
 
           {/* Navigation */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 relative">
             
             {/* Language switcher */}
             <LanguageButtonComponent 
               currentLocale={currentLocale}
-              onLanguageChange={switchLanguage}
             />
             
             {/* Hamburger menu */}
             <HamburgerMenu 
-              ref={hamburgerRef}
-              size="md"
-              color="dark"
-              animationSpeed="normal"
+              currentLocale={currentLocale}
+              dict={dict}
             />
           </div>
         </div>

@@ -1,21 +1,23 @@
 'use client';
 
+import { useRouter, usePathname } from 'next/navigation';
+
 interface LanguageButtonComponentProps {
   currentLocale: string;
-  onLanguageChange?: (locale: string) => void;
 }
 
 export default function LanguageButtonComponent({ 
-  currentLocale, 
-  onLanguageChange 
+  currentLocale
 }: LanguageButtonComponentProps) {
+  const router = useRouter();
+  const pathname = usePathname();
 
-  const handleLanguageSwitch = (locale: string) => {
-    if (onLanguageChange) {
-      onLanguageChange(locale);
-    } else {
-      console.log('Switching to:', locale);
-    }
+  const handleLanguageSwitch = (newLocale: string) => {
+    const pathWithoutLocale = pathname.replace(`/${currentLocale}`, '');
+    
+    const newPath = `/${newLocale}${pathWithoutLocale}`;
+    
+    router.push(newPath);
   };
 
   return (

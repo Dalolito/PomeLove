@@ -17,5 +17,15 @@
     },
     "home": {
       "available_now": "Disponibles ahora"
-    }
+    },
+    "footer": {
+      "sections": {
+        "company": "Empresa",
+        "services": "Servicios"
+      },
+      "links": {
+        "contact": "Contacto"
+      },
+      "copyright": "Todos los derechos reservados."
+  }
   }

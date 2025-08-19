@@ -17,5 +17,15 @@
   },
   "home": {
     "available_now": "Available now"
+  },
+  "footer": {
+    "sections": {
+      "company": "Company", 
+      "services": "Services"
+    },
+    "links": {
+      "contact": "Contact"
+    },
+    "copyright": "All rights reserved."
   }
 }
