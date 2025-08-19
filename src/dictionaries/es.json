@@ -1,31 +1,41 @@
 {
-    "header": {
-      "title": "POMELOVE KOREA",
-      "subtitle": "Pomerania de Alta Calidad",
-      "experience": "Criadores especializados con 15+ años de experiencia"
+  "header": {
+    "title": "POMELOVE KOREA",
+    "subtitle": "Pomerania de Alta Calidad",
+    "experience": "Criadores especializados con 15+ años de experiencia"
+  },
+  "navigation": {
+    "home": "Inicio",
+    "catalog": "Buscar un peludo",
+    "about": "Sobre nosotros",
+    "gallery": "Galería",
+    "contact": "Contacto",
+    "menu": "Menú"
+  },
+  "buttons": {
+    "search_puppy": "Buscar un peludo",
+    "about_us": "Sobre nosotros"
+  },
+  "home": {
+    "available_now": "Disponibles ahora"
+  },
+  "footer": {
+    "sections": {
+      "company": "Empresa",
+      "services": "Servicios"
     },
-    "navigation": {
-      "home": "Inicio",
-      "catalog": "Buscar un peludo",
-      "about": "Sobre nosotros",
-      "gallery": "Galería",
+    "links": {
       "contact": "Contacto"
     },
-    "buttons": {
-      "search_puppy": "Buscar un peludo",
-      "about_us": "Sobre nosotros"
-    },
-    "home": {
-      "available_now": "Disponibles ahora"
-    },
-    "footer": {
-      "sections": {
-        "company": "Empresa",
-        "services": "Servicios"
-      },
-      "links": {
-        "contact": "Contacto"
-      },
-      "copyright": "Todos los derechos reservados."
+    "copyright": "Todos los derechos reservados."
+  },
+  "admin": {
+    "menu": "Menú Admin",
+    "puppys": "Puppys",
+    "categories": "Categorías",
+    "subtitle": "Panel de administración",
+    "dashboard": "Dashboard",
+    "management": "Gestión",
+    "settings": "Configuración"
   }
-  }
+}

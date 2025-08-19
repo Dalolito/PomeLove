@@ -38,7 +38,7 @@ export default function HamburgerMenu({ currentLocale, dict }: HamburgerMenuProp
 
   const handleMenuItemClick = (href: string, close: () => void) => {
     router.push(href);
-    close(); // Close the menu after navigation
+    close(); 
   };
 
   return (

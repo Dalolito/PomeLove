@@ -9,7 +9,8 @@
     "catalog": "Find a puppy",
     "about": "About us",
     "gallery": "Gallery",
-    "contact": "Contact"
+    "contact": "Contact",
+    "menu": "Menu"
   },
   "buttons": {
     "search_puppy": "Find a puppy",
@@ -27,5 +28,14 @@
       "contact": "Contact"
     },
     "copyright": "All rights reserved."
+  },
+  "admin": {
+    "menu": "Admin Menu",
+    "puppys": "Puppys",
+    "categories": "Categories",
+    "subtitle": "Administration panel",
+    "dashboard": "Dashboard",
+    "management": "Management",
+    "settings": "Settings"
   }
 }
