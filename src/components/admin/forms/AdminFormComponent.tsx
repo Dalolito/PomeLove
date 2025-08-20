@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import AdminFormUploadMediaComponent from './AdminFormUploadMediaComponent';
 import AdminFormBasicInfoComponent from './AdminFormBasicInfoComponent';
@@ -39,7 +39,7 @@ export default function AdminFormComponent({
     name: '',
     description: '',
     birthDate: '',
-    categoryId: '1', // for tests
+    categoryId: '1',
     media: [],
     fatherImage: null,
     motherImage: null
@@ -53,26 +53,26 @@ export default function AdminFormComponent({
     );
   }
 
-  const handleBasicInfoChange = (field: keyof Pick<FormData, 'name' | 'description' | 'birthDate' | 'categoryId'>, value: string) => {
+  const handleBasicInfoChange = useCallback((field: keyof Pick<FormData, 'name' | 'description' | 'birthDate' | 'categoryId'>, value: string) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
     }));
-  };
+  }, []);
 
-  const handleMediaChange = (files: MediaFile[]) => {
+  const handleMediaChange = useCallback((files: MediaFile[]) => {
     setFormData(prev => ({
       ...prev,
       media: files
     }));
-  };
+  }, []);
 
-  const handleParentsChange = (field: keyof Pick<FormData, 'fatherImage' | 'motherImage'>, value: MediaFile | null) => {
+  const handleParentsChange = useCallback((field: keyof Pick<FormData, 'fatherImage' | 'motherImage'>, value: MediaFile | null) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
     }));
-  };
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -94,10 +94,10 @@ export default function AdminFormComponent({
         router.push(`/${locale}`);
       } else {
         const errorKey = result.error as keyof typeof dict.admin.forms.errors;
-        setError(dict.admin.forms.errors[errorKey] || dict.admin.forms.errors.createFailed);
+        setError(dict.admin.forms.errors?.[errorKey] || dict.admin.forms.errors?.createFailed || 'Error al crear la mascota');
       }
     } catch (error) {
-      setError(dict.admin.forms.errors.createFailed);
+      setError(dict.admin.forms.errors?.createFailed || 'Error al crear la mascota');
     } finally {
       setIsSubmitting(false);
     }
@@ -111,7 +111,6 @@ export default function AdminFormComponent({
     <div className={`max-w-4xl mx-auto ${className}`}>
       <form onSubmit={handleSubmit} className="space-y-6">
         
-        {/* Error Message */}
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-4">
             <div className="flex">
@@ -127,7 +126,6 @@ export default function AdminFormComponent({
           </div>
         )}
         
-        {/* Basic Information Section */}
         <AdminFormBasicInfoComponent
           data={{
             name: formData.name,
@@ -140,7 +138,6 @@ export default function AdminFormComponent({
           onChange={handleBasicInfoChange}
         />
 
-        {/* Media Upload Section */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <AdminFormUploadMediaComponent
             dict={dict}
@@ -150,7 +147,6 @@ export default function AdminFormComponent({
           />
         </div>
 
-        {/* Parent Images Section */}
         <AdminFormParentsComponent
           data={{
             fatherImage: formData.fatherImage,
@@ -160,7 +156,6 @@ export default function AdminFormComponent({
           onChange={handleParentsChange}
         />
 
-        {/* Form Actions */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <AdminFormActionButtonsComponent
             primaryText={dict.admin.forms.save}

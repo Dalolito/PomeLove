@@ -6,7 +6,7 @@ import { Category } from '@/domain/entities/Category';
 export class PuppyRepository implements IPuppyRepository {
   async create(data: CreatePuppyData): Promise<Puppy> {
     const puppy = await prisma.$transaction(async (tx) => {
-      const puppy = await tx.puppy.create({
+      const createdPuppy = await tx.puppy.create({
         data: {
           name: data.name,
           description: data.description,
@@ -17,26 +17,37 @@ export class PuppyRepository implements IPuppyRepository {
         },
         include: {
           category: true,
-          media: true,
         },
       });
 
       if (data.media && data.media.length > 0) {
-        const uploadedMedia = data.media.filter(file => file.isUploaded);
+        const uploadedMedia = data.media.filter(file => file.isUploaded && file.url);
         
         if (uploadedMedia.length > 0) {
+          const mediaData = uploadedMedia.map(file => ({
+            puppyId: createdPuppy.id,
+            mediaUrl: file.url,
+            mediaType: file.type,
+          }));
+          
           await tx.puppyMedia.createMany({
-            data: uploadedMedia.map(file => ({
-              puppyId: puppy.id,
-              mediaUrl: file.url,
-              mediaType: file.type,
-            })),
+            data: mediaData,
           });
         }
       }
 
-      return puppy;
+      return await tx.puppy.findUnique({
+        where: { id: createdPuppy.id },
+        include: {
+          category: true,
+          media: true,
+        },
+      });
     });
+
+    if (!puppy) {
+      throw new Error('Failed to create puppy');
+    }
 
     return this.mapToPuppyEntity(puppy);
   }
@@ -86,7 +97,7 @@ export class PuppyRepository implements IPuppyRepository {
       data: {
         name: data.name,
         description: data.description,
-        birthDate: data.birthDate ? new Date(data.birthDate) : undefined, // Convert string to Date object
+        birthDate: data.birthDate ? new Date(data.birthDate) : undefined,
         categoryId: data.categoryId ? parseInt(data.categoryId) : undefined,
         fatherImage: data.fatherImage,
         motherImage: data.motherImage,
@@ -121,14 +132,14 @@ export class PuppyRepository implements IPuppyRepository {
       fatherImage: puppy.fatherImage,
       motherImage: puppy.motherImage,
       category,
-      media: puppy.media.map((media: any) => ({
+      media: puppy.media ? puppy.media.map((media: any) => ({
         id: media.id.toString(),
-        file: null as any,
         url: media.mediaUrl,
         type: media.mediaType as 'image' | 'video',
         name: media.mediaUrl.split('/').pop() || 'Unknown',
         size: 0,
-      })),
+        isUploaded: true,
+      })) : [],
       createdAt: puppy.createdAt,
       updatedAt: puppy.updatedAt,
     };

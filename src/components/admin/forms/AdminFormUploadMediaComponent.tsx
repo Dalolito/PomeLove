@@ -40,6 +40,14 @@ export default function UploadMediaComponent({
     return result;
   };
 
+  const notifyParent = (newFiles: MediaFile[]) => {
+    if (onMediaChange) {
+      setTimeout(() => {
+        onMediaChange(newFiles);
+      }, 0);
+    }
+  };
+
   const handleFiles = async (fileList: FileList | File[]) => {
     const newFiles = Array.from(fileList);
     
@@ -63,7 +71,12 @@ export default function UploadMediaComponent({
         isUploaded: false
       };
       
-      setFiles(prev => [...prev, tempFile]);
+      setFiles(prev => {
+        const updated = [...prev, tempFile];
+        notifyParent(updated);
+        return updated;
+      });
+      
       setUploadingFiles(prev => new Set(prev).add(fileId));
       
       try {
@@ -75,26 +88,42 @@ export default function UploadMediaComponent({
           const result = await uploadImageAction(formData);
           
           if (result.success && result.url) {
-            setFiles(prev => prev.map(f => 
-              f.id === fileId 
-                ? { ...f, url: result.url!, isUploaded: true, file: undefined }
-                : f
-            ));
+            setFiles(prev => {
+              const updated = prev.map(f => 
+                f.id === fileId 
+                  ? { ...f, url: result.url!, isUploaded: true, file: undefined }
+                  : f
+              );
+              notifyParent(updated);
+              return updated;
+            });
           } else {
-            setFiles(prev => prev.filter(f => f.id !== fileId));
+            setFiles(prev => {
+              const updated = prev.filter(f => f.id !== fileId);
+              notifyParent(updated);
+              return updated;
+            });
             const errorKey = result.error as keyof typeof dict.admin.media.upload.errors;
             const errorMessage = dict.admin.media.upload.errors[errorKey] || dict.admin.media.upload.errors.uploadFailed;
             setErrors(prev => [...prev, `${file.name}: ${errorMessage}`]);
           }
         } else {
-          setFiles(prev => prev.map(f => 
-            f.id === fileId 
-              ? { ...f, isUploaded: false }
-              : f
-          ));
+          setFiles(prev => {
+            const updated = prev.map(f => 
+              f.id === fileId 
+                ? { ...f, isUploaded: false }
+                : f
+            );
+            notifyParent(updated);
+            return updated;
+          });
         }
       } catch (error) {
-        setFiles(prev => prev.filter(f => f.id !== fileId));
+        setFiles(prev => {
+          const updated = prev.filter(f => f.id !== fileId);
+          notifyParent(updated);
+          return updated;
+        });
         setErrors(prev => [...prev, `${file.name}: ${dict.admin.media.upload.errors.uploadFailed}`]);
       } finally {
         setUploadingFiles(prev => {
@@ -104,10 +133,6 @@ export default function UploadMediaComponent({
         });
       }
     }
-    
-    setTimeout(() => {
-      onMediaChange?.(files);
-    }, 100);
     
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
@@ -143,9 +168,11 @@ export default function UploadMediaComponent({
         URL.revokeObjectURL(fileToRemove.url);
       }
       
-      const updatedFiles = files.filter(f => f.id !== fileId);
-      setFiles(updatedFiles);
-      onMediaChange?.(updatedFiles);
+      setFiles(prev => {
+        const updated = prev.filter(f => f.id !== fileId);
+        notifyParent(updated);
+        return updated;
+      });
     }
   };
 

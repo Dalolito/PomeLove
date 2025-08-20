@@ -33,12 +33,12 @@ model Puppy {
 }
 
 model PuppyMedia {
-  id       Int      @id @default(autoincrement())
-  puppyId  Int
-  mediaUrl String
+  id        Int      @id @default(autoincrement())
+  puppyId   Int
+  mediaUrl  String
   mediaType String
   createdAt DateTime @default(now())
-  puppy    Puppy    @relation(fields: [puppyId], references: [id], onDelete: Cascade)
+  puppy     Puppy    @relation(fields: [puppyId], references: [id], onDelete: Cascade)
 
   @@map("puppy_media")
 }

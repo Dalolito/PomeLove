@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { use } from 'react';
 import AdminHeaderComponent from '@/components/admin/layout/AdminHeaderComponent';
 
 export async function generateMetadata({
   params,
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const dict = await getDictionary(params.locale);
+  const { locale } = await params;
+  const dict = await getDictionary(locale);
   
   return {
     title: `${dict.header.title} - ${dict.admin?.subtitle || 'Admin'}`,
@@ -15,7 +15,7 @@ export async function generateMetadata({
     openGraph: {
       title: `${dict.header.title} - Admin`,
       description: dict.admin?.subtitle || 'Administration panel',
-      locale: params.locale,
+      locale: locale,
     },
   };
 }
@@ -30,15 +30,15 @@ async function getDictionary(locale: string) {
   }
 }
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = use(params);
-  const dict = use(getDictionary(locale))
+  const { locale } = await params;
+  const dict = await getDictionary(locale);
   
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
