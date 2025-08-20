@@ -37,8 +37,6 @@ model PuppyMedia {
   puppyId  Int
   mediaUrl String
   mediaType String
-  fileName String
-  fileSize Int
   createdAt DateTime @default(now())
   puppy    Puppy    @relation(fields: [puppyId], references: [id], onDelete: Cascade)
 

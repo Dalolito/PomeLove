@@ -1,10 +1,11 @@
 export interface MediaFile {
   id: string;
-  file: File;
+  file?: File;
   url: string;
   type: 'image' | 'video';
   name: string;
   size: number;
+  isUploaded?: boolean;
 }
 
 type UploadConfig = {

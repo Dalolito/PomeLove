@@ -5,19 +5,37 @@ import { Category } from '@/domain/entities/Category';
 
 export class PuppyRepository implements IPuppyRepository {
   async create(data: CreatePuppyData): Promise<Puppy> {
-    const puppy = await prisma.puppy.create({
-      data: {
-        name: data.name,
-        description: data.description,
-        birthDate: new Date(data.birthDate), // Convert string to Date object
-        categoryId: parseInt(data.categoryId),
-        fatherImage: data.fatherImage,
-        motherImage: data.motherImage,
-      },
-      include: {
-        category: true,
-        media: true,
-      },
+    const puppy = await prisma.$transaction(async (tx) => {
+      const puppy = await tx.puppy.create({
+        data: {
+          name: data.name,
+          description: data.description,
+          birthDate: new Date(data.birthDate),
+          categoryId: parseInt(data.categoryId),
+          fatherImage: data.fatherImage,
+          motherImage: data.motherImage,
+        },
+        include: {
+          category: true,
+          media: true,
+        },
+      });
+
+      if (data.media && data.media.length > 0) {
+        const uploadedMedia = data.media.filter(file => file.isUploaded);
+        
+        if (uploadedMedia.length > 0) {
+          await tx.puppyMedia.createMany({
+            data: uploadedMedia.map(file => ({
+              puppyId: puppy.id,
+              mediaUrl: file.url,
+              mediaType: file.type,
+            })),
+          });
+        }
+      }
+
+      return puppy;
     });
 
     return this.mapToPuppyEntity(puppy);
@@ -105,11 +123,11 @@ export class PuppyRepository implements IPuppyRepository {
       category,
       media: puppy.media.map((media: any) => ({
         id: media.id.toString(),
-        file: null as any, // File object not available in database
+        file: null as any,
         url: media.mediaUrl,
         type: media.mediaType as 'image' | 'video',
-        name: media.fileName,
-        size: media.fileSize,
+        name: media.mediaUrl.split('/').pop() || 'Unknown',
+        size: 0,
       })),
       createdAt: puppy.createdAt,
       updatedAt: puppy.updatedAt,

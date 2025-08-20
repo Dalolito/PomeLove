@@ -36,6 +36,7 @@ export default function AdminFormParentsComponent({
           onChange={(file) => onChange('fatherImage', file)}
           dict={dict}
           maxFileSize={5}
+          uploadType="parents"
         />
         
         <AdminFormSingleImageUploadComponent
@@ -45,6 +46,7 @@ export default function AdminFormParentsComponent({
           onChange={(file) => onChange('motherImage', file)}
           dict={dict}
           maxFileSize={5}
+          uploadType="parents"
         />
       </div>
     </div>

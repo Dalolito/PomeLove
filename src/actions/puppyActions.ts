@@ -5,17 +5,13 @@ import { CreatePuppyData } from '@/domain/entities/Puppy';
 
 export async function createPuppyAction(data: CreatePuppyData) {
   try {
-    const puppy = await createPuppyUseCase.execute(data);
+    const uploadedMedia = data.media.filter(file => file.isUploaded);
+    const puppyData = { ...data, media: uploadedMedia };
     
-    return { 
-      success: true, 
-      data: puppy 
-    };
+    const puppy = await createPuppyUseCase.execute(puppyData);
+    return { success: true, data: puppy };
   } catch (error) {
     console.error('Error creating puppy:', error);
-    return { 
-      success: false, 
-      error: error instanceof Error ? error.message : 'Unknown error' 
-    };
+    return { success: false, error: 'CREATE_PUPPY_FAILED' };
   }
 }

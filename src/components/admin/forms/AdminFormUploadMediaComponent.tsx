@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { MediaUploadUseCase, MediaFile } from '@/application/useCases/admin/MediaUploadUseCase';
+import { uploadImageAction } from '@/actions/uploadActions';
 
 interface UploadMediaComponentProps {
   dict: any;
@@ -21,6 +22,7 @@ export default function UploadMediaComponent({
   const [files, setFiles] = useState<MediaFile[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
+  const [uploadingFiles, setUploadingFiles] = useState<Set<string>>(new Set());
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const uploadUseCase = new MediaUploadUseCase();
@@ -38,25 +40,74 @@ export default function UploadMediaComponent({
     return result;
   };
 
-  const handleFiles = (fileList: FileList | File[]) => {
-    const result = uploadUseCase.processFiles(fileList, files, config);
-    setFiles(result.files);
+  const handleFiles = async (fileList: FileList | File[]) => {
+    const newFiles = Array.from(fileList);
     
-    const translatedErrors = result.errors.map(error => {
-      if (error.includes('File size must be less than')) {
-        return replaceText(dict.admin.media.upload.errors.fileSize, { size: maxFileSize });
-      }
-      if (error.includes('File type not supported')) {
-        return dict.admin.media.upload.errors.fileType;
-      }
-      if (error.includes('Maximum') && error.includes('files allowed')) {
-        return replaceText(dict.admin.media.upload.errors.maxFiles, { count: maxFiles });
-      }
-      return error;
-    });
+    if (files.length + newFiles.length > maxFiles) {
+      setErrors([replaceText(dict.admin.media.upload.errors.maxFiles, { count: maxFiles })]);
+      return;
+    }
     
-    setErrors(translatedErrors);
-    onMediaChange?.(result.files);
+    setErrors([]);
+    
+    for (const file of newFiles) {
+      const fileId = Math.random().toString(36).substr(2, 9);
+      
+      const tempFile: MediaFile = {
+        id: fileId,
+        file,
+        url: URL.createObjectURL(file),
+        type: file.type.startsWith('image/') ? 'image' : 'video',
+        name: file.name,
+        size: file.size,
+        isUploaded: false
+      };
+      
+      setFiles(prev => [...prev, tempFile]);
+      setUploadingFiles(prev => new Set(prev).add(fileId));
+      
+      try {
+        if (file.type.startsWith('image/')) {
+          const formData = new FormData();
+          formData.append('file', file);
+          formData.append('type', 'puppies');
+          
+          const result = await uploadImageAction(formData);
+          
+          if (result.success && result.url) {
+            setFiles(prev => prev.map(f => 
+              f.id === fileId 
+                ? { ...f, url: result.url!, isUploaded: true, file: undefined }
+                : f
+            ));
+          } else {
+            setFiles(prev => prev.filter(f => f.id !== fileId));
+            const errorKey = result.error as keyof typeof dict.admin.media.upload.errors;
+            const errorMessage = dict.admin.media.upload.errors[errorKey] || dict.admin.media.upload.errors.uploadFailed;
+            setErrors(prev => [...prev, `${file.name}: ${errorMessage}`]);
+          }
+        } else {
+          setFiles(prev => prev.map(f => 
+            f.id === fileId 
+              ? { ...f, isUploaded: false }
+              : f
+          ));
+        }
+      } catch (error) {
+        setFiles(prev => prev.filter(f => f.id !== fileId));
+        setErrors(prev => [...prev, `${file.name}: ${dict.admin.media.upload.errors.uploadFailed}`]);
+      } finally {
+        setUploadingFiles(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(fileId);
+          return newSet;
+        });
+      }
+    }
+    
+    setTimeout(() => {
+      onMediaChange?.(files);
+    }, 100);
     
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
@@ -86,9 +137,16 @@ export default function UploadMediaComponent({
   };
 
   const removeFile = (fileId: string) => {
-    const updatedFiles = uploadUseCase.removeFile(fileId, files);
-    setFiles(updatedFiles);
-    onMediaChange?.(updatedFiles);
+    const fileToRemove = files.find(f => f.id === fileId);
+    if (fileToRemove) {
+      if (!fileToRemove.isUploaded && fileToRemove.file) {
+        URL.revokeObjectURL(fileToRemove.url);
+      }
+      
+      const updatedFiles = files.filter(f => f.id !== fileId);
+      setFiles(updatedFiles);
+      onMediaChange?.(updatedFiles);
+    }
   };
 
   const formatFileSize = (bytes: number): string => {
@@ -183,7 +241,7 @@ export default function UploadMediaComponent({
                 className="relative bg-white border border-gray-200 rounded-lg overflow-hidden group"
               >
                 {/* Preview */}
-                <div className="aspect-square bg-gray-100">
+                <div className="aspect-square bg-gray-100 relative">
                   {file.type === 'image' ? (
                     <img
                       src={file.url}
@@ -195,6 +253,13 @@ export default function UploadMediaComponent({
                       <span className="text-4xl text-white">🎥</span>
                     </div>
                   )}
+                  
+                   {/* Loading overlay */}
+                   {uploadingFiles.has(file.id) && (
+                     <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                       <div className="text-white text-xs">{dict.admin.media.upload.uploading}</div>
+                     </div>
+                   )}
                 </div>
 
                 {/* File Info */}

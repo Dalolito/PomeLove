@@ -91,13 +91,13 @@ export default function AdminFormComponent({
       });
 
       if (result.success) {
-        console.log('Puppy created successfully:', result.data);
         router.push(`/${locale}`);
       } else {
-        setError(result.error || 'Unknown error occurred');
+        const errorKey = result.error as keyof typeof dict.admin.forms.errors;
+        setError(dict.admin.forms.errors[errorKey] || dict.admin.forms.errors.createFailed);
       }
     } catch (error) {
-      setError('Error creating puppy. Please try again.');
+      setError(dict.admin.forms.errors.createFailed);
     } finally {
       setIsSubmitting(false);
     }

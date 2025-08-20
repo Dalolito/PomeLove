@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { MediaUploadUseCase, MediaFile } from '@/application/useCases/admin/MediaUploadUseCase';
+import { uploadImageAction } from '@/actions/uploadActions';
 
 interface SingleImageUploadProps {
   label: string;
@@ -11,6 +12,7 @@ interface SingleImageUploadProps {
   dict: any;
   maxFileSize?: number;
   className?: string;
+  uploadType?: 'puppies' | 'parents';
 }
 
 export default function AdminFormSingleImageUploadComponent({
@@ -20,10 +22,12 @@ export default function AdminFormSingleImageUploadComponent({
   onChange,
   dict,
   maxFileSize = 5,
-  className = ''
+  className = '',
+  uploadType = 'puppies'
 }: SingleImageUploadProps) {
   const [isDragOver, setIsDragOver] = useState(false);
   const [error, setError] = useState<string>('');
+  const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const uploadUseCase = new MediaUploadUseCase();
@@ -41,25 +45,36 @@ export default function AdminFormSingleImageUploadComponent({
     return result;
   };
 
-  const handleFileSelect = (file: File) => {
+  const handleFileSelect = async (file: File) => {
     setError('');
+    setIsUploading(true);
     
-    const result = uploadUseCase.processFiles([file], [], config);
-    
-    if (result.errors.length > 0) {
-      const translatedError = result.errors[0];
-      if (translatedError.includes('File size must be less than')) {
-        setError(replaceText(dict.admin.media.upload.errors.fileSize, { size: maxFileSize }));
-      } else if (translatedError.includes('File type not supported')) {
-        setError(dict.admin.media.upload.errors.fileType);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('type', uploadType);
+      
+      const result = await uploadImageAction(formData);
+      
+      if (result.success && result.url) {
+        const mediaFile: MediaFile = {
+          id: Math.random().toString(36).substr(2, 9),
+          url: result.url,
+          type: 'image',
+          name: file.name,
+          size: file.size,
+          isUploaded: true
+        };
+        
+        onChange(mediaFile);
       } else {
-        setError(translatedError);
+        const errorKey = result.error as keyof typeof dict.admin.media.upload.errors;
+        setError(dict.admin.media.upload.errors[errorKey] || dict.admin.media.upload.errors.uploadFailed);
       }
-      return;
-    }
-
-    if (result.files.length > 0) {
-      onChange(result.files[0]);
+    } catch (error) {
+      setError(dict.admin.media.upload.errors.uploadFailed);
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -74,7 +89,9 @@ export default function AdminFormSingleImageUploadComponent({
 
   const handleRemove = () => {
     if (value) {
-      URL.revokeObjectURL(value.url);
+      if (!value.isUploaded && value.file) {
+        URL.revokeObjectURL(value.url);
+      }
       onChange(null);
     }
   };
@@ -100,36 +117,45 @@ export default function AdminFormSingleImageUploadComponent({
           <button
             type="button"
             onClick={handleRemove}
-            className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
+            disabled={isUploading}
+            className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 disabled:opacity-50"
             title={dict.admin.media.upload.removeFile || 'Remove image'}
           >
             <span className="text-xs">✕</span>
           </button>
+          {isUploading && (
+            <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+              <div className="text-white text-xs">{dict.admin.media.upload.uploading}</div>
+            </div>
+          )}
         </div>
       ) : (
         <div
           className={`
-            w-32 h-32 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer transition-colors
-            ${isDragOver 
-              ? 'border-red-500 bg-red-50' 
-              : 'border-gray-300 hover:border-red-400 hover:bg-gray-50'
+            w-32 h-32 border-2 border-dashed rounded-lg flex flex-col items-center justify-center transition-colors
+            ${isUploading 
+              ? 'border-gray-300 bg-gray-50 cursor-not-allowed' 
+              : isDragOver 
+                ? 'border-red-500 bg-red-50 cursor-pointer' 
+                : 'border-gray-300 hover:border-red-400 hover:bg-gray-50 cursor-pointer'
             }
           `}
           onDragOver={(e) => {
             e.preventDefault();
-            setIsDragOver(true);
+            if (!isUploading) setIsDragOver(true);
           }}
           onDragLeave={(e) => {
             e.preventDefault();
             setIsDragOver(false);
           }}
           onDrop={handleDrop}
-          onClick={openFilePicker}
+          onClick={isUploading ? undefined : openFilePicker}
         >
           <input
             ref={fileInputRef}
             type="file"
             accept="image/*"
+            disabled={isUploading}
             onChange={(e) => {
               if (e.target.files && e.target.files[0]) {
                 handleFileSelect(e.target.files[0]);
@@ -137,10 +163,21 @@ export default function AdminFormSingleImageUploadComponent({
             }}
             className="hidden"
           />
-          <span className="text-2xl text-gray-400 mb-1">📷</span>
-          <span className="text-xs text-gray-500 text-center px-2">
-            {dict.admin.media.upload.dropText || 'Click or drag image'}
-          </span>
+          {isUploading ? (
+            <>
+              <span className="text-2xl text-gray-400 mb-1">⏳</span>
+              <span className="text-xs text-gray-500 text-center px-2">
+                {dict.admin.media.upload.uploading}
+              </span>
+            </>
+          ) : (
+            <>
+              <span className="text-2xl text-gray-400 mb-1">📷</span>
+              <span className="text-xs text-gray-500 text-center px-2">
+                {dict.admin.media.upload.dropText || 'Click or drag image'}
+              </span>
+            </>
+          )}
         </div>
       )}
 
