@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id       Int      @id @default(autoincrement())
+  name     String
+  minPrice Float
+  puppies  Puppy[]
+
+  @@map("categories")
+}
+
+model Puppy {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  birthDate   DateTime
+  categoryId  Int
+  fatherImage String?
+  motherImage String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  category    Category @relation(fields: [categoryId], references: [id])
+  media       PuppyMedia[]
+
+  @@map("puppies")
+}
+
+model PuppyMedia {
+  id       Int      @id @default(autoincrement())
+  puppyId  Int
+  mediaUrl String
+  mediaType String
+  fileName String
+  fileSize Int
+  createdAt DateTime @default(now())
+  puppy    Puppy    @relation(fields: [puppyId], references: [id], onDelete: Cascade)
+
+  @@map("puppy_media")
+}

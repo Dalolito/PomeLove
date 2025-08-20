@@ -1,7 +1,3 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
-import { useState, use } from 'react';
 import AdminFormComponent from '@/components/admin/forms/AdminFormComponent';
 
 async function getDictionary(locale: string) {
@@ -18,43 +14,9 @@ interface CreatePuppyPageProps {
   params: Promise<{ locale: string }>;
 }
 
-export default function CreatePuppyPage({ params }: CreatePuppyPageProps) {
-  const { locale } = use(params);
-  const router = useRouter();
-  const [dict, setDict] = useState<any>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useState(() => {
-    getDictionary(locale).then(setDict);
-  });
-
-  const handleSubmit = async (formData: any) => {
-    setIsSubmitting(true);
-    
-    try {
-      console.log('Creating puppy with data:', formData);
-      
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      router.push(`/${locale}/admin/puppys`);
-    } catch (error) {
-      console.error('Error creating puppy:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleCancel = () => {
-    router.push(`/${locale}/admin/puppys`);
-  };
-
-  if (!dict) {
-    return (
-      <div className="flex items-center justify-center min-h-64">
-        <div className="text-gray-500">Loading...</div>
-      </div>
-    );
-  }
+export default async function CreatePuppyPage({ params }: CreatePuppyPageProps) {
+  const { locale } = await params;
+  const dict = await getDictionary(locale);
 
   return (
     <div className="space-y-6">
@@ -69,9 +31,7 @@ export default function CreatePuppyPage({ params }: CreatePuppyPageProps) {
 
       <AdminFormComponent
         dict={dict}
-        onSubmit={handleSubmit}
-        onCancel={handleCancel}
-        isSubmitting={isSubmitting}
+        locale={locale}
       />
     </div>
   );

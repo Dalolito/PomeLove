@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import AdminFormUploadMediaComponent from './AdminFormUploadMediaComponent';
 import AdminFormBasicInfoComponent from './AdminFormBasicInfoComponent';
 import AdminFormParentsComponent from './AdminFormParentsComponent';
@@ -9,10 +10,8 @@ import { MediaFile } from '@/application/useCases/admin/MediaUploadUseCase';
 
 interface AdminFormComponentProps {
   dict: any;
+  locale: string;
   categories?: { id: string; name: string }[];
-  onSubmit?: (formData: FormData) => void;
-  onCancel?: () => void;
-  isSubmitting?: boolean;
   className?: string;
 }
 
@@ -28,12 +27,22 @@ interface FormData {
 
 export default function AdminFormComponent({
   dict,
+  locale,
   categories = [],
-  onSubmit,
-  onCancel,
-  isSubmitting = false,
   className = ''
 }: AdminFormComponentProps) {
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    description: '',
+    birthDate: '',
+    categoryId: '1', // for tests
+    media: [],
+    fatherImage: null,
+    motherImage: null
+  });
+
   if (!dict || !dict.admin || !dict.admin.forms) {
     return (
       <div className="flex items-center justify-center min-h-64">
@@ -41,16 +50,6 @@ export default function AdminFormComponent({
       </div>
     );
   }
-
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    description: '',
-    birthDate: '',
-    categoryId: '',
-    media: [],
-    fatherImage: null,
-    motherImage: null
-  });
 
   const handleBasicInfoChange = (field: keyof Pick<FormData, 'name' | 'description' | 'birthDate' | 'categoryId'>, value: string) => {
     setFormData(prev => ({
@@ -73,13 +72,47 @@ export default function AdminFormComponent({
     }));
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    onSubmit?.(formData);
+    setIsSubmitting(true);
+    
+    try {
+      const createPuppyData = {
+        name: formData.name,
+        description: formData.description,
+        birthDate: formData.birthDate,
+        categoryId: formData.categoryId,
+        media: formData.media,
+        fatherImage: formData.fatherImage?.url || null,
+        motherImage: formData.motherImage?.url || null,
+      };
+
+      const response = await fetch('/api/puppies', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(createPuppyData),
+      });
+
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to create puppy');
+      }
+
+      console.log('Puppy created successfully:', result.data);
+      router.push(`/${locale}/admin/puppys`);
+    } catch (error) {
+      console.error('Error creating puppy:', error);
+      alert('Error creating puppy. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleCancel = () => {
-    onCancel?.();
+    router.push(`/${locale}/admin/puppys`);
   };
 
   return (

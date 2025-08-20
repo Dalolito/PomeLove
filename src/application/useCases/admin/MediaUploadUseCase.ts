@@ -1,29 +1,27 @@
-// src/application/useCases/admin/MediaUploadUseCase.ts
-
 export interface MediaFile {
-    id: string;
-    file: File;
-    url: string;
-    type: 'image' | 'video';
-    name: string;
-    size: number;
-  }
-  
-  export interface UploadConfig {
-    maxFiles: number;
-    maxFileSize: number; 
-    acceptedTypes: string[];
-  }
-  
-  export interface ValidationResult {
-    isValid: boolean;
-    error?: string;
-  }
-  
-  export interface ProcessResult {
-    files: MediaFile[];
-    errors: string[];
-  }
+  id: string;
+  file: File;
+  url: string;
+  type: 'image' | 'video';
+  name: string;
+  size: number;
+}
+
+type UploadConfig = {
+  maxFiles: number;
+  maxFileSize: number; 
+  acceptedTypes: string[];
+}
+
+type ValidationResult = {
+  isValid: boolean;
+  error?: string;
+}
+
+type ProcessResult = {
+  files: MediaFile[];
+  errors: string[];
+}
   
   export class MediaUploadUseCase {
     

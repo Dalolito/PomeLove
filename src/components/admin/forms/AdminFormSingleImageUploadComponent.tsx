@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { MediaUploadUseCase, MediaFile, UploadConfig } from '@/application/useCases/admin/MediaUploadUseCase';
+import { MediaUploadUseCase, MediaFile } from '@/application/useCases/admin/MediaUploadUseCase';
 
 interface SingleImageUploadProps {
   label: string;
@@ -27,7 +27,7 @@ export default function AdminFormSingleImageUploadComponent({
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const uploadUseCase = new MediaUploadUseCase();
-  const config: UploadConfig = {
+  const config = {
     maxFiles: 1,
     maxFileSize,
     acceptedTypes: ['image/*']

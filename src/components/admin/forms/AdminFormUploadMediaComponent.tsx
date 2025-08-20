@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { MediaUploadUseCase, MediaFile, UploadConfig } from '@/application/useCases/admin/MediaUploadUseCase';
+import { MediaUploadUseCase, MediaFile } from '@/application/useCases/admin/MediaUploadUseCase';
 
 interface UploadMediaComponentProps {
   dict: any;
@@ -24,7 +24,7 @@ export default function UploadMediaComponent({
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const uploadUseCase = new MediaUploadUseCase();
-  const config: UploadConfig = {
+  const config = {
     maxFiles,
     maxFileSize,
     acceptedTypes: ['image/*', 'video/*']
