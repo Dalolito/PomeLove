@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import AdminHeader from '@/components/admin/layout/AdminHeaderComponent';
+import AdminHeaderComponent from '@/components/admin/layout/AdminHeaderComponent';
 
 export async function generateMetadata({
   params,
@@ -41,7 +41,7 @@ export default async function AdminLayout({
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       {/* Admin Header with navigation and hamburger menu */}
-      <AdminHeader 
+      <AdminHeaderComponent 
         title={dict.header.title} 
         currentLocale={params.locale} 
         dict={dict}

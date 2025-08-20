@@ -1,4 +1,4 @@
-import AdminHamburgerMenu from './AdminHamburgerMenuComponent';
+import AdminHamburgerMenuComponent from './AdminHamburgerMenuComponent';
 import LanguageButtonComponent from '@/components/layout/LanguageButtonComponent';
 
 interface AdminHeaderProps {
@@ -32,7 +32,7 @@ export default function AdminHeader({ title, currentLocale, dict }: AdminHeaderP
             />
             
             {/* Admin Hamburger menu */}
-            <AdminHamburgerMenu 
+            <AdminHamburgerMenuComponent 
               currentLocale={currentLocale}
               dict={dict}
             />

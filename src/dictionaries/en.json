@@ -31,11 +31,38 @@
   },
   "admin": {
     "menu": "Admin Menu",
-    "puppys": "Puppys",
+    "puppys": "Pets",
     "categories": "Categories",
     "subtitle": "Administration panel",
     "dashboard": "Dashboard",
     "management": "Management",
-    "settings": "Settings"
+    "settings": "Settings",
+    "forms": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "create": "Create",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "media": {
+      "upload": {
+        "title": "Upload Media",
+        "description": "Upload photos and videos of your pet",
+        "dropText": "Drop files here or click to browse",
+        "supportText": "Supports images and videos up to {size}MB each",
+        "maxFilesText": "Maximum {count} files allowed",
+        "uploadedFiles": "Uploaded Files ({current}/{max})",
+        "removeFile": "Remove file",
+        "fileTypes": {
+          "image": "Image",
+          "video": "Video"
+        },
+        "errors": {
+          "fileSize": "File size must be less than {size}MB",
+          "fileType": "File type not supported",
+          "maxFiles": "Maximum {count} files allowed"
+        }
+      }
+    }
   }
 }

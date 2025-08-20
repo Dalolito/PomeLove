@@ -1,4 +1,4 @@
-import HamburgerMenu from './HamburgerMenuComponent';
+import HamburgerMenuComponent from './HamburgerMenuComponent';
 import LanguageButtonComponent from './LanguageButtonComponent';
 
 interface HeaderProps {
@@ -32,7 +32,7 @@ export default function Header({ title, currentLocale, dict }: HeaderProps) {
             />
             
             {/* Hamburger menu */}
-            <HamburgerMenu 
+            <HamburgerMenuComponent 
               currentLocale={currentLocale}
               dict={dict}
             />

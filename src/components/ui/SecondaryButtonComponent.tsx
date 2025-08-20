@@ -1,10 +1,11 @@
 'use client';
 
-import Button from './baseButtonComponent';
+import BaseButtonComponent from './BaseButtonComponent';
 
 interface SecondaryButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
+  href?: string;
   type?: 'button' | 'submit' | 'reset';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   disabled?: boolean;
@@ -14,5 +15,5 @@ interface SecondaryButtonProps {
 }
 
 export default function SecondaryButton(props: SecondaryButtonProps) {
-  return <Button {...props} variant="outline" />;
+  return <BaseButtonComponent {...props} variant="outline" />;
 }

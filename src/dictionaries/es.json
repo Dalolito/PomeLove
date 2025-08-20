@@ -31,11 +31,38 @@
   },
   "admin": {
     "menu": "Menú Admin",
-    "puppys": "Puppys",
+    "puppys": "Mascotas",
     "categories": "Categorías",
     "subtitle": "Panel de administración",
     "dashboard": "Dashboard",
     "management": "Gestión",
-    "settings": "Configuración"
+    "settings": "Configuración",
+    "forms": {
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "create": "Crear",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "media": {
+      "upload": {
+        "title": "Subir Archivos",
+        "description": "Sube fotos y videos de tu mascota",
+        "dropText": "Arrastra archivos aquí o haz clic para seleccionar",
+        "supportText": "Soporta imágenes y videos hasta {size}MB cada uno",
+        "maxFilesText": "Máximo {count} archivos permitidos",
+        "uploadedFiles": "Archivos Subidos ({current}/{max})",
+        "removeFile": "Eliminar archivo",
+        "fileTypes": {
+          "image": "Imagen",
+          "video": "Video"
+        },
+        "errors": {
+          "fileSize": "El archivo debe ser menor a {size}MB",
+          "fileType": "Tipo de archivo no soportado",
+          "maxFiles": "Máximo {count} archivos permitidos"
+        }
+      }
+    }
   }
 }

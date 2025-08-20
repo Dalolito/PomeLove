@@ -1,4 +1,6 @@
-// src/app/[locale]/page.tsx
+import PrimaryButtonComponent from '@/components/ui/PrimaryButtonComponent';
+import SecondaryButtonComponent from '@/components/ui/SecondaryButtonComponent';
+
 async function getDictionary(locale: string) {
   try {
     const dict = await import(`@/dictionaries/${locale}.json`)
@@ -36,12 +38,21 @@ export default async function HomePage({
           </p>
           
           <div className="space-y-3">
-            <button className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+            <PrimaryButtonComponent 
+              fullWidth
+              size="lg"
+              href={`/${params.locale}/catalog`}
+            >
               {dict.buttons.search_puppy}
-            </button>
-            <button className="w-full border-2 border-red-500 text-red-500 hover:bg-red-50 font-semibold py-3 px-6 rounded-lg transition-colors">
+            </PrimaryButtonComponent>
+            
+            <SecondaryButtonComponent 
+              fullWidth
+              size="lg"
+              href={`/${params.locale}/about`}
+            >
               {dict.buttons.about_us}
-            </button>
+            </SecondaryButtonComponent>
           </div>
         </div>
         

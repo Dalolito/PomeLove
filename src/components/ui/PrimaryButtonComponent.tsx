@@ -1,10 +1,11 @@
 'use client';
 
-import Button from './baseButtonComponent';
+import BaseButtonComponent from './BaseButtonComponent';
 
 interface PrimaryButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
+  href?: string;
   type?: 'button' | 'submit' | 'reset';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   disabled?: boolean;
@@ -14,5 +15,5 @@ interface PrimaryButtonProps {
 }
 
 export default function PrimaryButton(props: PrimaryButtonProps) {
-  return <Button {...props} variant="primary" />;
+  return <BaseButtonComponent {...props} variant="primary" />;
 }

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Header from '@/components/layout/HeaderComponent';
-import Footer from '@/components/layout/FooterComponent';
+import HeaderComponent from '@/components/layout/HeaderComponent';
+import FooterComponent from '@/components/layout/FooterComponent';
 
 export async function generateMetadata({
   params,
@@ -42,7 +42,7 @@ export default async function LocaleLayout({
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header with navigation and hamburger menu */}
-      <Header 
+      <HeaderComponent 
         title={dict.header.title} 
         currentLocale={params.locale} 
         dict={dict}
@@ -54,7 +54,7 @@ export default async function LocaleLayout({
       </main>
       
       {/* Footer with contact info and social media */}
-      <Footer 
+      <FooterComponent 
         title={dict.header.title}
         currentLocale={params.locale}
         dict={dict}

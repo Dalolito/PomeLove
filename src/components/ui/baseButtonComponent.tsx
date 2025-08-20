@@ -1,10 +1,12 @@
 'use client';
 
 import { ReactNode } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface ButtonProps {
   children: ReactNode;
   onClick?: () => void;
+  href?: string;
   type?: 'button' | 'submit' | 'reset';
   variant?: 'primary' | 'secondary' | 'outline' | 'danger' | 'success';
   size?: 'sm' | 'md' | 'lg' | 'xl';
@@ -14,9 +16,10 @@ interface ButtonProps {
   className?: string;
 }
 
-export default function Button({
+export default function BaseButtonComponent({
   children,
   onClick,
+  href,
   type = 'button',
   variant = 'primary',
   size = 'md',
@@ -25,6 +28,7 @@ export default function Button({
   fullWidth = false,
   className = ''
 }: ButtonProps) {
+  const router = useRouter();
   
   // Color variants configuration
   const variants = {
@@ -50,10 +54,21 @@ export default function Button({
 
   const widthClasses = fullWidth ? 'w-full' : '';
 
+  // Handle click - navigate if href provided, otherwise call onClick
+  const handleClick = () => {
+    if (disabled || loading) return;
+    
+    if (href) {
+      router.push(href);
+    } else if (onClick) {
+      onClick();
+    }
+  };
+
   return (
     <button
       type={type}
-      onClick={!disabled && !loading ? onClick : undefined}
+      onClick={handleClick}
       disabled={disabled || loading}
       className={`
         ${variants[variant]}

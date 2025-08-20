@@ -1,7 +1,7 @@
 'use client';
 
-import PrimaryButton from '@/components/ui/PrimaryButtonComponent';
-import SecondaryButton from '@/components/ui/SecondaryButtonComponent';
+import PrimaryButtonComponent from '@/components/ui/PrimaryButtonComponent';
+import SecondaryButtonComponent from '@/components/ui/SecondaryButtonComponent';
 
 interface FormActionButtonsProps {
   primaryText: string;
@@ -40,16 +40,16 @@ export default function FormActionButtons({
 
   return (
     <div className={`${containerClasses} ${className}`}>
-      <SecondaryButton
+      <SecondaryButtonComponent
         onClick={onSecondaryClick}
         size={size}
         disabled={secondaryDisabled}
         fullWidth={layout === 'vertical' ? fullWidth : false}
       >
         {secondaryText}
-      </SecondaryButton>
+      </SecondaryButtonComponent>
       
-      <PrimaryButton
+      <PrimaryButtonComponent
         type={primaryType}
         onClick={onPrimaryClick}
         size={size}
@@ -58,7 +58,7 @@ export default function FormActionButtons({
         fullWidth={layout === 'vertical' ? fullWidth : false}
       >
         {primaryText}
-      </PrimaryButton>
+      </PrimaryButtonComponent>
     </div>
   );
 }
