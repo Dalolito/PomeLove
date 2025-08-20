@@ -30,7 +30,6 @@ export default function UploadMediaComponent({
     acceptedTypes: ['image/*', 'video/*']
   };
 
-  // Replace placeholders in text
   const replaceText = (text: string, replacements: Record<string, string | number>) => {
     let result = text;
     Object.entries(replacements).forEach(([key, value]) => {
@@ -43,7 +42,6 @@ export default function UploadMediaComponent({
     const result = uploadUseCase.processFiles(fileList, files, config);
     setFiles(result.files);
     
-    // Translate errors
     const translatedErrors = result.errors.map(error => {
       if (error.includes('File size must be less than')) {
         return replaceText(dict.admin.media.upload.errors.fileSize, { size: maxFileSize });
