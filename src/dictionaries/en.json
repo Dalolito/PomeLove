@@ -42,7 +42,27 @@
       "cancel": "Cancel",
       "create": "Create",
       "edit": "Edit",
-      "delete": "Delete"
+      "delete": "Delete",
+      "description": "Add a new pet to the system",
+      "basicInfo": "Basic Information",
+      "fields": {
+        "name": "Name",
+        "description": "Description",
+        "birthDate": "Birth Date",
+        "category": "Category",
+        "fatherImage": "Father Image",
+        "motherImage": "Mother Image",
+        "media": "Media Files"
+      },
+      "placeholders": {
+        "name": "Enter the puppy's name",
+        "description": "Describe the puppy's characteristics",
+        "category": "Select a category"
+      },
+      "sections": {
+        "parents": "Parent Lineage",
+        "parentsDescription": "Upload a photo of the puppy's father and mother (optional)"
+      }
     },
     "media": {
       "upload": {

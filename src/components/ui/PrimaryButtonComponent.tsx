@@ -1,5 +1,3 @@
-'use client';
-
 import BaseButtonComponent from './BaseButtonComponent';
 
 interface PrimaryButtonProps {

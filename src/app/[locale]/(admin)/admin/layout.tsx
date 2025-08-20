@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { use } from 'react';
 import AdminHeaderComponent from '@/components/admin/layout/AdminHeaderComponent';
 
 export async function generateMetadata({
@@ -29,21 +30,22 @@ async function getDictionary(locale: string) {
   }
 }
 
-export default async function AdminLayout({
+export default function AdminLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
-  const dict = await getDictionary(params.locale)
+  const { locale } = use(params);
+  const dict = use(getDictionary(locale))
   
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       {/* Admin Header with navigation and hamburger menu */}
       <AdminHeaderComponent 
         title={dict.header.title} 
-        currentLocale={params.locale} 
+        currentLocale={locale} 
         dict={dict}
       />
       

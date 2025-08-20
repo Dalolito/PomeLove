@@ -8,12 +8,15 @@ async function getDictionary(locale: string) {
     }
   }
   
-  export default async function AdminDashboardPage({
-    params,
-  }: {
-    params: { locale: string };
-  }) {
-    const dict = await getDictionary(params.locale);
+  import { use } from 'react';
+
+export default function AdminDashboardPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = use(params);
+  const dict = use(getDictionary(locale));
   
     return (
       <div className="text-center">

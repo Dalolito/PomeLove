@@ -11,12 +11,15 @@ async function getDictionary(locale: string) {
   }
 }
 
-export default async function HomePage({
+import { use } from 'react';
+
+export default function HomePage({
   params,
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
-  const dict = await getDictionary(params.locale);
+  const { locale } = use(params);
+  const dict = use(getDictionary(locale));
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -41,7 +44,7 @@ export default async function HomePage({
             <PrimaryButtonComponent 
               fullWidth
               size="lg"
-              href={`/${params.locale}/catalog`}
+              href={`/${locale}/catalog`}
             >
               {dict.buttons.search_puppy}
             </PrimaryButtonComponent>
@@ -49,7 +52,7 @@ export default async function HomePage({
             <SecondaryButtonComponent 
               fullWidth
               size="lg"
-              href={`/${params.locale}/about`}
+              href={`/${locale}/about`}
             >
               {dict.buttons.about_us}
             </SecondaryButtonComponent>

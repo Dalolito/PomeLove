@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { use } from 'react';
 import HeaderComponent from '@/components/layout/HeaderComponent';
 import FooterComponent from '@/components/layout/FooterComponent';
 
@@ -30,21 +31,22 @@ async function getDictionary(locale: string) {
   }
 }
 
-export default async function LocaleLayout({
+export default function LocaleLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
-  const dict = await getDictionary(params.locale)
+  const { locale } = use(params);
+  const dict = use(getDictionary(locale))
   
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header with navigation and hamburger menu */}
       <HeaderComponent 
         title={dict.header.title} 
-        currentLocale={params.locale} 
+        currentLocale={locale} 
         dict={dict}
       />
       
@@ -56,7 +58,7 @@ export default async function LocaleLayout({
       {/* Footer with contact info and social media */}
       <FooterComponent 
         title={dict.header.title}
-        currentLocale={params.locale}
+        currentLocale={locale}
         dict={dict}
       />
     </div>

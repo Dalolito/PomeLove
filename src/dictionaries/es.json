@@ -42,7 +42,27 @@
       "cancel": "Cancelar",
       "create": "Crear",
       "edit": "Editar",
-      "delete": "Eliminar"
+      "delete": "Eliminar",
+      "description": "Agrega una nueva mascota al sistema",
+      "basicInfo": "Información Básica",
+      "fields": {
+        "name": "Nombre",
+        "description": "Descripción",
+        "birthDate": "Fecha de Nacimiento",
+        "category": "Categoría",
+        "fatherImage": "Imagen del Padre",
+        "motherImage": "Imagen de la Madre",
+        "media": "Archivos Multimedia"
+      },
+      "placeholders": {
+        "name": "Ingresa el nombre del cachorro",
+        "description": "Describe las características del cachorro",
+        "category": "Selecciona una categoría"
+      },
+      "sections": {
+        "parents": "Linaje de los Padres",
+        "parentsDescription": "Sube una foto del padre y madre del cachorro (opcional)"
+      }
     },
     "media": {
       "upload": {

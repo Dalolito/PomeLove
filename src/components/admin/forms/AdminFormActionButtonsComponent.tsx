@@ -1,5 +1,3 @@
-'use client';
-
 import PrimaryButtonComponent from '@/components/ui/PrimaryButtonComponent';
 import SecondaryButtonComponent from '@/components/ui/SecondaryButtonComponent';
 
