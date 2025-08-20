@@ -7,6 +7,7 @@ import AdminFormBasicInfoComponent from './AdminFormBasicInfoComponent';
 import AdminFormParentsComponent from './AdminFormParentsComponent';
 import AdminFormActionButtonsComponent from './AdminFormActionButtonsComponent';
 import { MediaFile } from '@/application/useCases/admin/MediaUploadUseCase';
+import { createPuppyAction } from '@/actions/puppyActions';
 
 interface AdminFormComponentProps {
   dict: any;
@@ -33,6 +34,7 @@ export default function AdminFormComponent({
 }: AdminFormComponentProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string>('');
   const [formData, setFormData] = useState<FormData>({
     name: '',
     description: '',
@@ -75,9 +77,10 @@ export default function AdminFormComponent({
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setIsSubmitting(true);
+    setError('');
     
     try {
-      const createPuppyData = {
+      const result = await createPuppyAction({
         name: formData.name,
         description: formData.description,
         birthDate: formData.birthDate,
@@ -85,39 +88,44 @@ export default function AdminFormComponent({
         media: formData.media,
         fatherImage: formData.fatherImage?.url || null,
         motherImage: formData.motherImage?.url || null,
-      };
-
-      const response = await fetch('/api/puppies', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(createPuppyData),
       });
 
-      const result = await response.json();
-
-      if (!result.success) {
-        throw new Error(result.error || 'Failed to create puppy');
+      if (result.success) {
+        console.log('Puppy created successfully:', result.data);
+        router.push(`/${locale}`);
+      } else {
+        setError(result.error || 'Unknown error occurred');
       }
-
-      console.log('Puppy created successfully:', result.data);
-      router.push(`/${locale}/admin/puppys`);
     } catch (error) {
-      console.error('Error creating puppy:', error);
-      alert('Error creating puppy. Please try again.');
+      setError('Error creating puppy. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleCancel = () => {
-    router.push(`/${locale}/admin/puppys`);
+    router.push(`/${locale}`);
   };
 
   return (
     <div className={`max-w-4xl mx-auto ${className}`}>
       <form onSubmit={handleSubmit} className="space-y-6">
+        
+        {/* Error Message */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div className="ml-3">
+                <p className="text-sm text-red-800">{error}</p>
+              </div>
+            </div>
+          </div>
+        )}
         
         {/* Basic Information Section */}
         <AdminFormBasicInfoComponent
