@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
-import Header from '@/components/layout/HeaderComponent';
-import Footer from '@/components/layout/FooterComponent';
+import type { Metadata } from 'next';
+import { use } from 'react';
+import HeaderComponent from '@/components/layout/HeaderComponent';
+import FooterComponent from '@/components/layout/FooterComponent';
 
 export async function generateMetadata({
   params,
@@ -8,7 +9,7 @@ export async function generateMetadata({
   params: { locale: string };
 }): Promise<Metadata> {
   const dict = await getDictionary(params.locale);
-  
+
   return {
     title: `${dict.header.title} - ${dict.header.subtitle}`,
     description: dict.header.experience,
@@ -22,41 +23,40 @@ export async function generateMetadata({
 
 async function getDictionary(locale: string) {
   try {
-    const dict = await import(`@/dictionaries/${locale}.json`)
-    return dict.default
+    const dict = await import(`@/dictionaries/${locale}.json`);
+    return dict.default;
   } catch {
-    const dict = await import('@/dictionaries/es.json')
-    return dict.default
+    const dict = await import('@/dictionaries/es.json');
+    return dict.default;
   }
 }
 
-export default async function LocaleLayout({
+export default function LocaleLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
-  const dict = await getDictionary(params.locale)
-  
+  const { locale } = use(params);
+  const dict = use(getDictionary(locale));
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex min-h-screen flex-col">
       {/* Header with navigation and hamburger menu */}
-      <Header 
-        title={dict.header.title} 
-        currentLocale={params.locale} 
+      <HeaderComponent
+        title={dict.header.title}
+        currentLocale={locale}
         dict={dict}
       />
-      
+
       {/* Main content for each page */}
-      <main className="flex-1">
-        {children}
-      </main>
-      
+      <main className="flex-1">{children}</main>
+
       {/* Footer with contact info and social media */}
-      <Footer 
+      <FooterComponent
         title={dict.header.title}
-        currentLocale={params.locale}
+        currentLocale={locale}
         dict={dict}
       />
     </div>

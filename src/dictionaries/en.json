@@ -9,7 +9,8 @@
     "catalog": "Find a puppy",
     "about": "About us",
     "gallery": "Gallery",
-    "contact": "Contact"
+    "contact": "Contact",
+    "menu": "Menu"
   },
   "buttons": {
     "search_puppy": "Find a puppy",
@@ -20,12 +21,68 @@
   },
   "footer": {
     "sections": {
-      "company": "Company", 
+      "company": "Company",
       "services": "Services"
     },
     "links": {
       "contact": "Contact"
     },
     "copyright": "All rights reserved."
+  },
+  "admin": {
+    "menu": "Admin Menu",
+    "puppys": "Pets",
+    "categories": "Categories",
+    "subtitle": "Administration panel",
+    "dashboard": "Dashboard",
+    "management": "Management",
+    "settings": "Settings",
+    "forms": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "create": "Create",
+      "edit": "Edit",
+      "delete": "Delete",
+      "description": "Add a new pet to the system",
+      "basicInfo": "Basic Information",
+      "fields": {
+        "name": "Name",
+        "description": "Description",
+        "birthDate": "Birth Date",
+        "category": "Category",
+        "fatherImage": "Father Image",
+        "motherImage": "Mother Image",
+        "media": "Media Files"
+      },
+      "placeholders": {
+        "name": "Enter the puppy's name",
+        "description": "Describe the puppy's characteristics",
+        "category": "Select a category"
+      },
+      "sections": {
+        "parents": "Parent Lineage",
+        "parentsDescription": "Upload a photo of the puppy's father and mother (optional)"
+      }
+    },
+    "media": {
+      "upload": {
+        "title": "Upload Media",
+        "description": "Upload photos and videos of your pet",
+        "dropText": "Drop files here or click to browse",
+        "supportText": "Supports images and videos up to {size}MB each",
+        "maxFilesText": "Maximum {count} files allowed",
+        "uploadedFiles": "Uploaded Files ({current}/{max})",
+        "removeFile": "Remove file",
+        "fileTypes": {
+          "image": "Image",
+          "video": "Video"
+        },
+        "errors": {
+          "fileSize": "File size must be less than {size}MB",
+          "fileType": "File type not supported",
+          "maxFiles": "Maximum {count} files allowed"
+        }
+      }
+    }
   }
 }

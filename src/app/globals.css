@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @layer components {
   .container {
@@ -8,5 +8,5 @@
 
 /* Test para verificar que Tailwind funciona */
 .test-tailwind {
-  @apply bg-red-500 text-white p-4 rounded-lg;
+  @apply rounded-lg bg-red-500 p-4 text-white;
 }

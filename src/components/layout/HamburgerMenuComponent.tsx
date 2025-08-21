@@ -10,35 +10,46 @@ interface MenuItem {
   icon: string;
 }
 
+import { Dictionary } from '@/lib/types/dictionary';
+
 interface HamburgerMenuProps {
   currentLocale: string;
-  dict: any;
+  dict: Dictionary;
 }
 
-export default function HamburgerMenu({ currentLocale, dict }: HamburgerMenuProps) {
+export default function HamburgerMenu({
+  currentLocale,
+  dict,
+}: HamburgerMenuProps) {
   const router = useRouter();
+
+  const getNavigationText = (key: string): string => {
+    const navKey = key as keyof typeof dict.navigation;
+    const value = dict.navigation[navKey];
+    return typeof value === 'string' ? value : key;
+  };
 
   const menuItems: MenuItem[] = [
     {
       key: 'home',
       href: `/${currentLocale}`,
-      icon: '🏠'
+      icon: '🏠',
     },
     {
       key: 'catalog',
       href: `/${currentLocale}/catalog`,
-      icon: '🐕'
+      icon: '🐕',
     },
     {
       key: 'about',
       href: `/${currentLocale}/about`,
-      icon: 'ℹ️'
-    }
+      icon: 'ℹ️',
+    },
   ];
 
   const handleMenuItemClick = (href: string, close: () => void) => {
     router.push(href);
-    close(); // Close the menu after navigation
+    close();
   };
 
   return (
@@ -59,13 +70,12 @@ export default function HamburgerMenu({ currentLocale, dict }: HamburgerMenuProp
 
           {/* Mobile menu panel */}
           <div className="relative">
-            <Disclosure.Panel 
+            <Disclosure.Panel
               as="div"
-              className="absolute top-full right-0 z-50 w-80 bg-white shadow-xl border border-gray-100 rounded-lg mt-2"
+              className="absolute right-0 top-full z-50 mt-2 w-80 rounded-lg border border-gray-100 bg-white shadow-xl"
             >
-              
               {/* Menu header */}
-              <div className="px-6 py-4 border-b border-gray-100">
+              <div className="border-b border-gray-100 px-6 py-4">
                 <h3 className="text-lg font-semibold text-slate-800">
                   {dict.navigation?.menu || 'Menu'}
                 </h3>
@@ -74,17 +84,17 @@ export default function HamburgerMenu({ currentLocale, dict }: HamburgerMenuProp
               {/* Menu items */}
               <nav className="p-4">
                 <div className="space-y-2">
-                  {menuItems.map((item) => (
+                  {menuItems.map(item => (
                     <button
                       key={item.key}
                       onClick={() => handleMenuItemClick(item.href, close)}
-                      className="w-full flex items-center gap-4 p-3 text-left hover:bg-gray-50 rounded-lg transition-colors group"
+                      className="group flex w-full items-center gap-4 rounded-lg p-3 text-left transition-colors hover:bg-gray-50"
                     >
-                      <span className="text-xl group-hover:scale-110 transition-transform">
+                      <span className="text-xl transition-transform group-hover:scale-110">
                         {item.icon}
                       </span>
-                      <span className="text-slate-700 font-medium group-hover:text-slate-900">
-                        {dict.navigation?.[item.key] || item.key}
+                      <span className="font-medium text-slate-700 group-hover:text-slate-900">
+                        {getNavigationText(item.key)}
                       </span>
                     </button>
                   ))}
@@ -92,11 +102,11 @@ export default function HamburgerMenu({ currentLocale, dict }: HamburgerMenuProp
               </nav>
 
               {/* Menu footer */}
-              <div className="px-6 py-4 border-t border-gray-100 bg-gray-50 rounded-b-lg">
-                <p className="text-sm text-slate-500 text-center">
+              <div className="rounded-b-lg border-t border-gray-100 bg-gray-50 px-6 py-4">
+                <p className="text-center text-sm text-slate-500">
                   {dict.header?.title || 'PuppyShop'}
                 </p>
-                <p className="text-xs text-slate-400 text-center mt-1">
+                <p className="mt-1 text-center text-xs text-slate-400">
                   {dict.header?.experience || 'Premium quality'}
                 </p>
               </div>
