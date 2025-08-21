@@ -1,6 +1,10 @@
 import { prisma } from '@/lib/databaseConnection';
 import { CategoryRepository as ICategoryRepository } from '@/domain/repositories/CategoryRepository';
-import { Category, CreateCategoryData, UpdateCategoryData } from '@/domain/entities/Category';
+import {
+  Category,
+  CreateCategoryData,
+  UpdateCategoryData,
+} from '@/domain/entities/Category';
 
 export class CategoryRepository implements ICategoryRepository {
   async create(data: CreateCategoryData): Promise<Category> {

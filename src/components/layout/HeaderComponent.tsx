@@ -1,41 +1,36 @@
 import HamburgerMenuComponent from './HamburgerMenuComponent';
 import LanguageButtonComponent from './LanguageButtonComponent';
 
+import { Dictionary } from '@/lib/types/dictionary';
+
 interface HeaderProps {
   title: string;
   currentLocale: string;
-  dict: any;
+  dict: Dictionary;
 }
 
 export default function Header({ title, currentLocale, dict }: HeaderProps) {
   return (
-    <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
+    <header className="sticky top-0 z-50 border-b border-gray-100 bg-white shadow-sm">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          
           {/* Logo and title */}
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">P</span>
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-red-500 to-orange-500">
+              <span className="text-sm font-bold text-white">P</span>
             </div>
-            <h1 className="text-lg font-bold text-slate-800 tracking-tight">
+            <h1 className="text-lg font-bold tracking-tight text-slate-800">
               {title}
             </h1>
           </div>
 
           {/* Navigation */}
-          <div className="flex items-center gap-3 relative">
-            
+          <div className="relative flex items-center gap-3">
             {/* Language switcher */}
-            <LanguageButtonComponent 
-              currentLocale={currentLocale}
-            />
-            
+            <LanguageButtonComponent currentLocale={currentLocale} />
+
             {/* Hamburger menu */}
-            <HamburgerMenuComponent 
-              currentLocale={currentLocale}
-              dict={dict}
-            />
+            <HamburgerMenuComponent currentLocale={currentLocale} dict={dict} />
           </div>
         </div>
       </div>

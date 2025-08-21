@@ -3,7 +3,13 @@
 import { writeFile } from 'fs/promises';
 import { join } from 'path';
 
-const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
+const ALLOWED_MIME_TYPES = [
+  'image/jpeg',
+  'image/jpg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+];
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 interface UploadResult {
@@ -12,10 +18,12 @@ interface UploadResult {
   error?: string;
 }
 
-export async function uploadImageAction(formData: FormData): Promise<UploadResult> {
+export async function uploadImageAction(
+  formData: FormData
+): Promise<UploadResult> {
   try {
     const file = formData.get('file') as File;
-    
+
     if (!file) {
       return { success: false, error: 'NO_FILE_PROVIDED' };
     }
@@ -33,7 +41,7 @@ export async function uploadImageAction(formData: FormData): Promise<UploadResul
     const extension = file.name.split('.').pop();
     const filename = `${timestamp}_${random}.${extension}`;
 
-    const uploadType = formData.get('type') as string || 'puppies';
+    const uploadType = (formData.get('type') as string) || 'puppies';
     const uploadDir = uploadType === 'parents' ? 'parents' : 'puppies';
     const uploadPath = join(process.cwd(), 'public', 'uploads', uploadDir);
     const filePath = join(uploadPath, filename);
@@ -44,7 +52,6 @@ export async function uploadImageAction(formData: FormData): Promise<UploadResul
 
     const url = `/uploads/${uploadDir}/${filename}`;
     return { success: true, url };
-
   } catch (error) {
     console.error('Error uploading image:', error);
     return { success: false, error: 'UPLOAD_FAILED' };

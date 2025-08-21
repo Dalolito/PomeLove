@@ -1,3 +1,5 @@
+import { Dictionary } from '@/lib/types/dictionary';
+
 interface BasicInfoData {
   name: string;
   description: string;
@@ -8,7 +10,7 @@ interface BasicInfoData {
 interface AdminFormBasicInfoComponentProps {
   data: BasicInfoData;
   categories: { id: string; name: string }[];
-  dict: any;
+  dict: Dictionary;
   onChange: (field: keyof BasicInfoData, value: string) => void;
   className?: string;
 }
@@ -18,54 +20,56 @@ export default function AdminFormBasicInfoComponent({
   categories,
   dict,
   onChange,
-  className = ''
+  className = '',
 }: AdminFormBasicInfoComponentProps) {
   return (
-    <div className={`bg-white rounded-lg shadow-sm border border-gray-200 p-6 ${className}`}>
-      <h3 className="text-lg font-semibold text-gray-800 mb-4">
+    <div
+      className={`rounded-lg border border-gray-200 bg-white p-6 shadow-sm ${className}`}
+    >
+      <h3 className="mb-4 text-lg font-semibold text-gray-800">
         {dict.admin.forms.basicInfo}
       </h3>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {/* Name */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="mb-2 block text-sm font-medium text-gray-700">
             {dict.admin.forms.fields.name} *
           </label>
           <input
             type="text"
             value={data.name}
-            onChange={(e) => onChange('name', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+            onChange={e => onChange('name', e.target.value)}
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none"
             placeholder={dict.admin.forms.placeholders.name}
           />
         </div>
 
         {/* Birth Date */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="mb-2 block text-sm font-medium text-gray-700">
             {dict.admin.forms.fields.birthDate} *
           </label>
           <input
             type="date"
             value={data.birthDate}
-            onChange={(e) => onChange('birthDate', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+            onChange={e => onChange('birthDate', e.target.value)}
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none"
           />
         </div>
 
         {/* Category */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="mb-2 block text-sm font-medium text-gray-700">
             {dict.admin.forms.fields.category} *
           </label>
           <select
             value={data.categoryId}
-            onChange={(e) => onChange('categoryId', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+            onChange={e => onChange('categoryId', e.target.value)}
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none"
           >
             <option value="">{dict.admin.forms.placeholders.category}</option>
-            {categories.map((category) => (
+            {categories.map(category => (
               <option key={category.id} value={category.id}>
                 {category.name}
               </option>
@@ -76,14 +80,14 @@ export default function AdminFormBasicInfoComponent({
 
       {/* Description */}
       <div className="mt-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="mb-2 block text-sm font-medium text-gray-700">
           {dict.admin.forms.fields.description} *
         </label>
         <textarea
           value={data.description}
-          onChange={(e) => onChange('description', e.target.value)}
+          onChange={e => onChange('description', e.target.value)}
           rows={4}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+          className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none"
           placeholder={dict.admin.forms.placeholders.description}
         />
       </div>

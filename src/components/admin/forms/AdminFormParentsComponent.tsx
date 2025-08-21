@@ -1,4 +1,5 @@
 import AdminFormSingleImageUploadComponent from './AdminFormSingleImageUploadComponent';
+import { Dictionary } from '@/lib/types/dictionary';
 import { MediaFile } from '@/application/useCases/admin/MediaUploadUseCase';
 
 interface ParentsData {
@@ -8,7 +9,7 @@ interface ParentsData {
 
 interface AdminFormParentsComponentProps {
   data: ParentsData;
-  dict: any;
+  dict: Dictionary;
   onChange: (field: keyof ParentsData, value: MediaFile | null) => void;
   className?: string;
 }
@@ -17,37 +18,55 @@ export default function AdminFormParentsComponent({
   data,
   dict,
   onChange,
-  className = ''
+  className = '',
 }: AdminFormParentsComponentProps) {
   return (
-    <div className={`bg-white rounded-lg shadow-sm border border-gray-200 p-6 ${className}`}>
-      <h3 className="text-lg font-semibold text-gray-800 mb-4">
-        {dict.admin.forms.sections.parents}
-      </h3>
-      <p className="text-sm text-gray-600 mb-4">
-        {dict.admin.forms.sections.parentsDescription}
-      </p>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <AdminFormSingleImageUploadComponent
-          label={dict.admin.forms.fields.fatherImage}
-          description={dict.admin.forms.fields.fatherImage}
-          value={data.fatherImage}
-          onChange={(file) => onChange('fatherImage', file)}
-          dict={dict}
-          maxFileSize={5}
-          uploadType="parents"
-        />
-        
-        <AdminFormSingleImageUploadComponent
-          label={dict.admin.forms.fields.motherImage}
-          description={dict.admin.forms.fields.motherImage}
-          value={data.motherImage}
-          onChange={(file) => onChange('motherImage', file)}
-          dict={dict}
-          maxFileSize={5}
-          uploadType="parents"
-        />
+    <div
+      className={`rounded-lg border border-gray-200 bg-white p-6 shadow-sm ${className}`}
+    >
+      {/* Header Section */}
+      <div className="mb-6 text-center">
+        <h3 className="mb-2 text-xl font-semibold text-gray-800">
+          {dict.admin.forms.sections.parents}
+        </h3>
+        <p className="mx-auto max-w-2xl text-sm text-gray-600">
+          {dict.admin.forms.sections.parentsDescription}
+        </p>
+      </div>
+
+      {/* Upload Sections */}
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
+        {/* Father Section */}
+        <div className="flex flex-col items-center p-4">
+          <div className="w-full max-w-sm">
+            <AdminFormSingleImageUploadComponent
+              label={dict.admin.forms.fields.fatherImage}
+              description={dict.admin.forms.fields.fatherImage}
+              value={data.fatherImage}
+              onChange={file => onChange('fatherImage', file)}
+              dict={dict}
+              maxFileSize={5}
+              uploadType="parents"
+              className="text-center"
+            />
+          </div>
+        </div>
+
+        {/* Mother Section */}
+        <div className="flex flex-col items-center p-4">
+          <div className="w-full max-w-sm">
+            <AdminFormSingleImageUploadComponent
+              label={dict.admin.forms.fields.motherImage}
+              description={dict.admin.forms.fields.motherImage}
+              value={data.motherImage}
+              onChange={file => onChange('motherImage', file)}
+              dict={dict}
+              maxFileSize={5}
+              uploadType="parents"
+              className="text-center"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -10,25 +10,36 @@ interface MenuItem {
   icon: string;
 }
 
+import { Dictionary } from '@/lib/types/dictionary';
+
 interface AdminHamburgerMenuProps {
   currentLocale: string;
-  dict: any;
+  dict: Dictionary;
 }
 
-export default function AdminHamburgerMenu({ currentLocale, dict }: AdminHamburgerMenuProps) {
+export default function AdminHamburgerMenu({
+  currentLocale,
+  dict,
+}: AdminHamburgerMenuProps) {
   const router = useRouter();
+
+  const getAdminText = (key: string): string => {
+    const adminKey = key as keyof typeof dict.admin;
+    const value = dict.admin[adminKey];
+    return typeof value === 'string' ? value : key;
+  };
 
   const menuItems: MenuItem[] = [
     {
       key: 'puppys',
       href: `/${currentLocale}/admin/puppys`,
-      icon: '🐕'
+      icon: '🐕',
     },
     {
       key: 'categories',
       href: `/${currentLocale}/admin/categories`,
-      icon: '📂'
-    }
+      icon: '📂',
+    },
   ];
 
   const handleMenuItemClick = (href: string, close: () => void) => {
@@ -41,7 +52,7 @@ export default function AdminHamburgerMenu({ currentLocale, dict }: AdminHamburg
       {({ open, close }) => (
         <>
           {/* Hamburger button */}
-          <Disclosure.Button className="inline-flex items-center justify-center rounded-lg p-2 text-slate-600 hover:bg-gray-100 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+          <Disclosure.Button className="focus:ring-opacity-50 inline-flex items-center justify-center rounded-lg p-2 text-slate-600 hover:bg-gray-100 hover:text-slate-900 focus:ring-2 focus:ring-red-500 focus:outline-none">
             <span className="sr-only">
               {open ? 'Close admin menu' : 'Open admin menu'}
             </span>
@@ -54,13 +65,12 @@ export default function AdminHamburgerMenu({ currentLocale, dict }: AdminHamburg
 
           {/* Mobile menu panel */}
           <div className="relative">
-            <Disclosure.Panel 
+            <Disclosure.Panel
               as="div"
-              className="absolute top-full right-0 z-50 w-80 bg-white shadow-xl border border-gray-100 rounded-lg mt-2"
+              className="absolute top-full right-0 z-50 mt-2 w-80 rounded-lg border border-gray-100 bg-white shadow-xl"
             >
-              
               {/* Menu header */}
-              <div className="px-6 py-4 border-b border-gray-100">
+              <div className="border-b border-gray-100 px-6 py-4">
                 <h3 className="text-lg font-semibold text-slate-800">
                   {dict.admin?.menu || 'Admin Menu'}
                 </h3>
@@ -69,17 +79,17 @@ export default function AdminHamburgerMenu({ currentLocale, dict }: AdminHamburg
               {/* Menu items */}
               <nav className="p-4">
                 <div className="space-y-2">
-                  {menuItems.map((item) => (
+                  {menuItems.map(item => (
                     <button
                       key={item.key}
                       onClick={() => handleMenuItemClick(item.href, close)}
-                      className="w-full flex items-center gap-4 p-3 text-left hover:bg-gray-50 rounded-lg transition-colors group"
+                      className="group flex w-full items-center gap-4 rounded-lg p-3 text-left transition-colors hover:bg-gray-50"
                     >
-                      <span className="text-xl group-hover:scale-110 transition-transform">
+                      <span className="text-xl transition-transform group-hover:scale-110">
                         {item.icon}
                       </span>
-                      <span className="text-slate-700 font-medium group-hover:text-slate-900">
-                        {dict.admin?.[item.key] || item.key}
+                      <span className="font-medium text-slate-700 group-hover:text-slate-900">
+                        {getAdminText(item.key)}
                       </span>
                     </button>
                   ))}
@@ -87,11 +97,11 @@ export default function AdminHamburgerMenu({ currentLocale, dict }: AdminHamburg
               </nav>
 
               {/* Menu footer */}
-              <div className="px-6 py-4 border-t border-gray-100 bg-gray-50 rounded-b-lg">
-                <p className="text-sm text-slate-500 text-center">
+              <div className="rounded-b-lg border-t border-gray-100 bg-gray-50 px-6 py-4">
+                <p className="text-center text-sm text-slate-500">
                   {dict.header?.title || 'PuppyShop'} Admin
                 </p>
-                <p className="text-xs text-slate-400 text-center mt-1">
+                <p className="mt-1 text-center text-xs text-slate-400">
                   {dict.admin?.subtitle || 'Administration panel'}
                 </p>
               </div>

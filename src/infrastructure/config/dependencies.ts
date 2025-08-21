@@ -5,7 +5,8 @@ import { PuppyRepository as PuppyRepositoryImpl } from '@/infrastructure/reposit
 import { CreatePuppyUseCase } from '@/application/useCases/admin/CreatePuppyUseCase';
 
 // Repository instances
-export const categoryRepository: CategoryRepository = new CategoryRepositoryImpl();
+export const categoryRepository: CategoryRepository =
+  new CategoryRepositoryImpl();
 export const puppyRepository: PuppyRepository = new PuppyRepositoryImpl();
 
 // Use Case instances

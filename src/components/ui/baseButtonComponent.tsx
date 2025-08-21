@@ -26,17 +26,17 @@ export default function BaseButtonComponent({
   disabled = false,
   loading = false,
   fullWidth = false,
-  className = ''
+  className = '',
 }: ButtonProps) {
   const router = useRouter();
-  
+
   // Color variants configuration
   const variants = {
     primary: 'bg-red-500 hover:bg-red-600 text-white shadow-sm',
     secondary: 'bg-gray-500 hover:bg-gray-600 text-white shadow-sm',
     outline: 'border-2 border-red-500 text-red-500 hover:bg-red-50 bg-white',
     danger: 'bg-red-600 hover:bg-red-700 text-white shadow-sm',
-    success: 'bg-green-500 hover:bg-green-600 text-white shadow-sm'
+    success: 'bg-green-500 hover:bg-green-600 text-white shadow-sm',
   };
 
   // Size configurations
@@ -44,20 +44,19 @@ export default function BaseButtonComponent({
     sm: 'px-3 py-1.5 text-sm',
     md: 'px-4 py-2 text-sm',
     lg: 'px-6 py-3 text-base',
-    xl: 'px-8 py-4 text-lg'
+    xl: 'px-8 py-4 text-lg',
   };
 
   // State-based classes
-  const disabledClasses = disabled || loading 
-    ? 'opacity-50 cursor-not-allowed' 
-    : 'cursor-pointer';
+  const disabledClasses =
+    disabled || loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer';
 
   const widthClasses = fullWidth ? 'w-full' : '';
 
   // Handle click - navigate if href provided, otherwise call onClick
   const handleClick = () => {
     if (disabled || loading) return;
-    
+
     if (href) {
       router.push(href);
     } else if (onClick) {
@@ -70,20 +69,11 @@ export default function BaseButtonComponent({
       type={type}
       onClick={handleClick}
       disabled={disabled || loading}
-      className={`
-        ${variants[variant]}
-        ${sizes[size]}
-        ${disabledClasses}
-        ${widthClasses}
-        font-medium rounded-lg transition-all duration-200
-        focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50
-        active:transform active:scale-95
-        ${className}
-      `}
+      className={` ${variants[variant]} ${sizes[size]} ${disabledClasses} ${widthClasses} focus:ring-opacity-50 rounded-lg font-medium transition-all duration-200 focus:ring-2 focus:ring-red-500 focus:outline-none active:scale-95 active:transform ${className} `}
     >
       {loading ? (
         <div className="flex items-center justify-center gap-2">
-          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+          <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
           <span>Loading...</span>
         </div>
       ) : (

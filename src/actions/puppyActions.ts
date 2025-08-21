@@ -7,7 +7,7 @@ export async function createPuppyAction(data: CreatePuppyData) {
   try {
     const uploadedMedia = data.media.filter(file => file.isUploaded);
     const puppyData = { ...data, media: uploadedMedia };
-    
+
     const puppy = await createPuppyUseCase.execute(puppyData);
     return { success: true, data: puppy };
   } catch (error) {

@@ -1,4 +1,8 @@
-import { Category, CreateCategoryData, UpdateCategoryData } from '@/domain/entities/Category';
+import {
+  Category,
+  CreateCategoryData,
+  UpdateCategoryData,
+} from '@/domain/entities/Category';
 
 export interface CategoryRepository {
   create(data: CreateCategoryData): Promise<Category>;

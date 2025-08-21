@@ -3,11 +3,11 @@ import SecondaryButtonComponent from '@/components/ui/SecondaryButtonComponent';
 
 async function getDictionary(locale: string) {
   try {
-    const dict = await import(`@/dictionaries/${locale}.json`)
-    return dict.default
+    const dict = await import(`@/dictionaries/${locale}.json`);
+    return dict.default;
   } catch {
-    const dict = await import('@/dictionaries/es.json')
-    return dict.default
+    const dict = await import('@/dictionaries/es.json');
+    return dict.default;
   }
 }
 
@@ -24,32 +24,28 @@ export default function HomePage({
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-slate-800 mb-4">
+        <h1 className="mb-4 text-4xl font-bold text-slate-800">
           {dict.header.subtitle}
         </h1>
-        <p className="text-lg text-slate-600 mb-8">
-          {dict.header.experience}
-        </p>
-        
-        <div className="bg-white rounded-lg shadow-sm p-8 max-w-md mx-auto">
-          <div className="text-6xl mb-4">🐕</div>
-          <h2 className="text-xl font-semibold text-slate-800 mb-2">
+        <p className="mb-8 text-lg text-slate-600">{dict.header.experience}</p>
+
+        <div className="mx-auto max-w-md rounded-lg bg-white p-8 shadow-sm">
+          <div className="mb-4 text-6xl">🐕</div>
+          <h2 className="mb-2 text-xl font-semibold text-slate-800">
             {dict.navigation.home} - PuppyShop
           </h2>
-          <p className="text-slate-600 mb-6">
-            {dict.buttons.search_puppy}
-          </p>
-          
+          <p className="mb-6 text-slate-600">{dict.buttons.search_puppy}</p>
+
           <div className="space-y-3">
-            <PrimaryButtonComponent 
+            <PrimaryButtonComponent
               fullWidth
               size="lg"
               href={`/${locale}/catalog`}
             >
               {dict.buttons.search_puppy}
             </PrimaryButtonComponent>
-            
-            <SecondaryButtonComponent 
+
+            <SecondaryButtonComponent
               fullWidth
               size="lg"
               href={`/${locale}/about`}
@@ -58,7 +54,7 @@ export default function HomePage({
             </SecondaryButtonComponent>
           </div>
         </div>
-        
+
         <div className="mt-8 text-sm text-slate-500">
           {dict.home.available_now}
         </div>

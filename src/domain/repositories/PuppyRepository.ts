@@ -1,4 +1,8 @@
-import { Puppy, CreatePuppyData, UpdatePuppyData } from '@/domain/entities/Puppy';
+import {
+  Puppy,
+  CreatePuppyData,
+  UpdatePuppyData,
+} from '@/domain/entities/Puppy';
 
 export interface PuppyRepository {
   create(data: CreatePuppyData): Promise<Puppy>;

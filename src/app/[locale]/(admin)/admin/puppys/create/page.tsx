@@ -14,25 +14,26 @@ interface CreatePuppyPageProps {
   params: Promise<{ locale: string }>;
 }
 
-export default async function CreatePuppyPage({ params }: CreatePuppyPageProps) {
+export default async function CreatePuppyPage({
+  params,
+}: CreatePuppyPageProps) {
   const { locale } = await params;
   const dict = await getDictionary(locale);
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-800 mb-2">
+    <div className="w-full">
+      {/* Header Section*/}
+      <div className="mb-8 text-center lg:mb-12">
+        <h1 className="mb-3 text-3xl font-bold text-gray-800 lg:mb-4 lg:text-4xl">
           {dict.admin.forms?.create || 'Create'} {dict.admin.puppys || 'Puppy'}
         </h1>
-        <p className="text-gray-600">
+        <p className="mx-auto max-w-2xl px-4 text-lg text-gray-600">
           {dict.admin.forms?.description}
         </p>
       </div>
 
-      <AdminFormComponent
-        dict={dict}
-        locale={locale}
-      />
+      {/* Form Section */}
+      <AdminFormComponent dict={dict} locale={locale} />
     </div>
   );
 }

@@ -28,13 +28,11 @@ export default function FormActionButtons({
   size = 'lg',
   layout = 'horizontal',
   fullWidth = true,
-  className = ''
+  className = '',
 }: FormActionButtonsProps) {
-  
   // Layout-based container classes
-  const containerClasses = layout === 'horizontal' 
-    ? 'flex gap-4 justify-end' 
-    : 'flex flex-col gap-3';
+  const containerClasses =
+    layout === 'horizontal' ? 'flex gap-4 justify-end' : 'flex flex-col gap-3';
 
   return (
     <div className={`${containerClasses} ${className}`}>
@@ -46,7 +44,7 @@ export default function FormActionButtons({
       >
         {secondaryText}
       </SecondaryButtonComponent>
-      
+
       <PrimaryButtonComponent
         type={primaryType}
         onClick={onPrimaryClick}
