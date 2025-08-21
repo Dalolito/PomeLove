@@ -7,18 +7,18 @@ interface PuppyMediaData {
 }
 
 const imageUrls = [
-  'https://picsum.photos/800/600?random=11',
-  'https://picsum.photos/800/600?random=12',
-  'https://picsum.photos/800/600?random=13',
-  'https://picsum.photos/800/600?random=14',
-  'https://picsum.photos/800/600?random=15',
-  'https://picsum.photos/800/600?random=16',
-  'https://picsum.photos/800/600?random=17',
-  'https://picsum.photos/800/600?random=18',
-  'https://picsum.photos/800/600?random=19',
-  'https://picsum.photos/800/600?random=20',
-  'https://picsum.photos/800/600?random=21',
-  'https://picsum.photos/800/600?random=22'
+  'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1552053831-71594a27632d?w=800&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1546527868-ccb7ee7dfa6a?w=800&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=800&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1547407139-3c921a66005c?w=800&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1558788353-f76d92427f16?w=800&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1583511655826-05700d52be8d?w=800&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1547407139-3c921a66005c?w=800&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=800&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1552053831-71594a27632d?w=800&h=600&fit=crop'
 ];
 
 const videoUrls = [

@@ -24,6 +24,7 @@ model Puppy {
   categoryId  Int
   fatherImage String?
   motherImage String?
+  available   Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   category    Category @relation(fields: [categoryId], references: [id])

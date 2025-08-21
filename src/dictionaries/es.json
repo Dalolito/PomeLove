@@ -99,7 +99,7 @@
         "category": "Categoría",
         "birthDate": "Fecha Nacimiento",
         "description": "Descripción",
-        "media": "Media",
+        "available": "Disponible",
         "actions": "Acciones"
       },
       "actions": {
@@ -107,6 +107,10 @@
         "view": "Ver",
         "edit": "Editar",
         "delete": "Eliminar"
+      },
+      "status": {
+        "available": "Disponible",
+        "unavailable": "No Disponible"
       }
     },
     "utils": {

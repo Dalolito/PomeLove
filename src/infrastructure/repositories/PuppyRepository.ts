@@ -18,6 +18,7 @@ export class PuppyRepository implements IPuppyRepository {
           categoryId: parseInt(data.categoryId),
           fatherImage: data.fatherImage,
           motherImage: data.motherImage,
+          available: data.available ?? true,
         },
         include: {
           category: true,
@@ -107,6 +108,7 @@ export class PuppyRepository implements IPuppyRepository {
         categoryId: data.categoryId ? parseInt(data.categoryId) : undefined,
         fatherImage: data.fatherImage,
         motherImage: data.motherImage,
+        available: data.available,
       },
       include: {
         category: true,
@@ -130,6 +132,7 @@ export class PuppyRepository implements IPuppyRepository {
     birthDate: Date;
     fatherImage: string | null;
     motherImage: string | null;
+    available: boolean;
     createdAt: Date;
     updatedAt: Date;
     category: {
@@ -156,6 +159,7 @@ export class PuppyRepository implements IPuppyRepository {
       birthDate: puppy.birthDate,
       fatherImage: puppy.fatherImage,
       motherImage: puppy.motherImage,
+      available: puppy.available,
       category,
       media: puppy.media
         ? puppy.media.map((media: any) => ({

@@ -7,6 +7,7 @@ interface PuppyData {
   categoryId: number;
   fatherImage?: string;
   motherImage?: string;
+  available: boolean;
 }
 
 const puppyNames = [
@@ -30,19 +31,19 @@ const puppyDescriptions = [
 ];
 
 const fatherImages = [
-  'https://picsum.photos/400/300?random=1',
-  'https://picsum.photos/400/300?random=2',
-  'https://picsum.photos/400/300?random=3',
-  'https://picsum.photos/400/300?random=4',
-  'https://picsum.photos/400/300?random=5'
+  'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1552053831-71594a27632d?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1546527868-ccb7ee7dfa6a?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400&h=300&fit=crop'
 ];
 
 const motherImages = [
-  'https://picsum.photos/400/300?random=6',
-  'https://picsum.photos/400/300?random=7',
-  'https://picsum.photos/400/300?random=8',
-  'https://picsum.photos/400/300?random=9',
-  'https://picsum.photos/400/300?random=10'
+  'https://images.unsplash.com/photo-1547407139-3c921a66005c?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1558788353-f76d92427f16?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1583511655826-05700d52be8d?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1547407139-3c921a66005c?w=400&h=300&fit=crop',
+  'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400&h=300&fit=crop'
 ];
 
 function getRandomBirthDate(): Date {
@@ -67,7 +68,8 @@ function generatePuppiesData(categoriesCount: number, puppiesPerCategory: number
         birthDate: getRandomBirthDate(),
         categoryId: categoryId,
         fatherImage: getRandomElement(fatherImages),
-        motherImage: getRandomElement(motherImages)
+        motherImage: getRandomElement(motherImages),
+        available: Math.random() > 0.3
       };
       
       puppies.push(puppy);
@@ -108,7 +110,8 @@ export async function seedPuppies(prisma: PrismaClient) {
           birthDate: puppyData.birthDate,
           categoryId: puppyData.categoryId,
           fatherImage: puppyData.fatherImage,
-          motherImage: puppyData.motherImage
+          motherImage: puppyData.motherImage,
+          available: puppyData.available
         }
       });
       puppiesCreated++;

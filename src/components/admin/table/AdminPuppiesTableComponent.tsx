@@ -84,8 +84,8 @@ export default function AdminPuppiesTableComponent({
   return (
     <div className={`rounded-lg border border-gray-200 bg-white shadow-sm ${className}`}>
       {/* Header */}
-      <div className="border-b border-gray-200 px-6 py-4">
-        <div className="flex items-center justify-between">
+      <div className="border-b border-gray-200 px-4 py-4 sm:px-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 className="text-lg font-semibold text-gray-900">
               {dict.admin.table.title}
@@ -96,7 +96,7 @@ export default function AdminPuppiesTableComponent({
           </div>
           <button
             onClick={() => router.push(`/${locale}/admin/puppys/create`)}
-            className="rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+            className="w-full rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-600 sm:w-auto"
           >
             + {dict.admin.table.actions.newPet}
           </button>
@@ -105,47 +105,49 @@ export default function AdminPuppiesTableComponent({
 
       {/* Table */}
       <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
-                {dict.admin.table.headers.image}
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
-                {dict.admin.table.headers.name}
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
-                {dict.admin.table.headers.category}
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
-                {dict.admin.table.headers.birthDate}
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
-                {dict.admin.table.headers.description}
-              </th>
-              <th className="px-4 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
-                {dict.admin.table.headers.media}
-              </th>
-              <th className="px-4 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
-                {dict.admin.table.headers.actions}
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200 bg-white">
-            {puppies.map((puppy) => (
-              <AdminPuppiesTableElementComponent
-                key={puppy.id}
-                puppy={puppy}
-                dict={dict}
-                locale={locale}
-                onView={handleView}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-                isDeleting={deletingId === puppy.id}
-              />
-            ))}
-          </tbody>
-        </table>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                  {dict.admin.table.headers.image}
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                  {dict.admin.table.headers.name}
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                  {dict.admin.table.headers.category}
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                  {dict.admin.table.headers.birthDate}
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                  {dict.admin.table.headers.description}
+                </th>
+                <th className="px-4 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
+                  {dict.admin.table.headers.available}
+                </th>
+                <th className="px-4 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
+                  {dict.admin.table.headers.actions}
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200 bg-white">
+              {puppies.map((puppy) => (
+                <AdminPuppiesTableElementComponent
+                  key={puppy.id}
+                  puppy={puppy}
+                  dict={dict}
+                  locale={locale}
+                  onView={handleView}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                  isDeleting={deletingId === puppy.id}
+                />
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

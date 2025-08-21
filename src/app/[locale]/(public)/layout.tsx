@@ -6,9 +6,10 @@ import FooterComponent from '@/components/layout/FooterComponent';
 export async function generateMetadata({
   params,
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const dict = await getDictionary(params.locale);
+  const { locale } = await params;
+  const dict = await getDictionary(locale);
 
   return {
     title: `${dict.header.title} - ${dict.header.subtitle}`,
@@ -16,7 +17,7 @@ export async function generateMetadata({
     openGraph: {
       title: dict.header.subtitle,
       description: dict.header.experience,
-      locale: params.locale,
+      locale: locale,
     },
   };
 }

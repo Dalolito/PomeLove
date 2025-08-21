@@ -99,7 +99,7 @@
         "category": "Category",
         "birthDate": "Birth Date",
         "description": "Description",
-        "media": "Media",
+        "available": "Available",
         "actions": "Actions"
       },
       "actions": {
@@ -107,6 +107,10 @@
         "view": "View",
         "edit": "Edit",
         "delete": "Delete"
+      },
+      "status": {
+        "available": "Available",
+        "unavailable": "Unavailable"
       }
     },
     "utils": {

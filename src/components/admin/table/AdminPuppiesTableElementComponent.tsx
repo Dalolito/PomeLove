@@ -34,9 +34,12 @@ export default function AdminPuppiesTableElementComponent({
 
   const getMainImage = (): string => {
     if (puppy.media && puppy.media.length > 0) {
-      return puppy.media[0].url;
+      const firstImage = puppy.media.find(media => media.type === 'image');
+      if (firstImage) {
+        return firstImage.url;
+      }
     }
-    return '/placeholder-puppy.jpg';
+    return '/placeholder-puppy.svg';
   };
 
   return (
@@ -49,8 +52,11 @@ export default function AdminPuppiesTableElementComponent({
             className="h-full w-full object-cover"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
-              target.src = '/placeholder-puppy.jpg';
+              if (target.src !== '/placeholder-puppy.svg') {
+                target.src = '/placeholder-puppy.svg';
+              }
             }}
+            loading="lazy"
           />
         </div>
       </td>
@@ -78,8 +84,14 @@ export default function AdminPuppiesTableElementComponent({
         </div>
       </td>
 
-      <td className="px-4 py-3 text-center text-sm text-gray-500">
-        {puppy.media ? puppy.media.length : 0}
+      <td className="px-4 py-3 text-center">
+        <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+          puppy.available 
+            ? 'bg-green-100 text-green-800' 
+            : 'bg-red-100 text-red-800'
+        }`}>
+          {puppy.available ? dict.admin.table.status.available : dict.admin.table.status.unavailable}
+        </span>
       </td>
 
       <td className="px-4 py-3">

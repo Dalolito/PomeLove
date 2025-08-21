@@ -3,9 +3,19 @@ export const replaceText = (
   replacements: Record<string, string | number>
 ): string => {
   let result = text;
+  
   Object.entries(replacements).forEach(([key, value]) => {
-    result = result.replace(`{${key}}`, value.toString());
+    const pluralRegex = new RegExp(`\\{${key},\\s*plural,\\s*one\\s*\\{([^}]+)\\}\\s*other\\s*\\{([^}]+)\\}\\}`, 'g');
+    result = result.replace(pluralRegex, (match, oneForm, otherForm) => {
+      const numValue = Number(value);
+      return numValue === 1 ? oneForm : otherForm;
+    });
   });
+  
+  Object.entries(replacements).forEach(([key, value]) => {
+    result = result.replace(new RegExp(`\\{${key}\\}`, 'g'), value.toString());
+  });
+  
   return result;
 };
 

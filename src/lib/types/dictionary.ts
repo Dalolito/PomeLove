@@ -107,7 +107,7 @@ export interface Dictionary {
         category: string;
         birthDate: string;
         description: string;
-        media: string;
+        available: string;
         actions: string;
       };
       actions: {
@@ -115,6 +115,10 @@ export interface Dictionary {
         view: string;
         edit: string;
         delete: string;
+      };
+      status: {
+        available: string;
+        unavailable: string;
       };
     };
     utils: {
