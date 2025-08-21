@@ -69,7 +69,7 @@ export default function BaseButtonComponent({
       type={type}
       onClick={handleClick}
       disabled={disabled || loading}
-      className={` ${variants[variant]} ${sizes[size]} ${disabledClasses} ${widthClasses} focus:ring-opacity-50 rounded-lg font-medium transition-all duration-200 focus:ring-2 focus:ring-red-500 focus:outline-none active:scale-95 active:transform ${className} `}
+      className={` ${variants[variant]} ${sizes[size]} ${disabledClasses} ${widthClasses} rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 active:scale-95 active:transform ${className} `}
     >
       {loading ? (
         <div className="flex items-center justify-center gap-2">

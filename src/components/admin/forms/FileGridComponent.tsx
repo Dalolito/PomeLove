@@ -55,7 +55,7 @@ export default function FileGridComponent({
 
               {/* Loading overlay */}
               {uploadingFiles.has(file.id) && (
-                <div className="bg-opacity-50 absolute inset-0 flex items-center justify-center bg-black">
+                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
                   <div className="text-xs text-white">
                     {dict.admin.media.upload.uploading}
                   </div>
@@ -83,7 +83,7 @@ export default function FileGridComponent({
                 e.stopPropagation();
                 onRemoveFile(file.id);
               }}
-              className="absolute top-2 right-2 rounded-full bg-red-500 p-1 text-white opacity-0 transition-opacity group-hover:opacity-100 hover:bg-red-600"
+              className="absolute right-2 top-2 rounded-full bg-red-500 p-1 text-white opacity-0 transition-opacity hover:bg-red-600 group-hover:opacity-100"
               title={dict.admin.media.upload.removeFile}
             >
               <span className="text-sm">✕</span>

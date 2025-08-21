@@ -57,7 +57,7 @@ export default function HamburgerMenu({
       {({ open, close }) => (
         <>
           {/* Hamburger button */}
-          <Disclosure.Button className="focus:ring-opacity-50 inline-flex items-center justify-center rounded-lg p-2 text-slate-600 hover:bg-gray-100 hover:text-slate-900 focus:ring-2 focus:ring-red-500 focus:outline-none">
+          <Disclosure.Button className="inline-flex items-center justify-center rounded-lg p-2 text-slate-600 hover:bg-gray-100 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
             <span className="sr-only">
               {open ? 'Close main menu' : 'Open main menu'}
             </span>
@@ -72,7 +72,7 @@ export default function HamburgerMenu({
           <div className="relative">
             <Disclosure.Panel
               as="div"
-              className="absolute top-full right-0 z-50 mt-2 w-80 rounded-lg border border-gray-100 bg-white shadow-xl"
+              className="absolute right-0 top-full z-50 mt-2 w-80 rounded-lg border border-gray-100 bg-white shadow-xl"
             >
               {/* Menu header */}
               <div className="border-b border-gray-100 px-6 py-4">

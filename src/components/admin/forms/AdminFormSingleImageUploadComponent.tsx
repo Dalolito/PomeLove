@@ -115,13 +115,13 @@ export default function AdminFormSingleImageUploadComponent({
             type="button"
             onClick={handleRemove}
             disabled={isUploading}
-            className="absolute top-1 right-1 rounded-full bg-red-500 p-1 text-white opacity-0 transition-opacity group-hover:opacity-100 hover:bg-red-600 disabled:opacity-50"
+            className="absolute right-1 top-1 rounded-full bg-red-500 p-1 text-white opacity-0 transition-opacity hover:bg-red-600 disabled:opacity-50 group-hover:opacity-100"
             title={dict.admin.media.upload.removeFile || 'Remove image'}
           >
             <span className="text-xs">✕</span>
           </button>
           {isUploading && (
-            <div className="bg-opacity-50 absolute inset-0 flex items-center justify-center bg-black">
+            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
               <div className="text-xs text-white">
                 {dict.admin.media.upload.uploading}
               </div>

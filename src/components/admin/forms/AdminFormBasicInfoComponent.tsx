@@ -40,7 +40,7 @@ export default function AdminFormBasicInfoComponent({
             type="text"
             value={data.name}
             onChange={e => onChange('name', e.target.value)}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
             placeholder={dict.admin.forms.placeholders.name}
           />
         </div>
@@ -54,7 +54,7 @@ export default function AdminFormBasicInfoComponent({
             type="date"
             value={data.birthDate}
             onChange={e => onChange('birthDate', e.target.value)}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
           />
         </div>
 
@@ -66,7 +66,7 @@ export default function AdminFormBasicInfoComponent({
           <select
             value={data.categoryId}
             onChange={e => onChange('categoryId', e.target.value)}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
           >
             <option value="">{dict.admin.forms.placeholders.category}</option>
             {categories.map(category => (
@@ -87,7 +87,7 @@ export default function AdminFormBasicInfoComponent({
           value={data.description}
           onChange={e => onChange('description', e.target.value)}
           rows={4}
-          className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-red-500 focus:outline-none"
+          className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
           placeholder={dict.admin.forms.placeholders.description}
         />
       </div>
