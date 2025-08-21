@@ -11,7 +11,9 @@
     "format:check": "prettier --check .",
     "format:staged": "prettier --write",
     "lint:fix": "eslint . --fix && prettier --write .",
-    "check": "npm run lint && npm run format:check && tsc --noEmit"
+    "check": "npm run lint && npm run format:check && tsc --noEmit",
+    "db:seed": "npx tsx prisma/seed.ts",
+    "db:reset": "npx prisma migrate reset --force && npm run db:seed"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.7",
