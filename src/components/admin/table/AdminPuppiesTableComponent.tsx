@@ -109,25 +109,28 @@ export default function AdminPuppiesTableComponent({
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                <th className="px-2 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:px-4">
                   {dict.admin.table.headers.image}
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                <th className="px-2 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:px-4">
                   {dict.admin.table.headers.name}
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                <th className="hidden px-2 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:table-cell sm:px-4">
                   {dict.admin.table.headers.category}
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                <th className="px-2 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:px-4">
+                  {dict.admin.table.headers.gender}
+                </th>
+                <th className="hidden px-2 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 md:table-cell sm:px-4">
                   {dict.admin.table.headers.birthDate}
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                <th className="hidden px-2 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 lg:table-cell sm:px-4">
                   {dict.admin.table.headers.description}
                 </th>
-                <th className="px-4 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
+                <th className="px-2 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500 sm:px-4">
                   {dict.admin.table.headers.available}
                 </th>
-                <th className="px-4 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500">
+                <th className="px-2 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500 sm:px-4">
                   {dict.admin.table.headers.actions}
                 </th>
               </tr>

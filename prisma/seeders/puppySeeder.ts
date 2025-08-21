@@ -4,6 +4,7 @@ interface PuppyData {
   name: string;
   description: string;
   birthDate: Date;
+  gender: 'male' | 'female';
   categoryId: number;
   fatherImage?: string;
   motherImage?: string;
@@ -66,6 +67,7 @@ function generatePuppiesData(categoriesCount: number, puppiesPerCategory: number
         name: getRandomElement(puppyNames),
         description: getRandomElement(puppyDescriptions),
         birthDate: getRandomBirthDate(),
+        gender: Math.random() > 0.5 ? 'male' : 'female',
         categoryId: categoryId,
         fatherImage: getRandomElement(fatherImages),
         motherImage: getRandomElement(motherImages),
@@ -108,6 +110,7 @@ export async function seedPuppies(prisma: PrismaClient) {
           name: puppyData.name,
           description: puppyData.description,
           birthDate: puppyData.birthDate,
+          gender: puppyData.gender,
           categoryId: puppyData.categoryId,
           fatherImage: puppyData.fatherImage,
           motherImage: puppyData.motherImage,

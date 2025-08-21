@@ -49,6 +49,7 @@ export interface Dictionary {
         name: string;
         description: string;
         birthDate: string;
+        gender: string;
         category: string;
         fatherImage: string;
         motherImage: string;
@@ -57,7 +58,12 @@ export interface Dictionary {
       placeholders: {
         name: string;
         description: string;
+        gender: string;
         category: string;
+      };
+      gender: {
+        male: string;
+        female: string;
       };
       sections: {
         parents: string;
@@ -105,6 +111,7 @@ export interface Dictionary {
         image: string;
         name: string;
         category: string;
+        gender: string;
         birthDate: string;
         description: string;
         available: string;

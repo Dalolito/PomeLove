@@ -49,6 +49,7 @@
         "name": "Nombre",
         "description": "Descripción",
         "birthDate": "Fecha de Nacimiento",
+        "gender": "Género",
         "category": "Categoría",
         "fatherImage": "Imagen del Padre",
         "motherImage": "Imagen de la Madre",
@@ -57,7 +58,12 @@
       "placeholders": {
         "name": "Ingresa el nombre del cachorro",
         "description": "Describe las características del cachorro",
+        "gender": "Selecciona el género",
         "category": "Selecciona una categoría"
+      },
+      "gender": {
+        "male": "Macho",
+        "female": "Hembra"
       },
       "sections": {
         "parents": "Linaje de los Padres",
@@ -97,6 +103,7 @@
         "image": "Imagen",
         "name": "Nombre",
         "category": "Categoría",
+        "gender": "Género",
         "birthDate": "Fecha Nacimiento",
         "description": "Descripción",
         "available": "Disponible",

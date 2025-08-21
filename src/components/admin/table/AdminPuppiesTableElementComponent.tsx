@@ -44,8 +44,8 @@ export default function AdminPuppiesTableElementComponent({
 
   return (
     <tr className={`border-b border-gray-200 hover:bg-gray-50 ${className}`}>
-      <td className="px-4 py-3">
-        <div className="h-12 w-12 overflow-hidden rounded-lg bg-gray-100">
+      <td className="px-2 py-3 sm:px-4">
+        <div className="h-16 w-16 overflow-hidden rounded-lg bg-gray-100 sm:h-20 sm:w-20">
           <img
             src={getMainImage()}
             alt={puppy.name}
@@ -61,30 +61,44 @@ export default function AdminPuppiesTableElementComponent({
         </div>
       </td>
 
-      <td className="px-4 py-3">
+      <td className="px-2 py-3 sm:px-4">
         <div className="font-medium text-gray-900">{puppy.name}</div>
         <div className="text-sm text-gray-500">
           {calculatePuppyAgeUtil(puppy.birthDate, dict)}
         </div>
+        {/* Mobile indicator for hidden info */}
+        <div className="mt-1 flex items-center gap-2 text-xs text-gray-400 sm:hidden">
+          <span>{puppy.category.name}</span>
+          <span>•</span>
+          <span>{dict.admin.forms.gender[puppy.gender]}</span>
+          <span>•</span>
+          <span>{formatDate(puppy.birthDate, locale)}</span>
+        </div>
       </td>
 
-      <td className="px-4 py-3">
+      <td className="hidden px-2 py-3 sm:table-cell sm:px-4">
         <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800">
           {puppy.category.name}
         </span>
       </td>
 
-      <td className="px-4 py-3 text-sm text-gray-900">
+      <td className="px-2 py-3 sm:px-4">
+        <span className="inline-flex items-center rounded-full bg-purple-100 px-2.5 py-0.5 text-xs font-medium text-purple-800">
+          {dict.admin.forms.gender[puppy.gender]}
+        </span>
+      </td>
+
+      <td className="hidden px-2 py-3 text-sm text-gray-900 md:table-cell sm:px-4">
         {formatDate(puppy.birthDate, locale)}
       </td>
 
-      <td className="max-w-xs px-4 py-3">
+      <td className="hidden max-w-xs px-2 py-3 lg:table-cell sm:px-4">
         <div className="truncate text-sm text-gray-900" title={puppy.description}>
           {puppy.description}
         </div>
       </td>
 
-      <td className="px-4 py-3 text-center">
+      <td className="px-2 py-3 text-center sm:px-4">
         <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
           puppy.available 
             ? 'bg-green-100 text-green-800' 
@@ -94,7 +108,7 @@ export default function AdminPuppiesTableElementComponent({
         </span>
       </td>
 
-      <td className="px-4 py-3">
+      <td className="px-2 py-3 sm:px-4">
         <AdminPuppiesTableButtonsComponent
           puppyId={puppy.id!}
           puppyName={puppy.name}

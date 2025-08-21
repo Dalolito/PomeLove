@@ -7,6 +7,7 @@ import { Category } from './Category';
  * @property {string} name - Name of the puppy (required)
  * @property {string} description - Detailed description of the puppy (required)
  * @property {Date} birthDate - Date when the puppy was born (required)
+ * @property {string} gender - Gender of the puppy: 'male' or 'female' (required)
  * @property {MediaFile[]} media - Array of media files (images/videos) of the puppy
  * @property {string | null} fatherImage - URL/path to the father's image (optional)
  * @property {string | null} motherImage - URL/path to the mother's image (optional)
@@ -20,6 +21,7 @@ export interface Puppy {
   name: string;
   description: string;
   birthDate: Date;
+  gender: 'male' | 'female';
   media: MediaFile[];
   fatherImage: string | null;
   motherImage: string | null;
@@ -33,6 +35,7 @@ export interface CreatePuppyData {
   name: string;
   description: string;
   birthDate: string;
+  gender: 'male' | 'female';
   categoryId: string;
   media: MediaFile[];
   fatherImage: string | null;
@@ -44,6 +47,7 @@ export interface UpdatePuppyData {
   name?: string;
   description?: string;
   birthDate?: string;
+  gender?: 'male' | 'female';
   categoryId?: string;
   media?: MediaFile[];
   fatherImage?: string | null;

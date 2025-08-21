@@ -2,65 +2,58 @@
 
 import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import AdminFormUploadMediaComponent from './AdminFormUploadMediaComponent';
+import { MediaFile } from '@/application/useCases/admin/MediaUploadUseCase';
 import AdminFormBasicInfoComponent from './AdminFormBasicInfoComponent';
 import AdminFormParentsComponent from './AdminFormParentsComponent';
+import AdminFormUploadMediaComponent from './AdminFormUploadMediaComponent';
 import AdminFormActionButtonsComponent from './AdminFormActionButtonsComponent';
 import { createPuppyAction } from '@/actions/puppyActions';
-import { Dictionary } from '@/lib/types/dictionary';
-import { MediaFile } from '@/application/useCases/admin/MediaUploadUseCase';
-
-interface FormData {
-  name: string;
-  description: string;
-  birthDate: string;
-  categoryId: string;
-  media: MediaFile[];
-  fatherImage: MediaFile | null;
-  motherImage: MediaFile | null;
-}
 
 interface AdminFormComponentProps {
-  dict: Dictionary;
+  dict: any;
+  categories: { id: string; name: string }[];
   locale: string;
-  categories?: { id: string; name: string }[];
   className?: string;
 }
 
 export default function AdminFormComponent({
   dict,
+  categories,
   locale,
-  categories = [],
   className = '',
 }: AdminFormComponentProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string>('');
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<{
+    name: string;
+    description: string;
+    birthDate: string;
+    gender: 'male' | 'female';
+    categoryId: string;
+    media: MediaFile[];
+    fatherImage: MediaFile | null;
+    motherImage: MediaFile | null;
+  }>({
     name: '',
     description: '',
     birthDate: '',
-    categoryId: '1',
+    gender: 'male',
+    categoryId: '',
     media: [],
     fatherImage: null,
     motherImage: null,
   });
 
-  const handleBasicInfoChange = useCallback(
-    (
-      field: keyof Pick<
-        FormData,
-        'name' | 'description' | 'birthDate' | 'categoryId'
-      >,
-      value: string
-    ) => {
-      setFormData(prev => ({
-        ...prev,
-        [field]: value,
-      }));
-    },
-    []
-  );
+  const handleBasicInfoChange = (
+    field: 'name' | 'description' | 'birthDate' | 'gender' | 'categoryId',
+    value: string
+  ) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
 
   const handleMediaChange = useCallback((files: MediaFile[]) => {
     setFormData(prev => ({
@@ -70,10 +63,7 @@ export default function AdminFormComponent({
   }, []);
 
   const handleParentsChange = useCallback(
-    (
-      field: keyof Pick<FormData, 'fatherImage' | 'motherImage'>,
-      value: MediaFile | null
-    ) => {
+    (field: 'fatherImage' | 'motherImage', value: MediaFile | null) => {
       setFormData(prev => ({
         ...prev,
         [field]: value,
@@ -92,6 +82,7 @@ export default function AdminFormComponent({
         name: formData.name,
         description: formData.description,
         birthDate: formData.birthDate,
+        gender: formData.gender,
         categoryId: formData.categoryId,
         media: formData.media,
         fatherImage: formData.fatherImage?.url || null,
@@ -99,7 +90,7 @@ export default function AdminFormComponent({
       });
 
       if (result.success) {
-        router.push(`/${locale}`);
+        router.push(`/${locale}/admin/puppys`);
       } else {
         const errorKey = result.error as keyof typeof dict.admin.forms.errors;
         setError(
@@ -118,7 +109,7 @@ export default function AdminFormComponent({
   };
 
   const handleCancel = () => {
-    router.push(`/${locale}`);
+    router.push(`/${locale}/admin/puppys`);
   };
 
   return (
@@ -152,6 +143,7 @@ export default function AdminFormComponent({
             name: formData.name,
             description: formData.description,
             birthDate: formData.birthDate,
+            gender: formData.gender,
             categoryId: formData.categoryId,
           }}
           categories={categories}

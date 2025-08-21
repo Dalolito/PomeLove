@@ -21,6 +21,7 @@ model Puppy {
   name        String
   description String
   birthDate   DateTime
+  gender      String   @default("male") 
   categoryId  Int
   fatherImage String?
   motherImage String?

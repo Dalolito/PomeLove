@@ -1,17 +1,18 @@
 import { Dictionary } from '@/lib/types/dictionary';
 
-interface BasicInfoData {
+interface FormData {
   name: string;
   description: string;
   birthDate: string;
+  gender: 'male' | 'female';
   categoryId: string;
 }
 
 interface AdminFormBasicInfoComponentProps {
-  data: BasicInfoData;
+  data: FormData;
   categories: { id: string; name: string }[];
   dict: Dictionary;
-  onChange: (field: keyof BasicInfoData, value: string) => void;
+  onChange: (field: keyof FormData, value: string) => void;
   className?: string;
 }
 
@@ -56,6 +57,22 @@ export default function AdminFormBasicInfoComponent({
             onChange={e => onChange('birthDate', e.target.value)}
             className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
           />
+        </div>
+
+        {/* Gender */}
+        <div>
+          <label className="mb-2 block text-sm font-medium text-gray-700">
+            {dict.admin.forms.fields.gender} *
+          </label>
+          <select
+            value={data.gender}
+            onChange={e => onChange('gender', e.target.value)}
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+          >
+            <option value="">{dict.admin.forms.placeholders.gender}</option>
+            <option value="male">{dict.admin.forms.gender.male}</option>
+            <option value="female">{dict.admin.forms.gender.female}</option>
+          </select>
         </div>
 
         {/* Category */}

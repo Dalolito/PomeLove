@@ -49,6 +49,7 @@
         "name": "Name",
         "description": "Description",
         "birthDate": "Birth Date",
+        "gender": "Gender",
         "category": "Category",
         "fatherImage": "Father Image",
         "motherImage": "Mother Image",
@@ -57,7 +58,12 @@
       "placeholders": {
         "name": "Enter the puppy's name",
         "description": "Describe the puppy's characteristics",
+        "gender": "Select gender",
         "category": "Select a category"
+      },
+      "gender": {
+        "male": "Male",
+        "female": "Female"
       },
       "sections": {
         "parents": "Parent Lineage",
@@ -97,6 +103,7 @@
         "image": "Image",
         "name": "Name",
         "category": "Category",
+        "gender": "Gender",
         "birthDate": "Birth Date",
         "description": "Description",
         "available": "Available",

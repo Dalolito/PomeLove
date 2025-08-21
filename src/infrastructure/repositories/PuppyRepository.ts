@@ -15,6 +15,7 @@ export class PuppyRepository implements IPuppyRepository {
           name: data.name,
           description: data.description,
           birthDate: new Date(data.birthDate),
+          gender: data.gender,
           categoryId: parseInt(data.categoryId),
           fatherImage: data.fatherImage,
           motherImage: data.motherImage,
@@ -105,6 +106,7 @@ export class PuppyRepository implements IPuppyRepository {
         name: data.name,
         description: data.description,
         birthDate: data.birthDate ? new Date(data.birthDate) : undefined,
+        gender: data.gender,
         categoryId: data.categoryId ? parseInt(data.categoryId) : undefined,
         fatherImage: data.fatherImage,
         motherImage: data.motherImage,
@@ -130,6 +132,7 @@ export class PuppyRepository implements IPuppyRepository {
     name: string;
     description: string;
     birthDate: Date;
+    gender: string;
     fatherImage: string | null;
     motherImage: string | null;
     available: boolean;
@@ -157,6 +160,7 @@ export class PuppyRepository implements IPuppyRepository {
       name: puppy.name,
       description: puppy.description,
       birthDate: puppy.birthDate,
+      gender: puppy.gender as 'male' | 'female',
       fatherImage: puppy.fatherImage,
       motherImage: puppy.motherImage,
       available: puppy.available,
