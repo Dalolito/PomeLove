@@ -92,5 +92,50 @@ export interface Dictionary {
         };
       };
     };
+    table: {
+      title: string;
+      subtitle: string;
+      loading: string;
+      empty: {
+        title: string;
+        description: string;
+        button: string;
+      };
+      headers: {
+        image: string;
+        name: string;
+        category: string;
+        birthDate: string;
+        description: string;
+        media: string;
+        actions: string;
+      };
+      actions: {
+        newPet: string;
+        view: string;
+        edit: string;
+        delete: string;
+      };
+    };
+    utils: {
+      age: {
+        lessThanMonth: string;
+        month: string;
+        months: string;
+        year: string;
+        yearAndMonth: string;
+        yearAndMonths: string;
+        years: string;
+        yearsAndMonth: string;
+        yearsAndMonths: string;
+      };
+      fileSize: {
+        zeroBytes: string;
+        bytes: string;
+        kb: string;
+        mb: string;
+        gb: string;
+      };
+    };
   };
 }

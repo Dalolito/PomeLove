@@ -1,6 +1,6 @@
 'use server';
 
-import { createPuppyUseCase } from '@/infrastructure/config/dependencies';
+import { createPuppyUseCase, getAllPuppiesUseCase } from '@/infrastructure/config/dependencies';
 import { CreatePuppyData } from '@/domain/entities/Puppy';
 
 export async function createPuppyAction(data: CreatePuppyData) {
@@ -13,5 +13,15 @@ export async function createPuppyAction(data: CreatePuppyData) {
   } catch (error) {
     console.error('Error creating puppy:', error);
     return { success: false, error: 'CREATE_PUPPY_FAILED' };
+  }
+}
+
+export async function getAllPuppiesAction() {
+  try {
+    const result = await getAllPuppiesUseCase.execute();
+    return result;
+  } catch (error) {
+    console.error('Error getting all puppies:', error);
+    return { success: false, error: 'GET_PUPPIES_FAILED' };
   }
 }

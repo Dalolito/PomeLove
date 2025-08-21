@@ -83,6 +83,51 @@
           "maxFiles": "Máximo {count} archivos permitidos"
         }
       }
+    },
+    "table": {
+      "title": "Lista de Mascotas",
+      "subtitle": "{count} {count, plural, one {mascota} other {mascotas}} registradas",
+      "loading": "Cargando mascotas...",
+      "empty": {
+        "title": "No hay mascotas registradas",
+        "description": "Comienza agregando tu primera mascota al sistema",
+        "button": "Crear Primera Mascota"
+      },
+      "headers": {
+        "image": "Imagen",
+        "name": "Nombre",
+        "category": "Categoría",
+        "birthDate": "Fecha Nacimiento",
+        "description": "Descripción",
+        "media": "Media",
+        "actions": "Acciones"
+      },
+      "actions": {
+        "newPet": "Nueva Mascota",
+        "view": "Ver",
+        "edit": "Editar",
+        "delete": "Eliminar"
+      }
+    },
+    "utils": {
+      "age": {
+        "lessThanMonth": "Menos de 1 mes",
+        "month": "1 mes",
+        "months": "{count} meses",
+        "year": "1 año",
+        "yearAndMonth": "1 año y 1 mes",
+        "yearAndMonths": "1 año y {count} meses",
+        "years": "{count} años",
+        "yearsAndMonth": "{years} años y 1 mes",
+        "yearsAndMonths": "{years} años y {months} meses"
+      },
+      "fileSize": {
+        "zeroBytes": "0 Bytes",
+        "bytes": "Bytes",
+        "kb": "KB",
+        "mb": "MB",
+        "gb": "GB"
+      }
     }
   }
 }

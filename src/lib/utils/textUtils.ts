@@ -9,10 +9,17 @@ export const replaceText = (
   return result;
 };
 
-export const formatFileSize = (bytes: number): string => {
-  if (bytes === 0) return '0 Bytes';
+import { Dictionary } from '@/lib/types/dictionary';
+
+export const formatFileSize = (bytes: number, dict: Dictionary): string => {
+  if (bytes === 0) return dict.admin.utils.fileSize.zeroBytes;
   const k = 1024;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const sizes = [
+    dict.admin.utils.fileSize.bytes,
+    dict.admin.utils.fileSize.kb,
+    dict.admin.utils.fileSize.mb,
+    dict.admin.utils.fileSize.gb
+  ];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 };

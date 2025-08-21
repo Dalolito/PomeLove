@@ -73,7 +73,7 @@ export default function FileGridComponent({
               </p>
               <p className="text-xs text-gray-500">
                 {dict.admin.media.upload.fileTypes[file.type]} •{' '}
-                {formatFileSize(file.size)}
+                {formatFileSize(file.size, dict)}
               </p>
             </div>
 

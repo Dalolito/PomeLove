@@ -3,6 +3,7 @@ import { PuppyRepository } from '@/domain/repositories/PuppyRepository';
 import { CategoryRepository as CategoryRepositoryImpl } from '@/infrastructure/repositories/CategoryRepository';
 import { PuppyRepository as PuppyRepositoryImpl } from '@/infrastructure/repositories/PuppyRepository';
 import { CreatePuppyUseCase } from '@/application/useCases/admin/CreatePuppyUseCase';
+import { GetAllPuppiesUseCase } from '@/application/useCases/admin/GetAllPuppiesUseCase';
 
 // Repository instances
 export const categoryRepository: CategoryRepository =
@@ -11,3 +12,4 @@ export const puppyRepository: PuppyRepository = new PuppyRepositoryImpl();
 
 // Use Case instances
 export const createPuppyUseCase = new CreatePuppyUseCase(puppyRepository);
+export const getAllPuppiesUseCase = new GetAllPuppiesUseCase(puppyRepository);
