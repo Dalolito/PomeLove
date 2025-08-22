@@ -1,4 +1,5 @@
 import AdminFormComponent from '@/components/admin/forms/AdminFormComponent';
+import { getAllCategoriesAction } from '@/actions/categoryActions';
 
 async function getDictionary(locale: string) {
   try {
@@ -20,6 +21,10 @@ export default async function CreatePuppyPage({
   const { locale } = await params;
   const dict = await getDictionary(locale);
 
+  // Fetch categories for the form
+  const categoriesResult = await getAllCategoriesAction();
+  const categories = categoriesResult.success ? categoriesResult.data : [];
+
   return (
     <div className="w-full">
       {/* Header Section*/}
@@ -33,7 +38,7 @@ export default async function CreatePuppyPage({
       </div>
 
       {/* Form Section */}
-      <AdminFormComponent dict={dict} locale={locale} />
+      <AdminFormComponent dict={dict} categories={categories} locale={locale} />
     </div>
   );
 }

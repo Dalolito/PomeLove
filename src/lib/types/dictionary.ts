@@ -49,6 +49,7 @@ export interface Dictionary {
         name: string;
         description: string;
         birthDate: string;
+        gender: string;
         category: string;
         fatherImage: string;
         motherImage: string;
@@ -57,7 +58,12 @@ export interface Dictionary {
       placeholders: {
         name: string;
         description: string;
+        gender: string;
         category: string;
+      };
+      gender: {
+        male: string;
+        female: string;
       };
       sections: {
         parents: string;
@@ -90,6 +96,56 @@ export interface Dictionary {
           uploadFailed?: string;
           [key: string]: string | undefined;
         };
+      };
+    };
+    table: {
+      title: string;
+      subtitle: string;
+      loading: string;
+      empty: {
+        title: string;
+        description: string;
+        button: string;
+      };
+      headers: {
+        image: string;
+        name: string;
+        category: string;
+        gender: string;
+        birthDate: string;
+        description: string;
+        available: string;
+        actions: string;
+      };
+      actions: {
+        newPet: string;
+        view: string;
+        edit: string;
+        delete: string;
+      };
+      status: {
+        available: string;
+        unavailable: string;
+      };
+    };
+    utils: {
+      age: {
+        lessThanMonth: string;
+        month: string;
+        months: string;
+        year: string;
+        yearAndMonth: string;
+        yearAndMonths: string;
+        years: string;
+        yearsAndMonth: string;
+        yearsAndMonths: string;
+      };
+      fileSize: {
+        zeroBytes: string;
+        bytes: string;
+        kb: string;
+        mb: string;
+        gb: string;
       };
     };
   };

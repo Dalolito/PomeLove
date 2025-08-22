@@ -30,6 +30,14 @@ export function useFileUpload({
     [onMediaChange]
   );
 
+  const setInitialFiles = useCallback(
+    (initialFiles: MediaFile[]) => {
+      setFiles(initialFiles);
+      notifyParent(initialFiles);
+    },
+    [notifyParent]
+  );
+
   const addFile = useCallback((file: File): MediaFile => {
     const fileId = Math.random().toString(36).substr(2, 9);
 
@@ -152,5 +160,6 @@ export function useFileUpload({
     handleFiles,
     removeFile,
     clearErrors,
+    setInitialFiles,
   };
 }

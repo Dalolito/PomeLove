@@ -1,17 +1,23 @@
-import { Dictionary } from '@/lib/types/dictionary';
+'use client';
 
-interface BasicInfoData {
+import { Dictionary } from '@/lib/types/dictionary';
+import FormInputComponent from '@/components/ui/FormInputComponent';
+import FormSelectComponent from '@/components/ui/FormSelectComponent';
+import FormTextareaComponent from '@/components/ui/FormTextareaComponent';
+
+interface FormData {
   name: string;
   description: string;
   birthDate: string;
+  gender: 'male' | 'female';
   categoryId: string;
 }
 
 interface AdminFormBasicInfoComponentProps {
-  data: BasicInfoData;
+  data: FormData;
   categories: { id: string; name: string }[];
   dict: Dictionary;
-  onChange: (field: keyof BasicInfoData, value: string) => void;
+  onChange: (field: keyof FormData, value: string) => void;
   className?: string;
 }
 
@@ -22,6 +28,16 @@ export default function AdminFormBasicInfoComponent({
   onChange,
   className = '',
 }: AdminFormBasicInfoComponentProps) {
+  const genderOptions = [
+    { value: 'male', label: dict.admin.forms.gender.male },
+    { value: 'female', label: dict.admin.forms.gender.female },
+  ];
+
+  const categoryOptions = categories.map(category => ({
+    value: category.id,
+    label: category.name,
+  }));
+
   return (
     <div
       className={`rounded-lg border border-gray-200 bg-white p-6 shadow-sm ${className}`}
@@ -31,64 +47,49 @@ export default function AdminFormBasicInfoComponent({
       </h3>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {/* Name */}
-        <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700">
-            {dict.admin.forms.fields.name} *
-          </label>
-          <input
-            type="text"
-            value={data.name}
-            onChange={e => onChange('name', e.target.value)}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
-            placeholder={dict.admin.forms.placeholders.name}
-          />
-        </div>
+        <FormInputComponent
+          type="text"
+          value={data.name}
+          onChange={value => onChange('name', value)}
+          label={dict.admin.forms.fields.name}
+          placeholder={dict.admin.forms.placeholders.name}
+          required
+        />
 
-        {/* Birth Date */}
-        <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700">
-            {dict.admin.forms.fields.birthDate} *
-          </label>
-          <input
-            type="date"
-            value={data.birthDate}
-            onChange={e => onChange('birthDate', e.target.value)}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
+        <FormInputComponent
+          type="date"
+          value={data.birthDate}
+          onChange={value => onChange('birthDate', value)}
+          label={dict.admin.forms.fields.birthDate}
+          required
+        />
 
-        {/* Category */}
-        <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700">
-            {dict.admin.forms.fields.category} *
-          </label>
-          <select
-            value={data.categoryId}
-            onChange={e => onChange('categoryId', e.target.value)}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
-          >
-            <option value="">{dict.admin.forms.placeholders.category}</option>
-            {categories.map(category => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </div>
+        <FormSelectComponent
+          value={data.gender}
+          onChange={value => onChange('gender', value)}
+          label={dict.admin.forms.fields.gender}
+          placeholder={dict.admin.forms.placeholders.gender}
+          options={genderOptions}
+          required
+        />
+
+        <FormSelectComponent
+          value={data.categoryId}
+          onChange={value => onChange('categoryId', value)}
+          label={dict.admin.forms.fields.category}
+          placeholder={dict.admin.forms.placeholders.category}
+          options={categoryOptions}
+          required
+        />
       </div>
 
-      {/* Description */}
       <div className="mt-4">
-        <label className="mb-2 block text-sm font-medium text-gray-700">
-          {dict.admin.forms.fields.description} *
-        </label>
-        <textarea
+        <FormTextareaComponent
           value={data.description}
-          onChange={e => onChange('description', e.target.value)}
-          rows={4}
-          className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+          onChange={value => onChange('description', value)}
+          label={dict.admin.forms.fields.description}
           placeholder={dict.admin.forms.placeholders.description}
+          required
         />
       </div>
     </div>

@@ -49,6 +49,7 @@
         "name": "Name",
         "description": "Description",
         "birthDate": "Birth Date",
+        "gender": "Gender",
         "category": "Category",
         "fatherImage": "Father Image",
         "motherImage": "Mother Image",
@@ -57,11 +58,22 @@
       "placeholders": {
         "name": "Enter the puppy's name",
         "description": "Describe the puppy's characteristics",
+        "gender": "Select gender",
         "category": "Select a category"
+      },
+      "gender": {
+        "male": "Male",
+        "female": "Female"
       },
       "sections": {
         "parents": "Parent Lineage",
         "parentsDescription": "Upload a photo of the puppy's father and mother (optional)"
+      },
+      "errors": {
+        "createFailed": "Error creating pet",
+        "updateFailed": "Error updating pet",
+        "deleteFailed": "Error deleting pet",
+        "validationFailed": "Validation error"
       }
     },
     "media": {
@@ -82,6 +94,61 @@
           "fileType": "File type not supported",
           "maxFiles": "Maximum {count} files allowed"
         }
+      }
+    },
+    "table": {
+      "title": "Pets List",
+      "subtitle": "{count} {count, plural, one {pet} other {pets}} registered",
+      "loading": "Loading pets...",
+      "empty": {
+        "title": "No pets registered",
+        "description": "Start by adding your first pet to the system",
+        "button": "Create First Pet"
+      },
+      "headers": {
+        "image": "Image",
+        "name": "Name",
+        "category": "Category",
+        "gender": "Gender",
+        "birthDate": "Birth Date",
+        "description": "Description",
+        "available": "Available",
+        "actions": "Actions"
+      },
+      "actions": {
+        "newPet": "New Pet",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "deleteConfirmation": {
+        "title": "Confirm Delete",
+        "message": "Are you sure you want to delete",
+        "warning": "This action cannot be undone.",
+        "deleting": "Deleting..."
+      },
+      "status": {
+        "available": "Available",
+        "unavailable": "Unavailable"
+      }
+    },
+    "utils": {
+      "age": {
+        "lessThanMonth": "Less than 1 month",
+        "month": "1 month",
+        "months": "{count} months",
+        "year": "1 year",
+        "yearAndMonth": "1 year and 1 month",
+        "yearAndMonths": "1 year and {count} months",
+        "years": "{count} years",
+        "yearsAndMonth": "{years} years and 1 month",
+        "yearsAndMonths": "{years} years and {months} months"
+      },
+      "fileSize": {
+        "zeroBytes": "0 Bytes",
+        "bytes": "Bytes",
+        "kb": "KB",
+        "mb": "MB",
+        "gb": "GB"
       }
     }
   }

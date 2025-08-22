@@ -6,6 +6,15 @@
   }
 }
 
+@layer utilities {
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
 /* Test para verificar que Tailwind funciona */
 .test-tailwind {
   @apply rounded-lg bg-red-500 p-4 text-white;

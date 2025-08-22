@@ -1,30 +1,34 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { MediaFile } from '@/application/useCases/admin/MediaUploadUseCase';
+import { Puppy } from '@/domain/entities/Puppy';
 import AdminFormBasicInfoComponent from './AdminFormBasicInfoComponent';
 import AdminFormParentsComponent from './AdminFormParentsComponent';
 import AdminFormUploadMediaComponent from './AdminFormUploadMediaComponent';
 import AdminFormActionButtonsComponent from './AdminFormActionButtonsComponent';
-import { createPuppyAction } from '@/actions/puppyActions';
+import { updatePuppyAction } from '@/actions/puppyActions';
 
-interface AdminFormComponentProps {
+interface AdminEditFormComponentProps {
+  puppy: Puppy;
   dict: any;
   categories: { id: string; name: string }[];
   locale: string;
   className?: string;
 }
 
-export default function AdminFormComponent({
+export default function AdminEditFormComponent({
+  puppy,
   dict,
   categories,
   locale,
   className = '',
-}: AdminFormComponentProps) {
+}: AdminEditFormComponentProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string>('');
+
   const [formData, setFormData] = useState<{
     name: string;
     description: string;
@@ -34,6 +38,7 @@ export default function AdminFormComponent({
     media: MediaFile[];
     fatherImage: MediaFile | null;
     motherImage: MediaFile | null;
+    available: boolean;
   }>({
     name: '',
     description: '',
@@ -43,7 +48,50 @@ export default function AdminFormComponent({
     media: [],
     fatherImage: null,
     motherImage: null,
+    available: true,
   });
+
+  useEffect(() => {
+    if (puppy) {
+      const birthDateString = new Date(puppy.birthDate)
+        .toISOString()
+        .split('T')[0];
+
+      const fatherImageFile: MediaFile | null = puppy.fatherImage
+        ? {
+            id: 'father-' + Math.random().toString(36).substr(2, 9),
+            url: puppy.fatherImage,
+            type: 'image',
+            name: 'Father Image',
+            size: 0,
+            isUploaded: true,
+          }
+        : null;
+
+      const motherImageFile: MediaFile | null = puppy.motherImage
+        ? {
+            id: 'mother-' + Math.random().toString(36).substr(2, 9),
+            url: puppy.motherImage,
+            type: 'image',
+            name: 'Mother Image',
+            size: 0,
+            isUploaded: true,
+          }
+        : null;
+
+      setFormData({
+        name: puppy.name,
+        description: puppy.description,
+        birthDate: birthDateString,
+        gender: puppy.gender,
+        categoryId: puppy.category.id,
+        media: puppy.media || [],
+        fatherImage: fatherImageFile,
+        motherImage: motherImageFile,
+        available: puppy.available,
+      });
+    }
+  }, [puppy]);
 
   const handleBasicInfoChange = (
     field: 'name' | 'description' | 'birthDate' | 'gender' | 'categoryId',
@@ -78,7 +126,7 @@ export default function AdminFormComponent({
     setError('');
 
     try {
-      const result = await createPuppyAction({
+      const result = await updatePuppyAction(puppy.id!, {
         name: formData.name,
         description: formData.description,
         birthDate: formData.birthDate,
@@ -87,6 +135,7 @@ export default function AdminFormComponent({
         media: formData.media,
         fatherImage: formData.fatherImage?.url || null,
         motherImage: formData.motherImage?.url || null,
+        available: formData.available,
       });
 
       if (result.success) {
@@ -95,13 +144,14 @@ export default function AdminFormComponent({
         const errorKey = result.error as keyof typeof dict.admin.forms.errors;
         setError(
           dict.admin.forms.errors?.[errorKey] ||
-            dict.admin.forms.errors?.createFailed ||
-            'Error al crear la mascota'
+            dict.admin.forms.errors?.updateFailed ||
+            'Error al actualizar la mascota'
         );
       }
     } catch {
       setError(
-        dict.admin.forms.errors?.createFailed || 'Error al crear la mascota'
+        dict.admin.forms.errors?.updateFailed ||
+          'Error al actualizar la mascota'
       );
     } finally {
       setIsSubmitting(false);
@@ -156,6 +206,7 @@ export default function AdminFormComponent({
             dict={dict}
             maxFiles={10}
             maxFileSize={50}
+            initialFiles={formData.media}
             onMediaChange={handleMediaChange}
           />
         </div>
@@ -168,6 +219,28 @@ export default function AdminFormComponent({
           dict={dict}
           onChange={handleParentsChange}
         />
+
+        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+          <h3 className="mb-4 text-lg font-semibold text-gray-800">
+            {dict.admin.forms.fields?.availability || 'Availability'}
+          </h3>
+          <label className="flex items-center gap-3">
+            <input
+              type="checkbox"
+              checked={formData.available}
+              onChange={e =>
+                setFormData(prev => ({
+                  ...prev,
+                  available: e.target.checked,
+                }))
+              }
+              className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+            />
+            <span className="text-sm font-medium text-gray-700">
+              {dict.admin.table.status.available}
+            </span>
+          </label>
+        </div>
 
         <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
           <AdminFormActionButtonsComponent
