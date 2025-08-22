@@ -1,8 +1,5 @@
-'use client';
-
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import AdminPuppiesTableElementComponent from './AdminPuppiesTableElementComponent';
+import AdminPuppiesTableRowComponent from './AdminPuppiesTableRowComponent';
+import PrimaryButtonComponent from '@/components/ui/PrimaryButtonComponent';
 import { Dictionary } from '@/lib/types/dictionary';
 import { Puppy } from '@/domain/entities/Puppy';
 import { replaceText } from '@/lib/utils/textUtils';
@@ -22,29 +19,6 @@ export default function AdminPuppiesTableComponent({
   loading = false,
   className = '',
 }: AdminPuppiesTableComponentProps) {
-  const router = useRouter();
-  const [deletingId, setDeletingId] = useState<string>('');
-
-  const handleView = (id: string) => {
-    router.push(`/${locale}/admin/puppys/${id}`);
-  };
-
-  const handleEdit = (id: string) => {
-    router.push(`/${locale}/admin/puppys/${id}/edit`);
-  };
-
-  const handleDelete = async (id: string) => {
-    setDeletingId(id);
-    try {
-      // TODO: Implementar delete action
-      console.log('Delete puppy:', id);
-      // await deletePuppyAction(id);
-    } catch (error) {
-      console.error('Error deleting puppy:', error);
-    } finally {
-      setDeletingId('');
-    }
-  };
 
   if (loading) {
     return (
@@ -70,12 +44,12 @@ export default function AdminPuppiesTableComponent({
           <p className="mb-6 text-center text-gray-600">
             {dict.admin.table.empty.description}
           </p>
-          <button
-            onClick={() => router.push(`/${locale}/admin/puppys/create`)}
-            className="rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+          <PrimaryButtonComponent
+            href={`/${locale}/admin/puppys/create`}
+            className="rounded-lg"
           >
             {dict.admin.table.empty.button}
-          </button>
+          </PrimaryButtonComponent>
         </div>
       </div>
     );
@@ -94,12 +68,12 @@ export default function AdminPuppiesTableComponent({
               {replaceText(dict.admin.table.subtitle, { count: puppies.length })}
             </p>
           </div>
-          <button
-            onClick={() => router.push(`/${locale}/admin/puppys/create`)}
-            className="w-full rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-600 sm:w-auto"
+          <PrimaryButtonComponent
+            href={`/${locale}/admin/puppys/create`}
+            className="w-full sm:w-auto"
           >
             + {dict.admin.table.actions.newPet}
-          </button>
+          </PrimaryButtonComponent>
         </div>
       </div>
 
@@ -137,15 +111,11 @@ export default function AdminPuppiesTableComponent({
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
               {puppies.map((puppy) => (
-                <AdminPuppiesTableElementComponent
+                <AdminPuppiesTableRowComponent
                   key={puppy.id}
                   puppy={puppy}
                   dict={dict}
                   locale={locale}
-                  onView={handleView}
-                  onEdit={handleEdit}
-                  onDelete={handleDelete}
-                  isDeleting={deletingId === puppy.id}
                 />
               ))}
             </tbody>

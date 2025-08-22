@@ -44,6 +44,7 @@
       "edit": "Editar",
       "delete": "Eliminar",
       "description": "Agrega una nueva mascota al sistema",
+      "editDescription": "Actualiza la información de esta mascota",
       "basicInfo": "Información Básica",
       "fields": {
         "name": "Nombre",
@@ -53,7 +54,8 @@
         "category": "Categoría",
         "fatherImage": "Imagen del Padre",
         "motherImage": "Imagen de la Madre",
-        "media": "Archivos Multimedia"
+        "media": "Archivos Multimedia",
+        "availability": "Disponibilidad"
       },
       "placeholders": {
         "name": "Ingresa el nombre del cachorro",
@@ -68,6 +70,12 @@
       "sections": {
         "parents": "Linaje de los Padres",
         "parentsDescription": "Sube una foto del padre y madre del cachorro (opcional)"
+      },
+      "errors": {
+        "createFailed": "Error al crear la mascota",
+        "updateFailed": "Error al actualizar la mascota",
+        "deleteFailed": "Error al eliminar la mascota",
+        "validationFailed": "Error de validación"
       }
     },
     "media": {
@@ -79,6 +87,7 @@
         "maxFilesText": "Máximo {count} archivos permitidos",
         "uploadedFiles": "Archivos Subidos ({current}/{max})",
         "removeFile": "Eliminar archivo",
+        "uploading": "Subiendo...",
         "fileTypes": {
           "image": "Imagen",
           "video": "Video"
@@ -86,7 +95,8 @@
         "errors": {
           "fileSize": "El archivo debe ser menor a {size}MB",
           "fileType": "Tipo de archivo no soportado",
-          "maxFiles": "Máximo {count} archivos permitidos"
+          "maxFiles": "Máximo {count} archivos permitidos",
+          "uploadFailed": "Error al subir el archivo"
         }
       }
     },
@@ -111,9 +121,14 @@
       },
       "actions": {
         "newPet": "Nueva Mascota",
-        "view": "Ver",
         "edit": "Editar",
         "delete": "Eliminar"
+      },
+      "deleteConfirmation": {
+        "title": "Confirmar Eliminación",
+        "message": "¿Estás seguro de que quieres eliminar",
+        "warning": "Esta acción no se puede deshacer.",
+        "deleting": "Eliminando..."
       },
       "status": {
         "available": "Disponible",

@@ -1,14 +1,16 @@
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Dictionary } from '@/lib/types/dictionary';
+import DeleteConfirmationModal from '@/components/ui/DeleteConfirmationModal';
+import { deletePuppyAction } from '@/actions/puppyActions';
 
 interface AdminPuppiesTableButtonsProps {
   puppyId: string;
   puppyName: string;
   dict: Dictionary;
   locale: string;
-  onView?: (id: string) => void;
-  onEdit?: (id: string) => void;
-  onDelete?: (id: string) => void;
-  isDeleting?: boolean;
   className?: string;
 }
 
@@ -17,38 +19,42 @@ export default function AdminPuppiesTableButtonsComponent({
   puppyName,
   dict,
   locale,
-  onView,
-  onEdit,
-  onDelete,
-  isDeleting = false,
   className = '',
 }: AdminPuppiesTableButtonsProps) {
-  const handleView = () => {
-    onView?.(puppyId);
-  };
+  const router = useRouter();
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const handleEdit = () => {
-    onEdit?.(puppyId);
+    router.push(`/${locale}/admin/puppys/${puppyId}/edit`);
   };
 
-  const handleDelete = () => {
-    if (window.confirm(`¿Estás seguro de eliminar a ${puppyName}?`)) {
-      onDelete?.(puppyId);
+  const handleDeleteClick = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    setIsDeleting(true);
+    try {
+      const result = await deletePuppyAction(puppyId);
+      if (result.success) {
+        setShowDeleteModal(false);
+      } else {
+        console.error('Error deleting puppy:', result.error);
+      }
+    } catch (error) {
+      console.error('Error deleting puppy:', error);
+    } finally {
+      setIsDeleting(false);
     }
+  };
+
+  const handleDeleteCancel = () => {
+    setShowDeleteModal(false);
   };
 
   return (
     <div className={`flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-2 ${className}`}>
-      {/* Ver Button */}
-      <button
-        onClick={handleView}
-        className="flex h-12 w-full items-center justify-center rounded-lg border border-gray-300 text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900 sm:h-8 sm:w-8"
-        title={`Ver ${puppyName}`}
-        type="button"
-      >
-        <span className="text-base sm:text-sm">👁️</span>
-      </button>
-
       {/* Editar Button */}
       <button
         onClick={handleEdit}
@@ -61,7 +67,7 @@ export default function AdminPuppiesTableButtonsComponent({
 
       {/* Eliminar Button */}
       <button
-        onClick={handleDelete}
+        onClick={handleDeleteClick}
         disabled={isDeleting}
         className="flex h-12 w-full items-center justify-center rounded-lg border border-red-300 text-red-600 transition-colors hover:bg-red-50 hover:text-red-900 disabled:cursor-not-allowed disabled:opacity-50 sm:h-8 sm:w-8"
         title={`Eliminar ${puppyName}`}
@@ -73,6 +79,15 @@ export default function AdminPuppiesTableButtonsComponent({
           <span className="text-base sm:text-sm">🗑️</span>
         )}
       </button>
+
+      <DeleteConfirmationModal
+        isOpen={showDeleteModal}
+        onClose={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        puppyName={puppyName}
+        dict={dict}
+        isLoading={isDeleting}
+      />
     </div>
   );
 }

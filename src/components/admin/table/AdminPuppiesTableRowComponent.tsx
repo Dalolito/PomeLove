@@ -1,29 +1,24 @@
+'use client';
+
 import AdminPuppiesTableButtonsComponent from './AdminPuppiesTableButtonsComponent';
+import PuppyImageComponent from '@/components/ui/PuppyImageComponent';
 import { Dictionary } from '@/lib/types/dictionary';
 import { Puppy } from '@/domain/entities/Puppy';
 import { calculatePuppyAgeUtil } from '@/lib/utils/calculatePuppyAgeUtil';
 
-interface AdminPuppiesTableElementProps {
+interface AdminPuppiesTableRowProps {
   puppy: Puppy;
   dict: Dictionary;
   locale: string;
-  onView?: (id: string) => void;
-  onEdit?: (id: string) => void;
-  onDelete?: (id: string) => void;
-  isDeleting?: boolean;
   className?: string;
 }
 
-export default function AdminPuppiesTableElementComponent({
+export default function AdminPuppiesTableRowComponent({
   puppy,
   dict,
   locale,
-  onView,
-  onEdit,
-  onDelete,
-  isDeleting = false,
   className = '',
-}: AdminPuppiesTableElementProps) {
+}: AdminPuppiesTableRowProps) {
   const formatDate = (date: Date, localeParam: string): string => {
     return new Date(date).toLocaleDateString(localeParam === 'es' ? 'es-ES' : 'en-US', {
       year: 'numeric',
@@ -46,17 +41,10 @@ export default function AdminPuppiesTableElementComponent({
     <tr className={`border-b border-gray-200 hover:bg-gray-50 ${className}`}>
       <td className="px-2 py-3 sm:px-4">
         <div className="h-16 w-16 overflow-hidden rounded-lg bg-gray-100 sm:h-20 sm:w-20">
-          <img
+          <PuppyImageComponent
             src={getMainImage()}
             alt={puppy.name}
             className="h-full w-full object-cover"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              if (target.src !== '/placeholder-puppy.svg') {
-                target.src = '/placeholder-puppy.svg';
-              }
-            }}
-            loading="lazy"
           />
         </div>
       </td>
@@ -66,7 +54,6 @@ export default function AdminPuppiesTableElementComponent({
         <div className="text-sm text-gray-500">
           {calculatePuppyAgeUtil(puppy.birthDate, dict)}
         </div>
-        {/* Mobile indicator for hidden info */}
         <div className="mt-1 flex items-center gap-2 text-xs text-gray-400 sm:hidden">
           <span>{puppy.category.name}</span>
           <span>•</span>
@@ -114,10 +101,6 @@ export default function AdminPuppiesTableElementComponent({
           puppyName={puppy.name}
           dict={dict}
           locale={locale}
-          onView={onView}
-          onEdit={onEdit}
-          onDelete={onDelete}
-          isDeleting={isDeleting}
         />
       </td>
     </tr>

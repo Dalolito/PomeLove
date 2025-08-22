@@ -1,16 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MediaFile } from '@/application/useCases/admin/MediaUploadUseCase';
 import { useFileUpload } from '@/hooks/useFileUpload';
 import UploadAreaComponent from '@/components/admin/forms/UploadAreaComponent';
 import FileGridComponent from '@/components/admin/forms/FileGridComponent';
 import ErrorMessagesComponent from '@/components/admin/forms/ErrorMessagesComponent';
 
+import { Dictionary } from '@/lib/types/dictionary';
+
 interface UploadMediaComponentProps {
-  dict: any;
+  dict: Dictionary;
   maxFiles?: number;
   maxFileSize?: number;
+  initialFiles?: MediaFile[];
   onMediaChange?: (files: MediaFile[]) => void;
   className?: string;
 }
@@ -19,17 +22,31 @@ export default function UploadMediaComponent({
   dict,
   maxFiles = 10,
   maxFileSize = 50,
+  initialFiles = [],
   onMediaChange,
-  className = '',
+  className = ''
 }: UploadMediaComponentProps) {
   const [isDragOver, setIsDragOver] = useState(false);
+  
+  const {
+    files,
+    errors,
+    uploadingFiles,
+    handleFiles,
+    removeFile,
+    setInitialFiles
+  } = useFileUpload({
+    maxFiles,
+    maxFileSize,
+    onMediaChange
+  });
 
-  const { files, errors, uploadingFiles, handleFiles, removeFile } =
-    useFileUpload({
-      maxFiles,
-      maxFileSize,
-      onMediaChange,
-    });
+  // Set initial files when component mounts or initialFiles changes
+  useEffect(() => {
+    if (initialFiles.length > 0) {
+      setInitialFiles(initialFiles);
+    }
+  }, [initialFiles, setInitialFiles]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -57,7 +74,7 @@ export default function UploadMediaComponent({
     <div className={`space-y-4 ${className}`}>
       {/* Header */}
       <div>
-        <h3 className="mb-1 text-lg font-semibold text-gray-800">
+        <h3 className="text-lg font-semibold text-gray-800 mb-1">
           {dict.admin.media.upload.title}
         </h3>
         <p className="text-sm text-gray-600">

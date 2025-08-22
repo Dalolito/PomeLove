@@ -68,6 +68,12 @@
       "sections": {
         "parents": "Parent Lineage",
         "parentsDescription": "Upload a photo of the puppy's father and mother (optional)"
+      },
+      "errors": {
+        "createFailed": "Error creating pet",
+        "updateFailed": "Error updating pet",
+        "deleteFailed": "Error deleting pet",
+        "validationFailed": "Validation error"
       }
     },
     "media": {
@@ -111,9 +117,14 @@
       },
       "actions": {
         "newPet": "New Pet",
-        "view": "View",
         "edit": "Edit",
         "delete": "Delete"
+      },
+      "deleteConfirmation": {
+        "title": "Confirm Delete",
+        "message": "Are you sure you want to delete",
+        "warning": "This action cannot be undone.",
+        "deleting": "Deleting..."
       },
       "status": {
         "available": "Available",
