@@ -149,8 +149,11 @@ export class PuppyRepository implements IPuppyRepository {
         });
 
         const existingUrls = existingMedia.map(m => m.mediaUrl);
-        const newUrls = data.media?.filter(f => f.isUploaded && f.url).map(f => f.url) || [];
-        const mediaUrlsToDelete = existingUrls.filter(url => !newUrls.includes(url));
+        const newUrls =
+          data.media?.filter(f => f.isUploaded && f.url).map(f => f.url) || [];
+        const mediaUrlsToDelete = existingUrls.filter(
+          url => !newUrls.includes(url)
+        );
         urlsToDelete.push(...mediaUrlsToDelete);
 
         if (data.media && data.media.length > 0) {

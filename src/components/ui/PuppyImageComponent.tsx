@@ -16,7 +16,7 @@ export default function PuppyImageComponent({
       src={src}
       alt={alt}
       className={className}
-      onError={(e) => {
+      onError={e => {
         const target = e.target as HTMLImageElement;
         if (target.src !== '/placeholder-puppy.svg') {
           target.src = '/placeholder-puppy.svg';

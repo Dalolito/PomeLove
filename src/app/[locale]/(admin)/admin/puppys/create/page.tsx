@@ -20,7 +20,7 @@ export default async function CreatePuppyPage({
 }: CreatePuppyPageProps) {
   const { locale } = await params;
   const dict = await getDictionary(locale);
-  
+
   // Fetch categories for the form
   const categoriesResult = await getAllCategoriesAction();
   const categories = categoriesResult.success ? categoriesResult.data : [];
@@ -38,11 +38,7 @@ export default async function CreatePuppyPage({
       </div>
 
       {/* Form Section */}
-      <AdminFormComponent 
-        dict={dict} 
-        categories={categories}
-        locale={locale} 
-      />
+      <AdminFormComponent dict={dict} categories={categories} locale={locale} />
     </div>
   );
 }

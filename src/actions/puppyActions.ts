@@ -1,11 +1,11 @@
 'use server';
 
-import { 
-  createPuppyUseCase, 
+import {
+  createPuppyUseCase,
   getAllPuppiesUseCase,
   getPuppyByIdUseCase,
   updatePuppyUseCase,
-  deletePuppyUseCase
+  deletePuppyUseCase,
 } from '@/infrastructure/config/dependencies';
 import { CreatePuppyData, UpdatePuppyData } from '@/domain/entities/Puppy';
 import { revalidatePath } from 'next/cache';
@@ -16,10 +16,10 @@ export async function createPuppyAction(data: CreatePuppyData) {
     const puppyData = { ...data, media: uploadedMedia };
 
     const puppy = await createPuppyUseCase.execute(puppyData);
-    
+
     // Revalidar las páginas afectadas
     revalidatePath('/[locale]/admin/puppys', 'page');
-    
+
     return { success: true, data: puppy };
   } catch (error) {
     console.error('Error creating puppy:', error);
@@ -41,12 +41,12 @@ export async function updatePuppyAction(id: string, data: UpdatePuppyData) {
       id,
       ...processedData,
     });
-    
+
     // Revalidar las páginas afectadas
     revalidatePath('/[locale]/admin/puppys', 'page');
     revalidatePath(`/[locale]/admin/puppys/${id}`, 'page');
     revalidatePath(`/[locale]/admin/puppys/${id}/edit`, 'page');
-    
+
     return { success: true, data: puppy };
   } catch (error) {
     console.error('Error updating puppy:', error);
@@ -77,9 +77,9 @@ export async function getAllPuppiesAction() {
 export async function deletePuppyAction(id: string) {
   try {
     await deletePuppyUseCase.execute({ id });
-    
+
     revalidatePath('/[locale]/admin/puppys', 'page');
-    
+
     return { success: true };
   } catch (error) {
     console.error('Error deleting puppy:', error);

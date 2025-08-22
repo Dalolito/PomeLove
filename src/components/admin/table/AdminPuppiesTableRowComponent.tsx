@@ -20,11 +20,14 @@ export default function AdminPuppiesTableRowComponent({
   className = '',
 }: AdminPuppiesTableRowProps) {
   const formatDate = (date: Date, localeParam: string): string => {
-    return new Date(date).toLocaleDateString(localeParam === 'es' ? 'es-ES' : 'en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
+    return new Date(date).toLocaleDateString(
+      localeParam === 'es' ? 'es-ES' : 'en-US',
+      {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      }
+    );
   };
 
   const getMainImage = (): string => {
@@ -75,23 +78,30 @@ export default function AdminPuppiesTableRowComponent({
         </span>
       </td>
 
-      <td className="hidden px-2 py-3 text-sm text-gray-900 md:table-cell sm:px-4">
+      <td className="hidden px-2 py-3 text-sm text-gray-900 sm:px-4 md:table-cell">
         {formatDate(puppy.birthDate, locale)}
       </td>
 
-      <td className="hidden max-w-xs px-2 py-3 lg:table-cell sm:px-4">
-        <div className="truncate text-sm text-gray-900" title={puppy.description}>
+      <td className="hidden max-w-xs px-2 py-3 sm:px-4 lg:table-cell">
+        <div
+          className="truncate text-sm text-gray-900"
+          title={puppy.description}
+        >
           {puppy.description}
         </div>
       </td>
 
       <td className="px-2 py-3 text-center sm:px-4">
-        <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-          puppy.available 
-            ? 'bg-green-100 text-green-800' 
-            : 'bg-red-100 text-red-800'
-        }`}>
-          {puppy.available ? dict.admin.table.status.available : dict.admin.table.status.unavailable}
+        <span
+          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+            puppy.available
+              ? 'bg-green-100 text-green-800'
+              : 'bg-red-100 text-red-800'
+          }`}
+        >
+          {puppy.available
+            ? dict.admin.table.status.available
+            : dict.admin.table.status.unavailable}
         </span>
       </td>
 

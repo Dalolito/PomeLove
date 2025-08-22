@@ -54,7 +54,9 @@ export default function AdminPuppiesTableButtonsComponent({
   };
 
   return (
-    <div className={`flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-2 ${className}`}>
+    <div
+      className={`flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-2 ${className}`}
+    >
       {/* Editar Button */}
       <button
         onClick={handleEdit}

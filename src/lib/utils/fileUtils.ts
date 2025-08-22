@@ -5,7 +5,7 @@ export async function deleteFileFromServer(fileUrl: string): Promise<void> {
   try {
     const urlPath = new URL(fileUrl, 'http://localhost').pathname;
     const filePath = path.join(process.cwd(), 'public', urlPath);
-    
+
     await fs.access(filePath);
     await fs.unlink(filePath);
   } catch (error) {
@@ -13,7 +13,9 @@ export async function deleteFileFromServer(fileUrl: string): Promise<void> {
   }
 }
 
-export async function deleteMultipleFilesFromServer(fileUrls: string[]): Promise<void> {
+export async function deleteMultipleFilesFromServer(
+  fileUrls: string[]
+): Promise<void> {
   const deletePromises = fileUrls.map(url => deleteFileFromServer(url));
   await Promise.allSettled(deletePromises);
 }

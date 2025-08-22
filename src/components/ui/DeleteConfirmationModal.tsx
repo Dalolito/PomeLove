@@ -50,7 +50,11 @@ export default function DeleteConfirmationModal({
 
         <div className="mb-6">
           <p className="text-sm text-gray-500">
-            {dict.admin.table.deleteConfirmation?.message || 'Are you sure you want to delete'} <span className="font-medium text-gray-900">{puppyName}</span>? {dict.admin.table.deleteConfirmation?.warning || 'This action cannot be undone.'}
+            {dict.admin.table.deleteConfirmation?.message ||
+              'Are you sure you want to delete'}{' '}
+            <span className="font-medium text-gray-900">{puppyName}</span>?{' '}
+            {dict.admin.table.deleteConfirmation?.warning ||
+              'This action cannot be undone.'}
           </p>
         </div>
 

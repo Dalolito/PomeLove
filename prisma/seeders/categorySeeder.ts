@@ -6,16 +6,16 @@ interface CategoryData {
 }
 
 const categoriesData: CategoryData[] = [
-  { name: 'Golden Retriever', minPrice: 1200.00 },
-  { name: 'Labrador Retriever', minPrice: 1000.00 },
-  { name: 'German Shepherd', minPrice: 1500.00 },
-  { name: 'French Bulldog', minPrice: 3000.00 },
-  { name: 'Poodle', minPrice: 1800.00 },
-  { name: 'Beagle', minPrice: 800.00 },
-  { name: 'Rottweiler', minPrice: 2000.00 },
-  { name: 'Yorkshire Terrier', minPrice: 2500.00 },
-  { name: 'Boxer', minPrice: 1600.00 },
-  { name: 'Dachshund', minPrice: 900.00 }
+  { name: 'Golden Retriever', minPrice: 1200.0 },
+  { name: 'Labrador Retriever', minPrice: 1000.0 },
+  { name: 'German Shepherd', minPrice: 1500.0 },
+  { name: 'French Bulldog', minPrice: 3000.0 },
+  { name: 'Poodle', minPrice: 1800.0 },
+  { name: 'Beagle', minPrice: 800.0 },
+  { name: 'Rottweiler', minPrice: 2000.0 },
+  { name: 'Yorkshire Terrier', minPrice: 2500.0 },
+  { name: 'Boxer', minPrice: 1600.0 },
+  { name: 'Dachshund', minPrice: 900.0 },
 ];
 
 export async function seedCategories(prisma: PrismaClient) {
@@ -23,15 +23,15 @@ export async function seedCategories(prisma: PrismaClient) {
 
   for (const categoryData of categoriesData) {
     const existingCategory = await prisma.category.findFirst({
-      where: { name: categoryData.name }
+      where: { name: categoryData.name },
     });
 
     if (!existingCategory) {
       await prisma.category.create({
         data: {
           name: categoryData.name,
-          minPrice: categoryData.minPrice
-        }
+          minPrice: categoryData.minPrice,
+        },
       });
       categoriesCreated++;
       console.log(`  Category created: ${categoryData.name}`);

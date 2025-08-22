@@ -28,7 +28,7 @@ export default function AdminEditFormComponent({
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string>('');
-  
+
   const [formData, setFormData] = useState<{
     name: string;
     description: string;
@@ -53,9 +53,11 @@ export default function AdminEditFormComponent({
 
   useEffect(() => {
     if (puppy) {
-      const birthDateString = new Date(puppy.birthDate).toISOString().split('T')[0];
-      
-      const fatherImageFile: MediaFile | null = puppy.fatherImage 
+      const birthDateString = new Date(puppy.birthDate)
+        .toISOString()
+        .split('T')[0];
+
+      const fatherImageFile: MediaFile | null = puppy.fatherImage
         ? {
             id: 'father-' + Math.random().toString(36).substr(2, 9),
             url: puppy.fatherImage,
@@ -148,7 +150,8 @@ export default function AdminEditFormComponent({
       }
     } catch {
       setError(
-        dict.admin.forms.errors?.updateFailed || 'Error al actualizar la mascota'
+        dict.admin.forms.errors?.updateFailed ||
+          'Error al actualizar la mascota'
       );
     } finally {
       setIsSubmitting(false);
@@ -225,11 +228,13 @@ export default function AdminEditFormComponent({
             <input
               type="checkbox"
               checked={formData.available}
-              onChange={(e) => setFormData(prev => ({
-                ...prev,
-                available: e.target.checked
-              }))}
-              className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
+              onChange={e =>
+                setFormData(prev => ({
+                  ...prev,
+                  available: e.target.checked,
+                }))
+              }
+              className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
             />
             <span className="text-sm font-medium text-gray-700">
               {dict.admin.table.status.available}

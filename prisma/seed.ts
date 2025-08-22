@@ -26,7 +26,6 @@ async function main() {
     console.log(`   - Categories: ${categoriesResult.categoriesCreated}`);
     console.log(`   - Puppies: ${puppiesResult.puppiesCreated}`);
     console.log(`   - Media: ${mediaResult.mediaCreated}`);
-
   } catch (error) {
     console.error('Error during seeding:', error);
     process.exit(1);
@@ -35,8 +34,7 @@ async function main() {
   }
 }
 
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  });
+main().catch(e => {
+  console.error(e);
+  process.exit(1);
+});

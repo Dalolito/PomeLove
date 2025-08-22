@@ -24,21 +24,21 @@ export default function UploadMediaComponent({
   maxFileSize = 50,
   initialFiles = [],
   onMediaChange,
-  className = ''
+  className = '',
 }: UploadMediaComponentProps) {
   const [isDragOver, setIsDragOver] = useState(false);
-  
+
   const {
     files,
     errors,
     uploadingFiles,
     handleFiles,
     removeFile,
-    setInitialFiles
+    setInitialFiles,
   } = useFileUpload({
     maxFiles,
     maxFileSize,
-    onMediaChange
+    onMediaChange,
   });
 
   // Set initial files when component mounts or initialFiles changes
@@ -74,7 +74,7 @@ export default function UploadMediaComponent({
     <div className={`space-y-4 ${className}`}>
       {/* Header */}
       <div>
-        <h3 className="text-lg font-semibold text-gray-800 mb-1">
+        <h3 className="mb-1 text-lg font-semibold text-gray-800">
           {dict.admin.media.upload.title}
         </h3>
         <p className="text-sm text-gray-600">

@@ -14,18 +14,16 @@ async function getDictionary(locale: string) {
 }
 
 interface EditPuppyPageProps {
-  params: Promise<{ 
+  params: Promise<{
     locale: string;
     id: string;
   }>;
 }
 
-export default async function EditPuppyPage({
-  params,
-}: EditPuppyPageProps) {
+export default async function EditPuppyPage({ params }: EditPuppyPageProps) {
   const { locale, id } = await params;
   const dict = await getDictionary(locale);
-  
+
   const [puppyResult, categoriesResult] = await Promise.all([
     getPuppyByIdAction(id),
     getAllCategoriesAction(),
@@ -45,15 +43,16 @@ export default async function EditPuppyPage({
           {dict.admin.forms?.edit || 'Edit'} {puppy.name}
         </h1>
         <p className="mx-auto max-w-2xl px-4 text-lg text-gray-600">
-          {dict.admin.forms?.editDescription || 'Update the information for this pet'}
+          {dict.admin.forms?.editDescription ||
+            'Update the information for this pet'}
         </p>
       </div>
 
-      <AdminEditFormComponent 
+      <AdminEditFormComponent
         puppy={puppy}
-        dict={dict} 
+        dict={dict}
         categories={categories || []}
-        locale={locale} 
+        locale={locale}
       />
     </div>
   );

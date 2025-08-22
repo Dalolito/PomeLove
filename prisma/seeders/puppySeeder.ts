@@ -12,10 +12,38 @@ interface PuppyData {
 }
 
 const puppyNames = [
-  'Max', 'Bella', 'Charlie', 'Luna', 'Cooper', 'Lucy', 'Buddy', 'Daisy',
-  'Rocky', 'Molly', 'Bear', 'Sadie', 'Duke', 'Sophie', 'Teddy', 'Chloe',
-  'Tucker', 'Bailey', 'Oliver', 'Lola', 'Jack', 'Zoe', 'Winston', 'Ruby',
-  'Bentley', 'Penny', 'Murphy', 'Nova', 'Finn', 'Stella', 'Milo', 'Rosie'
+  'Max',
+  'Bella',
+  'Charlie',
+  'Luna',
+  'Cooper',
+  'Lucy',
+  'Buddy',
+  'Daisy',
+  'Rocky',
+  'Molly',
+  'Bear',
+  'Sadie',
+  'Duke',
+  'Sophie',
+  'Teddy',
+  'Chloe',
+  'Tucker',
+  'Bailey',
+  'Oliver',
+  'Lola',
+  'Jack',
+  'Zoe',
+  'Winston',
+  'Ruby',
+  'Bentley',
+  'Penny',
+  'Murphy',
+  'Nova',
+  'Finn',
+  'Stella',
+  'Milo',
+  'Rosie',
 ];
 
 const puppyDescriptions = [
@@ -28,7 +56,7 @@ const puppyDescriptions = [
   'Perrito gentil y paciente, excelente compañero para niños.',
   'Cachorro activo y atlético, perfecto para deportistas.',
   'Perrito cariñoso y protector, ideal para familias.',
-  'Cachorro alegre y sociable, ama hacer nuevos amigos.'
+  'Cachorro alegre y sociable, ama hacer nuevos amigos.',
 ];
 
 const fatherImages = [
@@ -36,7 +64,7 @@ const fatherImages = [
   'https://images.unsplash.com/photo-1552053831-71594a27632d?w=400&h=300&fit=crop',
   'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=300&fit=crop',
   'https://images.unsplash.com/photo-1546527868-ccb7ee7dfa6a?w=400&h=300&fit=crop',
-  'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400&h=300&fit=crop'
+  'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400&h=300&fit=crop',
 ];
 
 const motherImages = [
@@ -44,13 +72,15 @@ const motherImages = [
   'https://images.unsplash.com/photo-1558788353-f76d92427f16?w=400&h=300&fit=crop',
   'https://images.unsplash.com/photo-1583511655826-05700d52be8d?w=400&h=300&fit=crop',
   'https://images.unsplash.com/photo-1547407139-3c921a66005c?w=400&h=300&fit=crop',
-  'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400&h=300&fit=crop'
+  'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400&h=300&fit=crop',
 ];
 
 function getRandomBirthDate(): Date {
   const now = new Date();
-  const threeMonthsAgo = new Date(now.getTime() - (90 * 24 * 60 * 60 * 1000));
-  const randomTime = threeMonthsAgo.getTime() + Math.random() * (now.getTime() - threeMonthsAgo.getTime());
+  const threeMonthsAgo = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+  const randomTime =
+    threeMonthsAgo.getTime() +
+    Math.random() * (now.getTime() - threeMonthsAgo.getTime());
   return new Date(randomTime);
 }
 
@@ -58,9 +88,12 @@ function getRandomElement<T>(array: T[]): T {
   return array[Math.floor(Math.random() * array.length)];
 }
 
-function generatePuppiesData(categoriesCount: number, puppiesPerCategory: number): PuppyData[] {
+function generatePuppiesData(
+  categoriesCount: number,
+  puppiesPerCategory: number
+): PuppyData[] {
   const puppies: PuppyData[] = [];
-  
+
   for (let categoryId = 1; categoryId <= categoriesCount; categoryId++) {
     for (let i = 0; i < puppiesPerCategory; i++) {
       const puppy: PuppyData = {
@@ -71,13 +104,13 @@ function generatePuppiesData(categoriesCount: number, puppiesPerCategory: number
         categoryId: categoryId,
         fatherImage: getRandomElement(fatherImages),
         motherImage: getRandomElement(motherImages),
-        available: Math.random() > 0.3
+        available: Math.random() > 0.3,
       };
-      
+
       puppies.push(puppy);
     }
   }
-  
+
   return puppies;
 }
 
@@ -85,7 +118,7 @@ export async function seedPuppies(prisma: PrismaClient) {
   let puppiesCreated = 0;
 
   const categories = await prisma.category.findMany({
-    select: { id: true }
+    select: { id: true },
   });
 
   if (categories.length === 0) {
@@ -100,8 +133,8 @@ export async function seedPuppies(prisma: PrismaClient) {
     const existingPuppy = await prisma.puppy.findFirst({
       where: {
         name: puppyData.name,
-        categoryId: puppyData.categoryId
-      }
+        categoryId: puppyData.categoryId,
+      },
     });
 
     if (!existingPuppy) {
@@ -114,13 +147,17 @@ export async function seedPuppies(prisma: PrismaClient) {
           categoryId: puppyData.categoryId,
           fatherImage: puppyData.fatherImage,
           motherImage: puppyData.motherImage,
-          available: puppyData.available
-        }
+          available: puppyData.available,
+        },
       });
       puppiesCreated++;
-      console.log(`  Puppy created: ${puppyData.name} (Category: ${puppyData.categoryId})`);
+      console.log(
+        `  Puppy created: ${puppyData.name} (Category: ${puppyData.categoryId})`
+      );
     } else {
-      console.log(`  Puppy already exists: ${puppyData.name} in category ${puppyData.categoryId}`);
+      console.log(
+        `  Puppy already exists: ${puppyData.name} in category ${puppyData.categoryId}`
+      );
     }
   }
 

@@ -25,11 +25,14 @@ export default function AdminPuppiesCardElementComponent({
   className = '',
 }: AdminPuppiesCardElementProps) {
   const formatDate = (date: Date, localeParam: string): string => {
-    return new Date(date).toLocaleDateString(localeParam === 'es' ? 'es-ES' : 'en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
+    return new Date(date).toLocaleDateString(
+      localeParam === 'es' ? 'es-ES' : 'en-US',
+      {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      }
+    );
   };
 
   const getMainImage = (): string => {
@@ -43,7 +46,9 @@ export default function AdminPuppiesCardElementComponent({
   };
 
   return (
-    <div className={`rounded-lg border border-gray-200 bg-white p-4 shadow-sm ${className}`}>
+    <div
+      className={`rounded-lg border border-gray-200 bg-white p-4 shadow-sm ${className}`}
+    >
       <div className="flex items-start gap-4">
         {/* Image */}
         <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg bg-gray-100">
@@ -51,7 +56,7 @@ export default function AdminPuppiesCardElementComponent({
             src={getMainImage()}
             alt={puppy.name}
             className="h-full w-full object-cover"
-            onError={(e) => {
+            onError={e => {
               const target = e.target as HTMLImageElement;
               if (target.src !== '/placeholder-puppy.svg') {
                 target.src = '/placeholder-puppy.svg';
@@ -62,17 +67,17 @@ export default function AdminPuppiesCardElementComponent({
         </div>
 
         {/* Content */}
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between">
-            <div className="flex-1 min-w-0">
-              <h3 className="text-lg font-semibold text-gray-900 truncate">
+            <div className="min-w-0 flex-1">
+              <h3 className="truncate text-lg font-semibold text-gray-900">
                 {puppy.name}
               </h3>
               <p className="text-sm text-gray-500">
                 {calculatePuppyAgeUtil(puppy.birthDate, dict)}
               </p>
             </div>
-            
+
             {/* Actions */}
             <div className="ml-2 flex-shrink-0">
               <AdminPuppiesTableButtonsComponent
@@ -97,14 +102,18 @@ export default function AdminPuppiesCardElementComponent({
 
           {/* Description */}
           <div className="mt-2">
-            <p className="text-sm text-gray-600 line-clamp-2" title={puppy.description}>
+            <p
+              className="line-clamp-2 text-sm text-gray-600"
+              title={puppy.description}
+            >
               {puppy.description}
             </p>
           </div>
 
           {/* Birth Date */}
           <div className="mt-2 text-xs text-gray-500">
-            {dict.admin.table.headers.birthDate}: {formatDate(puppy.birthDate, locale)}
+            {dict.admin.table.headers.birthDate}:{' '}
+            {formatDate(puppy.birthDate, locale)}
           </div>
         </div>
       </div>

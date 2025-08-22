@@ -15,7 +15,7 @@ export class GetPuppyByIdUseCase {
   async execute(id: string): Promise<GetPuppyByIdResult> {
     try {
       const puppy = await this.puppyRepository.findById(id);
-      
+
       if (!puppy) {
         return {
           success: false,
@@ -29,7 +29,7 @@ export class GetPuppyByIdUseCase {
       };
     } catch (error) {
       console.error('Error getting puppy by ID:', error);
-      
+
       return {
         success: false,
         error: 'Failed to fetch puppy',
