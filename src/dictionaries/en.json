@@ -76,6 +76,48 @@
         "validationFailed": "Validation error"
       }
     },
+    "categories": {
+      "title": "Categories",
+      "subtitle": "{count} {count, plural, one {category} other {categories}} registered",
+      "loading": "Loading categories...",
+      "description": "Add a new category to the system",
+      "editDescription": "Update the category information",
+      "basicInfo": "Category Information",
+      "empty": {
+        "title": "No categories registered",
+        "description": "Start by adding your first category to the system",
+        "button": "Create First Category"
+      },
+      "fields": {
+        "name": "Name",
+        "minPrice": "Minimum Price"
+      },
+      "placeholders": {
+        "name": "Enter category name",
+        "minPrice": "Enter minimum price"
+      },
+      "headers": {
+        "name": "Name",
+        "minPrice": "Minimum Price",
+        "actions": "Actions"
+      },
+      "actions": {
+        "newCategory": "New Category",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "errors": {
+        "createFailed": "Error creating category",
+        "updateFailed": "Error updating category",
+        "deleteFailed": "Error deleting category"
+      },
+      "deleteConfirmation": {
+        "title": "Confirm Category Deletion",
+        "message": "Are you sure you want to delete the category",
+        "warning": "This action will delete the category and ALL associated pets. This action cannot be undone.",
+        "deleting": "Deleting category and pets..."
+      }
+    },
     "media": {
       "upload": {
         "title": "Upload Media",

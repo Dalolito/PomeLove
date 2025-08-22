@@ -1,6 +1,6 @@
 import AdminFormSingleImageUploadComponent from './AdminFormSingleImageUploadComponent';
 import { Dictionary } from '@/lib/types/dictionary';
-import { MediaFile } from '@/application/useCases/admin/MediaUploadUseCase';
+import { MediaFile } from '@/application/useCases/utils/MediaUploadUseCase';
 
 interface ParentsData {
   fatherImage: MediaFile | null;

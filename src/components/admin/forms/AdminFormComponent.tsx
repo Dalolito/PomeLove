@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { MediaFile } from '@/application/useCases/admin/MediaUploadUseCase';
+import { MediaFile } from '@/application/useCases/utils/MediaUploadUseCase';
 import AdminFormBasicInfoComponent from './AdminFormBasicInfoComponent';
 import AdminFormParentsComponent from './AdminFormParentsComponent';
 import AdminFormUploadMediaComponent from './AdminFormUploadMediaComponent';

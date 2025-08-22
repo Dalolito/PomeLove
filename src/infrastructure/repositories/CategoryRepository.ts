@@ -64,6 +64,30 @@ export class CategoryRepository implements ICategoryRepository {
     };
   }
 
+  async findByIdWithPuppies(id: string): Promise<{ category: Category; puppiesCount: number } | null> {
+    const categoryWithPuppies = await prisma.category.findUnique({
+      where: { id: parseInt(id) },
+      include: {
+        _count: {
+          select: {
+            puppies: true,
+          },
+        },
+      },
+    });
+
+    if (!categoryWithPuppies) return null;
+
+    return {
+      category: {
+        id: categoryWithPuppies.id.toString(),
+        name: categoryWithPuppies.name,
+        minPrice: categoryWithPuppies.minPrice,
+      },
+      puppiesCount: categoryWithPuppies._count.puppies,
+    };
+  }
+
   async delete(id: string): Promise<void> {
     await prisma.category.delete({
       where: { id: parseInt(id) },

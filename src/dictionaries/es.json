@@ -78,6 +78,48 @@
         "validationFailed": "Error de validación"
       }
     },
+    "categories": {
+      "title": "Categorías",
+      "subtitle": "{count} {count, plural, one {categoría} other {categorías}} registradas",
+      "loading": "Cargando categorías...",
+      "description": "Agrega una nueva categoría al sistema",
+      "editDescription": "Actualiza la información de la categoría",
+      "basicInfo": "Información de la Categoría",
+      "empty": {
+        "title": "No hay categorías registradas",
+        "description": "Comienza agregando tu primera categoría al sistema",
+        "button": "Crear Primera Categoría"
+      },
+      "fields": {
+        "name": "Nombre",
+        "minPrice": "Precio Mínimo"
+      },
+      "placeholders": {
+        "name": "Ingresa el nombre de la categoría",
+        "minPrice": "Ingresa el precio mínimo"
+      },
+      "headers": {
+        "name": "Nombre",
+        "minPrice": "Precio Mínimo",
+        "actions": "Acciones"
+      },
+      "actions": {
+        "newCategory": "Nueva Categoría",
+        "edit": "Editar",
+        "delete": "Eliminar"
+      },
+      "errors": {
+        "createFailed": "Error al crear la categoría",
+        "updateFailed": "Error al actualizar la categoría",
+        "deleteFailed": "Error al eliminar la categoría"
+      },
+      "deleteConfirmation": {
+        "title": "Confirmar Eliminación de Categoría",
+        "message": "¿Estás seguro de que quieres eliminar la categoría",
+        "warning": "Esta acción eliminará la categoría y TODAS las mascotas asociadas. Esta acción no se puede deshacer.",
+        "deleting": "Eliminando categoría y mascotas..."
+      }
+    },
     "media": {
       "upload": {
         "title": "Subir Archivos",

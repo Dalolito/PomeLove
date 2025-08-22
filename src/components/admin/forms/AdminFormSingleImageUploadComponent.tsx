@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { MediaFile } from '@/application/useCases/admin/MediaUploadUseCase';
+import { MediaFile } from '@/application/useCases/utils/MediaUploadUseCase';
 import { uploadImageAction } from '@/actions/uploadActions';
 
 import { Dictionary } from '@/lib/types/dictionary';
