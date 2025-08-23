@@ -109,7 +109,7 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
               </p>
               <p className="flex items-center gap-2">
                 <span>📍</span>
-                <span>Medellín, Colombia</span>
+                <span>{dict.footer?.location || 'Medellín, Colombia'}</span>
               </p>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { MediaFile } from '@/application/useCases/admin/MediaUploadUseCase';
+import { MediaFile } from '@/application/useCases/utils/MediaUploadUseCase';
 
 export interface FormData {
   name: string;

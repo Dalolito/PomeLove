@@ -7,6 +7,7 @@ import {
 } from '@/domain/entities/Puppy';
 import { Category } from '@/domain/entities/Category';
 import { deleteMultipleFilesFromServer } from '@/lib/utils/fileUtils';
+import { PuppyFilters } from '@/lib/types/filters';
 
 export class PuppyRepository implements IPuppyRepository {
   async create(data: CreatePuppyData): Promise<Puppy> {
@@ -195,6 +196,39 @@ export class PuppyRepository implements IPuppyRepository {
     }
 
     return this.mapToPuppyEntity(puppy);
+  }
+
+  async findFiltered(filters: PuppyFilters): Promise<Puppy[]> {
+    const whereClause: any = {};
+
+    if (filters.categoryId) {
+      whereClause.categoryId = parseInt(filters.categoryId);
+    }
+
+    if (filters.gender && filters.gender !== 'all') {
+      whereClause.gender = filters.gender;
+    }
+
+    if (filters.available !== undefined && filters.available !== 'all') {
+      whereClause.available = filters.available;
+    }
+
+    if (filters.search) {
+      whereClause.name = {
+        contains: filters.search,
+      };
+    }
+
+    const puppies = await prisma.puppy.findMany({
+      where: whereClause,
+      include: {
+        category: true,
+        media: true,
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    return puppies.map(puppy => this.mapToPuppyEntity(puppy));
   }
 
   async delete(id: string): Promise<void> {

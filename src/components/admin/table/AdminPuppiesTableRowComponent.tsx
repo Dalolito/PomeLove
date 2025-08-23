@@ -1,6 +1,6 @@
 'use client';
 
-import AdminPuppiesTableButtonsComponent from './AdminPuppiesTableButtonsComponent';
+import AdminPuppiesTableButtonsComponent from '@/components/admin/table/AdminPuppiesTableButtonsComponent';
 import PuppyImageComponent from '@/components/ui/PuppyImageComponent';
 import { Dictionary } from '@/lib/types/dictionary';
 import { Puppy } from '@/domain/entities/Puppy';

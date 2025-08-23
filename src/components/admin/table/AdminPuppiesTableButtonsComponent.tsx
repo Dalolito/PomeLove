@@ -86,7 +86,7 @@ export default function AdminPuppiesTableButtonsComponent({
         isOpen={showDeleteModal}
         onClose={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        puppyName={puppyName}
+        itemName={puppyName}
         dict={dict}
         isLoading={isDeleting}
       />

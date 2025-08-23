@@ -1,4 +1,4 @@
-import BaseButtonComponent from './baseButtonComponent';
+import BaseButtonComponent from '@/components/ui/baseButtonComponent';
 
 interface PrimaryButtonProps {
   children: React.ReactNode;

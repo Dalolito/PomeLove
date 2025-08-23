@@ -4,10 +4,12 @@ import { useRouter, usePathname } from 'next/navigation';
 
 interface LanguageButtonComponentProps {
   currentLocale: string;
+  dict: any;
 }
 
 export default function LanguageButtonComponent({
   currentLocale,
+  dict,
 }: LanguageButtonComponentProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -29,7 +31,7 @@ export default function LanguageButtonComponent({
             ? 'bg-white text-slate-700 shadow-sm'
             : 'text-slate-500 hover:text-slate-700'
         }`}
-        title="Español"
+        title={dict.navigation?.spanish || 'Español'}
       >
         ES
       </button>
@@ -40,7 +42,7 @@ export default function LanguageButtonComponent({
             ? 'bg-white text-slate-700 shadow-sm'
             : 'text-slate-500 hover:text-slate-700'
         }`}
-        title="English"
+        title={dict.navigation?.english || 'English'}
       >
         EN
       </button>

@@ -1,4 +1,4 @@
-import AdminPuppiesTableRowComponent from './AdminPuppiesTableRowComponent';
+import AdminPuppiesTableRowComponent from '@/components/admin/table/AdminPuppiesTableRowComponent';
 import PrimaryButtonComponent from '@/components/ui/PrimaryButtonComponent';
 import { Dictionary } from '@/lib/types/dictionary';
 import { Puppy } from '@/domain/entities/Puppy';
@@ -9,6 +9,8 @@ interface AdminPuppiesTableComponentProps {
   dict: Dictionary;
   locale: string;
   loading?: boolean;
+  isFiltering?: boolean;
+  hasActiveFilters?: boolean;
   className?: string;
 }
 
@@ -17,6 +19,8 @@ export default function AdminPuppiesTableComponent({
   dict,
   locale,
   loading = false,
+  isFiltering = false,
+  hasActiveFilters = false,
   className = '',
 }: AdminPuppiesTableComponentProps) {
   if (loading) {
@@ -42,17 +46,24 @@ export default function AdminPuppiesTableComponent({
         <div className="flex flex-col items-center justify-center p-12">
           <div className="mb-4 text-6xl">🐕</div>
           <h3 className="mb-2 text-lg font-semibold text-gray-900">
-            {dict.admin.table.empty.title}
+            {hasActiveFilters
+              ? dict.admin.filters?.noResults || 'No pets found'
+              : dict.admin.table.empty.title}
           </h3>
           <p className="mb-6 text-center text-gray-600">
-            {dict.admin.table.empty.description}
+            {hasActiveFilters
+              ? dict.admin.filters?.noResultsDescription ||
+                'Try adjusting your search filters'
+              : dict.admin.table.empty.description}
           </p>
-          <PrimaryButtonComponent
-            href={`/${locale}/admin/puppys/create`}
-            className="rounded-lg"
-          >
-            {dict.admin.table.empty.button}
-          </PrimaryButtonComponent>
+          {!hasActiveFilters && (
+            <PrimaryButtonComponent
+              href={`/${locale}/admin/puppys/create`}
+              className="rounded-lg"
+            >
+              {dict.admin.table.empty.button}
+            </PrimaryButtonComponent>
+          )}
         </div>
       </div>
     );
@@ -69,11 +80,16 @@ export default function AdminPuppiesTableComponent({
             <h2 className="text-lg font-semibold text-gray-900">
               {dict.admin.table.title}
             </h2>
-            <p className="text-sm text-gray-600">
-              {replaceText(dict.admin.table.subtitle, {
-                count: puppies.length,
-              })}
-            </p>
+            <div className="flex items-center gap-2">
+              <p className="text-sm text-gray-600">
+                {replaceText(dict.admin.table.subtitle, {
+                  count: puppies.length,
+                })}
+              </p>
+              {isFiltering && (
+                <div className="h-4 w-4 animate-spin rounded-full border border-red-500 border-t-transparent"></div>
+              )}
+            </div>
           </div>
           <PrimaryButtonComponent
             href={`/${locale}/admin/puppys/create`}

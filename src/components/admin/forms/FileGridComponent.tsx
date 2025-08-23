@@ -1,6 +1,6 @@
 'use client';
 
-import { MediaFile } from '@/application/useCases/admin/MediaUploadUseCase';
+import { MediaFile } from '@/application/useCases/utils/MediaUploadUseCase';
 import { replaceText, formatFileSize } from '@/lib/utils/textUtils';
 
 import { Dictionary } from '@/lib/types/dictionary';
