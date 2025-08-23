@@ -4,7 +4,10 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Dictionary } from '@/lib/types/dictionary';
 import DeleteConfirmationModal from '@/components/ui/DeleteConfirmationModal';
-import { deleteCategoryAction, getCategoryWithPuppiesAction } from '@/actions/categoryActions';
+import {
+  deleteCategoryAction,
+  getCategoryWithPuppiesAction,
+} from '@/actions/categoryActions';
 
 interface AdminCategoriesTableButtonsProps {
   categoryId: string;
@@ -69,7 +72,7 @@ export default function AdminCategoriesTableButtonsComponent({
       <button
         onClick={handleEdit}
         className="rounded-lg border border-blue-300 p-2 text-blue-600 transition-colors hover:bg-blue-50 hover:text-blue-900"
-        title={`Editar ${categoryName}`}
+        title={`${dict.admin.categories.actions.edit} ${categoryName}`}
         type="button"
       >
         <span className="text-sm">✏️</span>
@@ -79,7 +82,7 @@ export default function AdminCategoriesTableButtonsComponent({
         onClick={handleDeleteClick}
         disabled={isDeleting}
         className="rounded-lg border border-red-300 p-2 text-red-600 transition-colors hover:bg-red-50 hover:text-red-900 disabled:cursor-not-allowed disabled:opacity-50"
-        title={`Eliminar ${categoryName}`}
+        title={`${dict.admin.categories.actions.delete} ${categoryName}`}
         type="button"
       >
         {isDeleting ? (
@@ -96,16 +99,16 @@ export default function AdminCategoriesTableButtonsComponent({
         itemName={categoryName}
         dict={dict}
         isLoading={isDeleting}
-        customTitle="Confirmar Eliminación de Categoría"
-        customMessage="¿Estás seguro de que quieres eliminar la categoría"
+        customTitle={dict.admin.categories.deleteConfirmation.title}
+        customMessage={`${dict.admin.categories.deleteConfirmation.message} ${categoryName}`}
         customWarning={
           puppiesCount > 0
-            ? `Esta acción eliminará la categoría y TODAS las mascotas asociadas. Esta acción no se puede deshacer. ⚠️ ${puppiesCount} ${
-                puppiesCount === 1 ? 'mascota' : 'mascotas'
-              } será eliminada.`
-            : "Esta acción eliminará la categoría y TODAS las mascotas asociadas. Esta acción no se puede deshacer."
+            ? `${dict.admin.categories.deleteConfirmation.warning} ⚠️ ${puppiesCount} ${
+                puppiesCount === 1 ? 'pet' : 'pets'
+              } will be deleted.`
+            : dict.admin.categories.deleteConfirmation.warning
         }
-        customDeletingText="Eliminando categoría y mascotas..."
+        customDeletingText={dict.admin.categories.deleteConfirmation.deleting}
       />
     </div>
   );

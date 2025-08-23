@@ -13,7 +13,7 @@ export class GetCategoryByIdUseCase {
   async execute(id: string): Promise<GetCategoryByIdResult> {
     try {
       const category = await this.categoryRepository.findById(id);
-      
+
       if (!category) {
         return {
           success: false,
@@ -27,7 +27,7 @@ export class GetCategoryByIdUseCase {
       };
     } catch (error) {
       console.error('Error getting category by ID:', error);
-      
+
       return {
         success: false,
         error: 'Failed to fetch category',

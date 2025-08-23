@@ -10,7 +10,9 @@
     "about": "Sobre nosotros",
     "gallery": "Galería",
     "contact": "Contacto",
-    "menu": "Menú"
+    "menu": "Menú",
+    "spanish": "Español",
+    "english": "Inglés"
   },
   "buttons": {
     "search_puppy": "Buscar un peludo",
@@ -118,6 +120,20 @@
         "message": "¿Estás seguro de que quieres eliminar la categoría",
         "warning": "Esta acción eliminará la categoría y TODAS las mascotas asociadas. Esta acción no se puede deshacer.",
         "deleting": "Eliminando categoría y mascotas..."
+      },
+      "filters": {
+        "title": "Filtros de Búsqueda",
+        "clearFilters": "Limpiar filtros",
+        "searchLabel": "Buscar",
+        "searchPlaceholder": "Buscar por nombre...",
+        "sortBy": "Ordenar por",
+        "sortByName": "Nombre",
+        "sortByPrice": "Precio",
+        "sortOrder": "Orden",
+        "ascending": "Ascendente",
+        "descending": "Descendente",
+        "noResults": "No se encontraron categorías",
+        "noResultsDescription": "Intenta ajustar los filtros de búsqueda"
       }
     },
     "media": {
@@ -176,6 +192,20 @@
         "available": "Disponible",
         "unavailable": "No Disponible"
       }
+    },
+    "filters": {
+      "title": "Filtros de Búsqueda",
+      "clearFilters": "Limpiar filtros",
+      "allCategories": "Todas las categorías",
+      "allGenders": "Todos los géneros",
+      "allStatuses": "Todos los estados",
+      "category": "Categoría",
+      "gender": "Género",
+      "availability": "Disponibilidad",
+      "searchLabel": "Buscar",
+      "searchPlaceholder": "Buscar por nombre...",
+      "noResults": "No se encontraron mascotas",
+      "noResultsDescription": "Intenta ajustar los filtros de búsqueda"
     },
     "utils": {
       "age": {

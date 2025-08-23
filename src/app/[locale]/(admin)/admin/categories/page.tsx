@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { getAllCategoriesAction } from '@/actions/categoryActions';
-import AdminCategoriesTableComponent from '@/components/admin/table/AdminCategoriesTableComponent';
+import AdminCategoriesContent from '@/components/admin/categories/AdminCategoriesContent';
 
 async function getDictionary(locale: string) {
   try {
@@ -21,7 +21,7 @@ export default async function AdminCategoriesPage({
 }: AdminCategoriesPageProps) {
   const { locale } = await params;
   const dict = await getDictionary(locale);
-  
+
   const result = await getAllCategoriesAction();
 
   return (
@@ -31,13 +31,15 @@ export default async function AdminCategoriesPage({
           <div className="flex items-center justify-center p-8">
             <div className="flex items-center gap-3">
               <div className="h-6 w-6 animate-spin rounded-full border-2 border-red-500 border-t-transparent"></div>
-              <span className="text-gray-600">{dict.admin.categories.loading}</span>
+              <span className="text-gray-600">
+                {dict.admin.categories.loading}
+              </span>
             </div>
           </div>
         }
       >
-        <AdminCategoriesTableComponent
-          categories={result.data || []}
+        <AdminCategoriesContent
+          initialCategories={result.data || []}
           dict={dict}
           locale={locale}
         />

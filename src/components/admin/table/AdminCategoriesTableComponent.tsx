@@ -1,4 +1,4 @@
-import AdminCategoriesTableRowComponent from './AdminCategoriesTableRowComponent';
+import AdminCategoriesTableRowComponent from '@/components/admin/table/AdminCategoriesTableRowComponent';
 import PrimaryButtonComponent from '@/components/ui/PrimaryButtonComponent';
 import { Dictionary } from '@/lib/types/dictionary';
 import { Category } from '@/domain/entities/Category';
@@ -21,11 +21,15 @@ export default function AdminCategoriesTableComponent({
 }: AdminCategoriesTableComponentProps) {
   if (loading) {
     return (
-      <div className={`rounded-lg border border-gray-200 bg-white shadow-sm ${className}`}>
+      <div
+        className={`rounded-lg border border-gray-200 bg-white shadow-sm ${className}`}
+      >
         <div className="flex items-center justify-center p-8">
           <div className="flex items-center gap-3">
             <div className="h-6 w-6 animate-spin rounded-full border-2 border-red-500 border-t-transparent"></div>
-            <span className="text-gray-600">{dict.admin.categories.loading}</span>
+            <span className="text-gray-600">
+              {dict.admin.categories.loading}
+            </span>
           </div>
         </div>
       </div>
@@ -34,7 +38,9 @@ export default function AdminCategoriesTableComponent({
 
   if (categories.length === 0) {
     return (
-      <div className={`rounded-lg border border-gray-200 bg-white shadow-sm ${className}`}>
+      <div
+        className={`rounded-lg border border-gray-200 bg-white shadow-sm ${className}`}
+      >
         <div className="flex flex-col items-center justify-center p-12">
           <div className="mb-4 text-6xl">📂</div>
           <h3 className="mb-2 text-lg font-semibold text-gray-900">
@@ -55,7 +61,9 @@ export default function AdminCategoriesTableComponent({
   }
 
   return (
-    <div className={`rounded-lg border border-gray-200 bg-white shadow-sm ${className}`}>
+    <div
+      className={`rounded-lg border border-gray-200 bg-white shadow-sm ${className}`}
+    >
       <div className="border-b border-gray-200 px-4 py-4 sm:px-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>

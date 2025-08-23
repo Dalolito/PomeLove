@@ -6,8 +6,10 @@ import {
   getPuppyByIdUseCase,
   updatePuppyUseCase,
   deletePuppyUseCase,
+  getFilteredPuppiesUseCase,
 } from '@/infrastructure/config/dependencies';
 import { CreatePuppyData, UpdatePuppyData } from '@/domain/entities/Puppy';
+import { PuppyFilters } from '@/lib/types/filters';
 import { revalidatePath } from 'next/cache';
 
 export async function createPuppyAction(data: CreatePuppyData) {
@@ -84,5 +86,15 @@ export async function deletePuppyAction(id: string) {
   } catch (error) {
     console.error('Error deleting puppy:', error);
     return { success: false, error: 'DELETE_PUPPY_FAILED' };
+  }
+}
+
+export async function getFilteredPuppiesAction(filters: PuppyFilters) {
+  try {
+    const result = await getFilteredPuppiesUseCase.execute(filters);
+    return result;
+  } catch (error) {
+    console.error('Error getting filtered puppies:', error);
+    return { success: false, error: 'GET_FILTERED_PUPPIES_FAILED' };
   }
 }

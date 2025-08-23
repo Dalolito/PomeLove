@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import AdminFormActionButtonsComponent from './AdminFormActionButtonsComponent';
+import AdminFormActionButtonsComponent from '@/components/admin/forms/AdminFormActionButtonsComponent';
 import FormInputComponent from '@/components/ui/FormInputComponent';
 import { createCategoryAction } from '@/actions/categoryActions';
 
@@ -103,7 +103,10 @@ export default function AdminCategoryFormComponent({
               value={formData.name}
               onChange={value => handleFieldChange('name', value)}
               label={dict.admin.categories?.fields?.name || 'Name'}
-              placeholder={dict.admin.categories?.placeholders?.name || 'Enter category name'}
+              placeholder={
+                dict.admin.categories?.placeholders?.name ||
+                'Enter category name'
+              }
               required
             />
 
@@ -112,7 +115,10 @@ export default function AdminCategoryFormComponent({
               value={formData.minPrice}
               onChange={value => handleFieldChange('minPrice', value)}
               label={dict.admin.categories?.fields?.minPrice || 'Minimum Price'}
-              placeholder={dict.admin.categories?.placeholders?.minPrice || 'Enter minimum price'}
+              placeholder={
+                dict.admin.categories?.placeholders?.minPrice ||
+                'Enter minimum price'
+              }
               required
             />
           </div>

@@ -19,7 +19,9 @@ interface EditCategoryPageProps {
   }>;
 }
 
-export default async function EditCategoryPage({ params }: EditCategoryPageProps) {
+export default async function EditCategoryPage({
+  params,
+}: EditCategoryPageProps) {
   const { locale, id } = await params;
   const dict = await getDictionary(locale);
 
@@ -38,7 +40,8 @@ export default async function EditCategoryPage({ params }: EditCategoryPageProps
           {dict.admin.forms?.edit || 'Edit'} {category.name}
         </h1>
         <p className="mx-auto max-w-2xl px-4 text-lg text-gray-600">
-          {dict.admin.categories?.editDescription || 'Update the category information'}
+          {dict.admin.categories?.editDescription ||
+            'Update the category information'}
         </p>
       </div>
 

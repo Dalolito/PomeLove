@@ -1,6 +1,6 @@
 'use client';
 
-import AdminCategoriesTableButtonsComponent from './AdminCategoriesTableButtonsComponent';
+import AdminCategoriesTableButtonsComponent from '@/components/admin/table/AdminCategoriesTableButtonsComponent';
 import { Dictionary } from '@/lib/types/dictionary';
 import { Category } from '@/domain/entities/Category';
 
@@ -31,7 +31,9 @@ export default function AdminCategoriesTableRowComponent({
       </td>
 
       <td className="px-4 py-4 sm:px-6">
-        <div className="text-sm text-gray-900">{formatPrice(category.minPrice)}</div>
+        <div className="text-sm text-gray-900">
+          {formatPrice(category.minPrice)}
+        </div>
       </td>
 
       <td className="px-4 py-4 text-center sm:px-6">

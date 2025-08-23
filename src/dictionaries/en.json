@@ -10,7 +10,9 @@
     "about": "About us",
     "gallery": "Gallery",
     "contact": "Contact",
-    "menu": "Menu"
+    "menu": "Menu",
+    "spanish": "Spanish",
+    "english": "English"
   },
   "buttons": {
     "search_puppy": "Find a puppy",
@@ -116,6 +118,20 @@
         "message": "Are you sure you want to delete the category",
         "warning": "This action will delete the category and ALL associated pets. This action cannot be undone.",
         "deleting": "Deleting category and pets..."
+      },
+      "filters": {
+        "title": "Search Filters",
+        "clearFilters": "Clear filters",
+        "searchLabel": "Search",
+        "searchPlaceholder": "Search by name...",
+        "sortBy": "Sort by",
+        "sortByName": "Name",
+        "sortByPrice": "Price",
+        "sortOrder": "Order",
+        "ascending": "Ascending",
+        "descending": "Descending",
+        "noResults": "No categories found",
+        "noResultsDescription": "Try adjusting your search filters"
       }
     },
     "media": {
@@ -172,6 +188,20 @@
         "available": "Available",
         "unavailable": "Unavailable"
       }
+    },
+    "filters": {
+      "title": "Search Filters",
+      "clearFilters": "Clear filters",
+      "allCategories": "All categories",
+      "allGenders": "All genders",
+      "allStatuses": "All statuses",
+      "category": "Category",
+      "gender": "Gender",
+      "availability": "Availability",
+      "searchLabel": "Search",
+      "searchPlaceholder": "Search by name...",
+      "noResults": "No pets found",
+      "noResultsDescription": "Try adjusting your search filters"
     },
     "utils": {
       "age": {

@@ -1,4 +1,4 @@
-import AdminPuppiesTableButtonsComponent from './AdminPuppiesTableButtonsComponent';
+import AdminPuppiesTableButtonsComponent from '@/components/admin/table/AdminPuppiesTableButtonsComponent';
 import { Dictionary } from '@/lib/types/dictionary';
 import { Puppy } from '@/domain/entities/Puppy';
 import { calculatePuppyAgeUtil } from '@/lib/utils/calculatePuppyAgeUtil';

@@ -1,5 +1,5 @@
-import HamburgerMenuComponent from './HamburgerMenuComponent';
-import LanguageButtonComponent from './LanguageButtonComponent';
+import HamburgerMenuComponent from '@/components/layout/HamburgerMenuComponent';
+import LanguageButtonComponent from '@/components/layout/LanguageButtonComponent';
 
 import { Dictionary } from '@/lib/types/dictionary';
 
@@ -27,7 +27,10 @@ export default function Header({ title, currentLocale, dict }: HeaderProps) {
           {/* Navigation */}
           <div className="relative flex items-center gap-3">
             {/* Language switcher */}
-            <LanguageButtonComponent currentLocale={currentLocale} />
+            <LanguageButtonComponent
+              currentLocale={currentLocale}
+              dict={dict}
+            />
 
             {/* Hamburger menu */}
             <HamburgerMenuComponent currentLocale={currentLocale} dict={dict} />

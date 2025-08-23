@@ -15,7 +15,10 @@ export class UpdateCategoryUseCase {
     }
 
     const { id, ...updateData } = request;
-    const updatedCategory = await this.categoryRepository.update(id, updateData);
+    const updatedCategory = await this.categoryRepository.update(
+      id,
+      updateData
+    );
 
     return updatedCategory;
   }

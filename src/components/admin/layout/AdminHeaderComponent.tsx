@@ -1,4 +1,4 @@
-import AdminHamburgerMenuComponent from './AdminHamburgerMenuComponent';
+import AdminHamburgerMenuComponent from '@/components/admin/layout/AdminHamburgerMenuComponent';
 import LanguageButtonComponent from '@/components/layout/LanguageButtonComponent';
 import { Dictionary } from '@/lib/types/dictionary';
 
@@ -30,7 +30,10 @@ export default function AdminHeader({
           {/* Navigation */}
           <div className="relative flex items-center gap-3">
             {/* Language switcher */}
-            <LanguageButtonComponent currentLocale={currentLocale} />
+            <LanguageButtonComponent
+              currentLocale={currentLocale}
+              dict={dict}
+            />
 
             {/* Admin Hamburger menu */}
             <AdminHamburgerMenuComponent

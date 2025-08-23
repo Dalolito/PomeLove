@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import AdminFormActionButtonsComponent from './AdminFormActionButtonsComponent';
+import AdminFormActionButtonsComponent from '@/components/admin/forms/AdminFormActionButtonsComponent';
 import FormInputComponent from '@/components/ui/FormInputComponent';
 import { updateCategoryAction } from '@/actions/categoryActions';
 import { Category } from '@/domain/entities/Category';
@@ -67,7 +67,8 @@ export default function AdminEditCategoryFormComponent({
       }
     } catch {
       setError(
-        dict.admin.forms.errors?.updateFailed || 'Error al actualizar la categoría'
+        dict.admin.forms.errors?.updateFailed ||
+          'Error al actualizar la categoría'
       );
     } finally {
       setIsSubmitting(false);
@@ -115,7 +116,10 @@ export default function AdminEditCategoryFormComponent({
               value={formData.name}
               onChange={value => handleFieldChange('name', value)}
               label={dict.admin.categories?.fields?.name || 'Name'}
-              placeholder={dict.admin.categories?.placeholders?.name || 'Enter category name'}
+              placeholder={
+                dict.admin.categories?.placeholders?.name ||
+                'Enter category name'
+              }
               required
             />
 
@@ -124,7 +128,10 @@ export default function AdminEditCategoryFormComponent({
               value={formData.minPrice}
               onChange={value => handleFieldChange('minPrice', value)}
               label={dict.admin.categories?.fields?.minPrice || 'Minimum Price'}
-              placeholder={dict.admin.categories?.placeholders?.minPrice || 'Enter minimum price'}
+              placeholder={
+                dict.admin.categories?.placeholders?.minPrice ||
+                'Enter minimum price'
+              }
               required
             />
           </div>

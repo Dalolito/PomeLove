@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { getAllPuppiesAction } from '@/actions/puppyActions';
-import AdminPuppiesTableComponent from '@/components/admin/table/AdminPuppiesTableComponent';
+import { getAllCategoriesAction } from '@/actions/categoryActions';
+import AdminPuppiesContent from '@/components/admin/puppies/AdminPuppiesContent';
 
 async function getDictionary(locale: string) {
   try {
@@ -22,7 +23,10 @@ export default async function AdminPuppiesPage({
   const { locale } = await params;
   const dict = await getDictionary(locale);
 
-  const result = await getAllPuppiesAction();
+  const [puppiesResult, categoriesResult] = await Promise.all([
+    getAllPuppiesAction(),
+    getAllCategoriesAction(),
+  ]);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -36,8 +40,9 @@ export default async function AdminPuppiesPage({
           </div>
         }
       >
-        <AdminPuppiesTableComponent
-          puppies={result.puppies || []}
+        <AdminPuppiesContent
+          initialPuppies={puppiesResult.puppies || []}
+          categories={categoriesResult.data || []}
           dict={dict}
           locale={locale}
         />

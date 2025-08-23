@@ -4,10 +4,10 @@ import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { MediaFile } from '@/application/useCases/utils/MediaUploadUseCase';
 import { Puppy } from '@/domain/entities/Puppy';
-import AdminFormBasicInfoComponent from './AdminFormBasicInfoComponent';
-import AdminFormParentsComponent from './AdminFormParentsComponent';
-import AdminFormUploadMediaComponent from './AdminFormUploadMediaComponent';
-import AdminFormActionButtonsComponent from './AdminFormActionButtonsComponent';
+import AdminFormBasicInfoComponent from '@/components/admin/forms/AdminFormBasicInfoComponent';
+import AdminFormParentsComponent from '@/components/admin/forms/AdminFormParentsComponent';
+import AdminFormUploadMediaComponent from '@/components/admin/forms/AdminFormUploadMediaComponent';
+import AdminFormActionButtonsComponent from '@/components/admin/forms/AdminFormActionButtonsComponent';
 import { updatePuppyAction } from '@/actions/puppyActions';
 
 interface AdminEditFormComponentProps {
@@ -145,14 +145,12 @@ export default function AdminEditFormComponent({
         setError(
           dict.admin.forms.errors?.[errorKey] ||
             dict.admin.forms.errors?.updateFailed ||
-            'Error al actualizar la mascota'
+            dict.admin.forms.errors?.updateFailed ||
+            'Error updating pet'
         );
       }
     } catch {
-      setError(
-        dict.admin.forms.errors?.updateFailed ||
-          'Error al actualizar la mascota'
-      );
+      setError(dict.admin.forms.errors?.updateFailed || 'Error updating pet');
     } finally {
       setIsSubmitting(false);
     }
