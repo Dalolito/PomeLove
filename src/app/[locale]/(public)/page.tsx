@@ -1,3 +1,6 @@
+import { Suspense } from 'react';
+import PuppyAvailableListComponent from '@/components/puppy/PuppyAvailableListComponent';
+import PuppyCardSkeletonComponent from '@/components/puppy/PuppyCardSkeletonComponent';
 import PrimaryButtonComponent from '@/components/ui/PrimaryButtonComponent';
 import SecondaryButtonComponent from '@/components/ui/SecondaryButtonComponent';
 
@@ -21,44 +24,113 @@ export default function HomePage({
   const { locale } = use(params);
   const dict = use(getDictionary(locale));
 
+  const LoadingSkeleton = () => (
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {Array.from({ length: 8 }).map((_, index) => (
+        <PuppyCardSkeletonComponent key={index} />
+      ))}
+    </div>
+  );
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold text-slate-800">
-          {dict.header.subtitle}
-        </h1>
-        <p className="mb-8 text-lg text-slate-600">{dict.header.experience}</p>
+    <div className="min-h-screen bg-gray-50">
+      <section className="relative border-b bg-white">
+        <div className="container mx-auto px-4 py-12 lg:py-16">
+          <div className="mx-auto max-w-4xl text-center">
+            <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl lg:text-6xl">
+              {dict.header.subtitle}
+            </h1>
+            <p className="mx-auto mt-6 max-w-2xl text-xl text-gray-600">
+              {dict.header.experience}
+            </p>
 
-        <div className="mx-auto max-w-md rounded-lg bg-white p-8 shadow-sm">
-          <div className="mb-4 text-6xl">🐕</div>
-          <h2 className="mb-2 text-xl font-semibold text-slate-800">
-            {dict.navigation.home} - PuppyShop
-          </h2>
-          <p className="mb-6 text-slate-600">{dict.buttons.search_puppy}</p>
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center sm:gap-6">
+              <PrimaryButtonComponent
+                size="xl"
+                href={`/${locale}/catalog`}
+                className="transform bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg transition-all duration-200 hover:scale-105 hover:from-blue-700 hover:to-blue-800"
+              >
+                🐕 {dict.buttons.search_puppy}
+              </PrimaryButtonComponent>
 
-          <div className="space-y-3">
-            <PrimaryButtonComponent
-              fullWidth
-              size="lg"
-              href={`/${locale}/catalog`}
-            >
-              {dict.buttons.search_puppy}
-            </PrimaryButtonComponent>
-
-            <SecondaryButtonComponent
-              fullWidth
-              size="lg"
-              href={`/${locale}/about`}
-            >
-              {dict.buttons.about_us}
-            </SecondaryButtonComponent>
+              <SecondaryButtonComponent
+                size="xl"
+                href={`/${locale}/about`}
+                className="transform border-2 border-gray-300 bg-white shadow-lg transition-all duration-200 hover:scale-105 hover:border-gray-400 hover:bg-gray-50"
+              >
+                ℹ️ {dict.buttons.about_us}
+              </SecondaryButtonComponent>
+            </div>
           </div>
         </div>
+      </section>
 
-        <div className="mt-8 text-sm text-slate-500">
-          {dict.home.available_now}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="mb-12 text-center">
+            <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+              {dict.home.available_now}
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+              {dict.home.availableDescription}
+            </p>
+          </div>
+
+          <Suspense fallback={<LoadingSkeleton />}>
+            <PuppyAvailableListComponent
+              dict={dict}
+              locale={locale}
+              maxPuppies={8}
+              className="mb-12"
+            />
+          </Suspense>
+
+          <div className="text-center">
+            <PrimaryButtonComponent
+              size="lg"
+              href={`/${locale}/catalog`}
+              className="transform bg-gradient-to-r from-emerald-600 to-emerald-700 shadow-lg transition-all duration-200 hover:scale-105 hover:from-emerald-700 hover:to-emerald-800"
+            >
+              {dict.home.viewAllPuppies}
+            </PrimaryButtonComponent>
+          </div>
         </div>
-      </div>
+      </section>
+
+      <section className="bg-gradient-to-r from-orange-500 to-red-500 py-16 text-white">
+        <div className="container mx-auto px-4 text-center">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="mb-6 text-3xl font-bold sm:text-4xl">
+              {dict.home.contactTitle}
+            </h2>
+            <p className="mb-8 text-xl text-orange-100">
+              {dict.home.contactDescription}
+            </p>
+
+            <div className="flex flex-col gap-4 sm:flex-row sm:justify-center sm:gap-6">
+              <a
+                href="https://wa.me/573004439574"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-8 py-4 text-lg font-medium text-red-500 shadow-lg transition-all hover:scale-105 hover:bg-gray-100 hover:shadow-xl active:scale-95"
+              >
+                <span className="text-xl">💬</span>
+                {dict.home.whatsappText}
+              </a>
+
+              <a
+                href="https://www.instagram.com/pomelove_korea?igsh=dTA4Njl5aXY5bnRk&utm_source=qr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-8 py-4 text-lg font-medium text-red-500 shadow-lg transition-all hover:scale-105 hover:bg-gray-100 hover:shadow-xl active:scale-95"
+              >
+                <span className="text-xl">📱</span>
+                {dict.home.instagramText}
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

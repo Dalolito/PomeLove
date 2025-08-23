@@ -17,9 +17,17 @@ export interface Dictionary {
   buttons: {
     search_puppy: string;
     about_us: string;
+    view_details: string;
+    ask_about_puppy: string;
   };
   home: {
     available_now: string;
+    availableDescription: string;
+    viewAllPuppies: string;
+    contactTitle: string;
+    contactDescription: string;
+    whatsappText: string;
+    instagramText: string;
   };
   footer: {
     sections: {
