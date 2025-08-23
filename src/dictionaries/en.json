@@ -231,5 +231,26 @@
         "gb": "GB"
       }
     }
+  },
+  "catalog": {
+    "title": "Find Your Perfect Companion",
+    "subtitle": "Explore our selection of adorable pets",
+    "loading": "Loading catalog...",
+    "fromPrice": "from",
+    "resultsCount": "{count} {status} {count, plural, one {pet} other {pets}}",
+    "filtered": "found",
+    "total": "available",
+    "filters": {
+      "title": "Filter by",
+      "clearFilters": "Clear filters",
+      "category": "Breed",
+      "gender": "Gender",
+      "availability": "Availability",
+      "allCategories": "All breeds",
+      "allGenders": "Both genders",
+      "allAvailability": "All",
+      "available": "Available",
+      "unavailable": "Unavailable"
+    }
   }
 }

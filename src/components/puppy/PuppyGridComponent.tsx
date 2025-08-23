@@ -54,7 +54,7 @@ export default function PuppyGridComponent({
           puppy={puppy}
           dict={dict}
           locale={locale}
-          priority={index < 4}
+          priority={index < 6}
         />
       ))}
     </div>

@@ -27,7 +27,7 @@ export default function PuppyCardComponent({
   const getMainImage = (): string => {
     if (puppy.media && puppy.media.length > 0) {
       const firstImage = puppy.media.find(media => media.type === 'image');
-      if (firstImage) {
+      if (firstImage && firstImage.url) {
         return firstImage.url;
       }
     }
@@ -54,16 +54,11 @@ export default function PuppyCardComponent({
       className={`group overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:scale-[1.02] hover:border-blue-300 hover:shadow-xl ${className}`}
     >
       <div className="relative aspect-square">
-        {!imageLoaded && (
-          <div className="absolute inset-0 animate-pulse bg-gray-200" />
-        )}
         <PuppyCardImageComponent
           src={getMainImage()}
           alt={puppy.name}
           priority={priority}
-          className={`absolute inset-0 transition-opacity duration-300 ${
-            imageLoaded ? 'opacity-100' : 'opacity-0'
-          }`}
+          className="absolute inset-0"
           onLoad={() => setImageLoaded(true)}
         />
 

@@ -37,7 +37,8 @@
     "links": {
       "contact": "Contacto"
     },
-    "copyright": "Todos los derechos reservados."
+    "copyright": "Todos los derechos reservados.",
+    "location": "Medellín, Colombia"
   },
   "admin": {
     "menu": "Menú Admin",
@@ -234,6 +235,27 @@
         "mb": "MB",
         "gb": "GB"
       }
+    }
+  },
+  "catalog": {
+    "title": "Encuentra tu Compañero Perfecto",
+    "subtitle": "Explora nuestra selección de adorables mascotas",
+    "loading": "Cargando catálogo...",
+    "fromPrice": "desde",
+    "resultsCount": "{count} {status} {count, plural, one {mascota} other {mascotas}}",
+    "filtered": "encontradas",
+    "total": "disponibles",
+    "filters": {
+      "title": "Filtrar por",
+      "clearFilters": "Limpiar filtros",
+      "category": "Raza",
+      "gender": "Género",
+      "availability": "Disponibilidad",
+      "allCategories": "Todas las razas",
+      "allGenders": "Ambos géneros",
+      "allAvailability": "Todas",
+      "available": "Disponibles",
+      "unavailable": "No disponibles"
     }
   }
 }

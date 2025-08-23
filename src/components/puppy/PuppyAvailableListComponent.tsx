@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Puppy } from '@/domain/entities/Puppy';
 import { Dictionary } from '@/lib/types/dictionary';
 import { getFilteredPuppiesAction } from '@/actions/puppyActions';
 import PuppyGridComponent from '@/components/puppy/PuppyGridComponent';
+import ImagePreloaderComponent from '@/components/ui/ImagePreloaderComponent';
 
 interface PuppyAvailableListComponentProps {
   dict: Dictionary;
@@ -49,6 +50,19 @@ export default function PuppyAvailableListComponent({
     fetchAvailablePuppies();
   }, [maxPuppies]);
 
+  const priorityImages = useMemo(() => {
+    return puppies
+      .slice(0, 6)
+      .map(puppy => {
+        if (puppy.media && puppy.media.length > 0) {
+          const firstImage = puppy.media.find(media => media.type === 'image');
+          return firstImage?.url;
+        }
+        return null;
+      })
+      .filter(Boolean) as string[];
+  }, [puppies]);
+
   if (error) {
     return (
       <div className={`py-12 text-center ${className}`}>
@@ -64,12 +78,15 @@ export default function PuppyAvailableListComponent({
   }
 
   return (
-    <PuppyGridComponent
-      puppies={puppies}
-      dict={dict}
-      locale={locale}
-      loading={loading}
-      className={className}
-    />
+    <>
+      <ImagePreloaderComponent images={priorityImages} />
+      <PuppyGridComponent
+        puppies={puppies}
+        dict={dict}
+        locale={locale}
+        loading={loading}
+        className={className}
+      />
+    </>
   );
 }
