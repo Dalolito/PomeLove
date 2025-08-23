@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { MediaFile } from '@/application/useCases/utils/MediaUploadUseCase';
 import { Dictionary } from '@/lib/types/dictionary';
-import PuppyImageComponent from '@/components/ui/PuppyImageComponent';
 
 interface PuppyDetailGalleryComponentProps {
   media: MediaFile[];
@@ -18,38 +18,15 @@ export default function PuppyDetailGalleryComponent({
   dict,
   className = '',
 }: PuppyDetailGalleryComponentProps) {
-  // Debug: Log incoming media data
-  console.log('PuppyDetailGalleryComponent Debug:', {
-    puppyName,
-    mediaLength: media.length,
-    media: media.map(m => ({
-      id: m.id,
-      type: m.type,
-      url: m.url
-    }))
-  });
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
-  const [imageLoaded, setImageLoaded] = useState(false);
 
   // Filter valid media files
   const allMedia = media.filter(m => m.type === 'image' || m.type === 'video');
   const hasMedia = allMedia.length > 0;
   const selectedMedia = hasMedia ? allMedia[selectedIndex] : null;
-
-  // Debug: Log media information
-  console.log('Gallery Debug:', {
-    mediaCount: media.length,
-    allMediaCount: allMedia.length,
-    selectedIndex,
-    selectedMedia: selectedMedia ? {
-      id: selectedMedia.id,
-      type: selectedMedia.type,
-      url: selectedMedia.url
-    } : null
-  });
 
   // Navigation functions
   const nextSlide = () => {
@@ -91,11 +68,6 @@ export default function PuppyDetailGalleryComponent({
     setTouchEnd(null);
   };
 
-  // Reset image loaded state when selected media changes
-  useEffect(() => {
-    setImageLoaded(false);
-  }, [selectedIndex]);
-
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -127,10 +99,13 @@ export default function PuppyDetailGalleryComponent({
         className={`rounded-lg border border-gray-200 bg-white shadow-sm ${className}`}
       >
         <div className="flex aspect-square items-center justify-center bg-gray-100">
-          <PuppyImageComponent
+          <Image
             src="/placeholder-puppy.svg"
             alt={puppyName}
+            width={400}
+            height={400}
             className="h-full w-full object-cover"
+            priority
           />
         </div>
       </div>
@@ -150,40 +125,53 @@ export default function PuppyDetailGalleryComponent({
           onTouchEnd={handleTouchEnd}
         >
           {selectedMedia?.type === 'video' ? (
-            <video
-              src={selectedMedia.url}
-              className="h-full w-full object-cover"
-              controls
-              autoPlay
-              muted
-              loop
-            />
+            <div className="relative h-full w-full">
+              <video
+                src={selectedMedia.url}
+                className="h-full w-full object-cover"
+                controls
+                autoPlay
+                muted
+                loop
+                onError={(e) => {
+                  console.warn('Video failed to load:', selectedMedia.url);
+                  // Show fallback content
+                  const videoElement = e.target as HTMLVideoElement;
+                  videoElement.style.display = 'none';
+                  const fallbackDiv = videoElement.parentElement?.querySelector('.video-fallback');
+                  if (fallbackDiv) {
+                    (fallbackDiv as HTMLElement).style.display = 'flex';
+                  }
+                }}
+              />
+              {/* Fallback content for video errors */}
+              <div className="video-fallback hidden absolute inset-0 bg-gray-200 flex items-center justify-center">
+                <div className="text-gray-400 text-center">
+                  <svg className="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                  </svg>
+                  <p className="text-sm">Video no disponible</p>
+                </div>
+              </div>
+            </div>
           ) : (
             <div
               className="group relative h-full w-full cursor-pointer"
               onClick={() => setShowModal(true)}
             >
-              <img
+              <Image
                 src={selectedMedia?.url || '/placeholder-puppy.svg'}
-                alt={`${puppyName} - Main view`}
-                className={`h-full w-full object-cover transition-all duration-300 group-hover:scale-105 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  console.log('Image error for:', target.src);
-                  setImageLoaded(true);
-                  if (target.src !== '/placeholder-puppy.svg') {
-                    target.src = '/placeholder-puppy.svg';
-                  }
-                }}
-                onLoad={() => {
-                  console.log('Image loaded successfully:', selectedMedia?.url);
-                  setImageLoaded(true);
-                }}
+                alt={`${puppyName} - Image ${selectedIndex + 1}`}
+                fill
+                className="object-cover transition-all duration-300 group-hover:scale-105"
+                priority={selectedIndex < 3} // Priority for first 3 images
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
+                placeholder="blur"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                unoptimized={selectedMedia?.url?.includes('localhost')} // For local development
               />
-              {!imageLoaded && (
-                <div className="absolute inset-0 animate-pulse bg-gray-200" />
-              )}
 
+              {/* Hover overlay */}
               <div className="absolute inset-0 bg-black bg-opacity-0 transition-all duration-300 group-hover:bg-opacity-20" />
             </div>
           )}
@@ -193,7 +181,7 @@ export default function PuppyDetailGalleryComponent({
             <>
               <button
                 onClick={prevSlide}
-                className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-black bg-opacity-50 p-2 text-white transition-all hover:bg-opacity-70"
+                className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-black bg-opacity-50 p-2 text-white transition-all hover:bg-opacity-70 z-10"
                 aria-label="Previous"
               >
                 <svg
@@ -213,7 +201,7 @@ export default function PuppyDetailGalleryComponent({
 
               <button
                 onClick={nextSlide}
-                className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-black bg-opacity-50 p-2 text-white transition-all hover:bg-opacity-70"
+                className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-black bg-opacity-50 p-2 text-white transition-all hover:bg-opacity-70 z-10"
                 aria-label="Next"
               >
                 <svg
@@ -234,20 +222,20 @@ export default function PuppyDetailGalleryComponent({
           )}
 
           {/* Position indicator */}
-          <div className="absolute bottom-4 right-4 rounded-lg bg-black bg-opacity-50 px-3 py-1 text-sm text-white">
+          <div className="absolute bottom-4 right-4 rounded-lg bg-black bg-opacity-50 px-3 py-1 text-sm text-white z-10">
             {selectedIndex + 1} / {allMedia.length}
           </div>
 
           {/* Media type indicator */}
           {selectedMedia?.type === 'video' && (
-            <div className="absolute left-4 top-4 rounded-lg bg-red-500 px-2 py-1 text-xs text-white">
+            <div className="absolute left-4 top-4 rounded-lg bg-red-500 px-2 py-1 text-xs text-white z-10">
               🎥 Video
             </div>
           )}
 
           {/* Dot indicators - mobile only */}
           {allMedia.length > 1 && (
-            <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1.5 sm:hidden">
+            <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1.5 sm:hidden z-10">
               {allMedia.map((_, index) => (
                 <button
                   key={index}
@@ -264,13 +252,13 @@ export default function PuppyDetailGalleryComponent({
           )}
         </div>
 
-        {/* Thumbnail carousel - ultra compact version */}
+        {/* Thumbnail carousel */}
         {allMedia.length > 1 && (
           <div className="border-t border-gray-100 p-1.5">
             <div className="flex justify-center gap-0.5">
               {allMedia.slice(0, 6).map((media, index) => (
                 <button
-                  key={media.id}
+                  key={`thumb-${media.id}-${index}`}
                   onClick={() => goToSlide(index)}
                   className={`group relative h-8 w-8 flex-shrink-0 overflow-hidden rounded border transition-all ${
                     selectedIndex === index
@@ -284,7 +272,25 @@ export default function PuppyDetailGalleryComponent({
                         src={media.url}
                         className="h-full w-full object-cover"
                         muted
+                        onError={(e) => {
+                          console.warn('Thumbnail video failed to load:', media.url);
+                          // Show fallback content
+                          const videoElement = e.target as HTMLVideoElement;
+                          videoElement.style.display = 'none';
+                          const fallbackDiv = videoElement.parentElement?.querySelector('.video-fallback-thumb');
+                          if (fallbackDiv) {
+                            (fallbackDiv as HTMLElement).style.display = 'flex';
+                          }
+                        }}
                       />
+                      {/* Fallback content for thumbnail video errors */}
+                      <div className="video-fallback-thumb hidden absolute inset-0 bg-gray-200 flex items-center justify-center">
+                        <div className="text-gray-400">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                      </div>
                       <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
                         <div className="rounded-full bg-white bg-opacity-80 p-0.5">
                           <svg
@@ -298,16 +304,14 @@ export default function PuppyDetailGalleryComponent({
                       </div>
                     </div>
                   ) : (
-                    <img
+                    <Image
                       src={media.url}
-                      alt={`${puppyName} - ${index + 1}`}
-                      className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-110"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        if (target.src !== '/placeholder-puppy.svg') {
-                          target.src = '/placeholder-puppy.svg';
-                        }
-                      }}
+                      alt={`${puppyName} - Thumbnail ${index + 1}`}
+                      width={32}
+                      height={32}
+                      className="object-cover transition-transform duration-200 group-hover:scale-110"
+                      sizes="32px"
+                      unoptimized={media.url?.includes('localhost')}
                     />
                   )}
                 </button>
@@ -330,16 +334,23 @@ export default function PuppyDetailGalleryComponent({
         >
           <button
             onClick={() => setShowModal(false)}
-            className="absolute right-4 top-4 text-white hover:text-gray-300"
+            className="absolute right-4 top-4 text-white hover:text-gray-300 z-10"
           >
             <span className="text-3xl">✕</span>
           </button>
 
           <div className="relative max-h-[90vh] max-w-[90vw]">
-            <img
+            <Image
               src={selectedMedia.url}
               alt={`${puppyName} - Enlarged view`}
+              width={1200}
+              height={800}
               className="max-h-full max-w-full object-contain"
+              priority={true} // Always priority in modal
+              quality={95} // High quality for modal
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+              unoptimized={selectedMedia.url?.includes('localhost')}
             />
 
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-lg bg-black bg-opacity-50 px-4 py-2 text-white">
