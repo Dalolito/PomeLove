@@ -229,4 +229,25 @@ export interface Dictionary {
       };
     };
   };
+  catalog: {
+    title: string;
+    subtitle: string;
+    loading: string;
+    fromPrice: string;
+    resultsCount: string;
+    filtered: string;
+    total: string;
+    filters: {
+      title: string;
+      clearFilters: string;
+      category: string;
+      gender: string;
+      availability: string;
+      allCategories: string;
+      allGenders: string;
+      allAvailability: string;
+      available: string;
+      unavailable: string;
+    };
+  };
 }

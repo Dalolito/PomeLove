@@ -23,7 +23,22 @@ export interface CategoryFilterState {
   hasActiveFilters: boolean;
 }
 
+import { Category } from '@/domain/entities/Category';
+
 export interface FilterOption {
   value: string;
   label: string;
+}
+
+export interface CatalogFilters {
+  categoryId?: string;
+  gender?: 'male' | 'female' | 'all';
+  available?: boolean | 'all';
+}
+
+export interface CatalogFilterState {
+  filters: CatalogFilters;
+  selectedCategory: Category | null;
+  isLoading: boolean;
+  hasActiveFilters: boolean;
 }
