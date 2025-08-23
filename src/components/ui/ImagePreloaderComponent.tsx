@@ -6,7 +6,9 @@ interface ImagePreloaderComponentProps {
   images: string[];
 }
 
-export default function ImagePreloaderComponent({ images }: ImagePreloaderComponentProps) {
+export default function ImagePreloaderComponent({
+  images,
+}: ImagePreloaderComponentProps) {
   useEffect(() => {
     const preloadImages = () => {
       images.forEach(src => {

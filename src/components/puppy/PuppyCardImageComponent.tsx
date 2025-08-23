@@ -37,7 +37,7 @@ export default function PuppyCardImageComponent({
       {isLoading && (
         <div className="absolute inset-0 animate-pulse bg-gray-200" />
       )}
-      
+
       <img
         src={imageSrc}
         alt={alt}
@@ -50,7 +50,7 @@ export default function PuppyCardImageComponent({
         decoding="async"
         fetchPriority={priority ? 'high' : 'auto'}
       />
-      
+
       <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
     </div>
   );
