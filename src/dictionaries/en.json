@@ -16,10 +16,18 @@
   },
   "buttons": {
     "search_puppy": "Find a puppy",
-    "about_us": "About us"
+    "about_us": "About us",
+    "view_details": "View details",
+    "ask_about_puppy": "Ask about this puppy"
   },
   "home": {
-    "available_now": "Available now"
+    "available_now": "Available now",
+    "availableDescription": "Our adorable puppies are ready to find their perfect home",
+    "viewAllPuppies": "View All Available Pets →",
+    "contactTitle": "Did you find your perfect companion?",
+    "contactDescription": "Contact us now and we'll help you learn more about our adorable puppies",
+    "whatsappText": "WhatsApp: +57 300 443 9574",
+    "instagramText": "Follow us on Instagram"
   },
   "footer": {
     "sections": {

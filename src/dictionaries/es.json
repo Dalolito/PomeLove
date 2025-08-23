@@ -16,10 +16,18 @@
   },
   "buttons": {
     "search_puppy": "Buscar un peludo",
-    "about_us": "Sobre nosotros"
+    "about_us": "Sobre nosotros",
+    "view_details": "Ver detalles",
+    "ask_about_puppy": "Preguntar sobre este perro"
   },
   "home": {
-    "available_now": "Disponibles ahora"
+    "available_now": "Disponibles ahora",
+    "availableDescription": "Nuestros adorables cachorritos están listos para encontrar su hogar perfecto",
+    "viewAllPuppies": "Ver Todas las Mascotas Disponibles →",
+    "contactTitle": "¿Encontraste a tu compañero perfecto?",
+    "contactDescription": "Contáctanos ahora y te ayudaremos a conocer más sobre nuestros adorables cachorros",
+    "whatsappText": "WhatsApp: +57 300 443 9574",
+    "instagramText": "Síguenos en Instagram"
   },
   "footer": {
     "sections": {
