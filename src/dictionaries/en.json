@@ -18,7 +18,8 @@
     "search_puppy": "Find a puppy",
     "about_us": "About us",
     "view_details": "View details",
-    "ask_about_puppy": "Ask about this puppy"
+    "ask_about_puppy": "Ask about this puppy",
+    "back_to_catalog": "Back to catalog"
   },
   "home": {
     "available_now": "Available now",

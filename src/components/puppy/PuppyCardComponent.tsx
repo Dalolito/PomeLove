@@ -24,6 +24,7 @@ export default function PuppyCardComponent({
 }: PuppyCardComponentProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
 
+  // Get the first available image or fallback to placeholder
   const getMainImage = (): string => {
     if (puppy.media && puppy.media.length > 0) {
       const firstImage = puppy.media.find(media => media.type === 'image');
@@ -34,6 +35,7 @@ export default function PuppyCardComponent({
     return '/placeholder-puppy.svg';
   };
 
+  // Format price according to locale
   const formatPrice = (price: number): string => {
     return new Intl.NumberFormat(locale === 'es' ? 'es-CO' : 'en-US', {
       style: 'currency',
@@ -42,6 +44,7 @@ export default function PuppyCardComponent({
     }).format(price);
   };
 
+  // Handle WhatsApp contact click
   const handleContactClick = () => {
     const message = encodeURIComponent(
       `${dict.buttons.search_puppy}: ${puppy.name} - ${puppy.category.name}`
@@ -53,6 +56,7 @@ export default function PuppyCardComponent({
     <div
       className={`group overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:scale-[1.02] hover:border-blue-300 hover:shadow-xl ${className}`}
     >
+      {/* Image section */}
       <div className="relative aspect-square">
         <PuppyCardImageComponent
           src={getMainImage()}
@@ -62,6 +66,7 @@ export default function PuppyCardComponent({
           onLoad={() => setImageLoaded(true)}
         />
 
+        {/* Availability badge */}
         {puppy.available && (
           <div className="absolute left-3 top-3">
             <span className="inline-flex items-center rounded-full bg-emerald-500 px-2.5 py-0.5 text-xs font-medium text-white shadow-sm">
@@ -71,7 +76,9 @@ export default function PuppyCardComponent({
         )}
       </div>
 
+      {/* Content section */}
       <div className="space-y-3 p-4">
+        {/* Name and age */}
         <div className="flex items-center justify-between">
           <h3 className="truncate text-lg font-semibold text-gray-900">
             {puppy.name}
@@ -81,6 +88,7 @@ export default function PuppyCardComponent({
           </span>
         </div>
 
+        {/* Category and gender badges */}
         <div className="flex items-center gap-2">
           <span className="inline-flex items-center rounded-full border border-sky-200 bg-sky-100 px-2.5 py-0.5 text-xs font-medium text-sky-800">
             {puppy.category.name}
@@ -90,6 +98,7 @@ export default function PuppyCardComponent({
           </span>
         </div>
 
+        {/* Description */}
         <p
           className="line-clamp-2 text-sm text-gray-600"
           title={puppy.description}
@@ -97,6 +106,7 @@ export default function PuppyCardComponent({
           {puppy.description}
         </p>
 
+        {/* Action buttons */}
         <div className="flex flex-col gap-2">
           <PrimaryButtonComponent
             href={`/${locale}/puppy/${puppy.id}`}

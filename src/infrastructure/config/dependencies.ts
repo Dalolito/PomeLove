@@ -9,6 +9,7 @@ import { UpdatePuppyUseCase } from '@/application/useCases/puppies/UpdatePuppyUs
 import { DeletePuppyUseCase } from '@/application/useCases/puppies/DeletePuppyUseCase';
 import { GetFilteredPuppiesUseCase } from '@/application/useCases/puppies/GetFilteredPuppiesUseCase';
 import { GetFilteredCategoriesUseCase } from '@/application/useCases/categories/GetFilteredCategoriesUseCase';
+import { GetPuppyDetailUseCase } from '@/application/useCases/puppies/GetPuppyDetailUseCase';
 import { GetCategoryByIdUseCase } from '@/application/useCases/categories/GetCategoryByIdUseCase';
 import { GetCategoryWithPuppiesUseCase } from '@/application/useCases/categories/GetCategoryWithPuppiesUseCase';
 import { GetAllCategoriesUseCase } from '@/application/useCases/categories/GetAllCategoriesUseCase';
@@ -31,6 +32,7 @@ export const getFilteredPuppiesUseCase = new GetFilteredPuppiesUseCase(
 export const getFilteredCategoriesUseCase = new GetFilteredCategoriesUseCase(
   categoryRepository
 );
+export const getPuppyDetailUseCase = new GetPuppyDetailUseCase(puppyRepository);
 
 export const getCategoryByIdUseCase = new GetCategoryByIdUseCase(
   categoryRepository

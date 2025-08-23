@@ -14,6 +14,7 @@ export function usePuppyFilters({
   initialPuppies,
   onFilteredResults,
 }: UsePuppyFiltersProps) {
+  // Filter state management
   const [filterState, setFilterState] = useState<FilterState>({
     filters: {},
     isLoading: false,
@@ -22,9 +23,12 @@ export function usePuppyFilters({
 
   const [filteredPuppies, setFilteredPuppies] =
     useState<Puppy[]>(initialPuppies);
+
+  // Refs for debouncing and preventing duplicate calls
   const debounceTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
   const lastAppliedFiltersRef = useRef<string>('');
 
+  // Check if any filters are currently active
   const checkHasActiveFilters = useCallback(
     (filters: PuppyFilters): boolean => {
       return !!(
@@ -37,10 +41,12 @@ export function usePuppyFilters({
     []
   );
 
+  // Apply filters with server-side filtering
   const applyFilters = useCallback(
     async (filters: PuppyFilters) => {
       const filtersKey = JSON.stringify(filters);
 
+      // Prevent duplicate filter applications
       if (lastAppliedFiltersRef.current === filtersKey) {
         return;
       }
@@ -50,9 +56,11 @@ export function usePuppyFilters({
 
       try {
         if (!checkHasActiveFilters(filters)) {
+          // No active filters, show all initial puppies
           setFilteredPuppies(initialPuppies);
           onFilteredResults?.(initialPuppies);
         } else {
+          // Apply server-side filtering
           const result = await getFilteredPuppiesAction(filters);
 
           if (result.success && result.puppies) {
@@ -73,15 +81,18 @@ export function usePuppyFilters({
     [initialPuppies, onFilteredResults, checkHasActiveFilters]
   );
 
+  // Update individual filter with debouncing
   const updateFilter = useCallback(
     (key: keyof PuppyFilters, value: any) => {
       setFilterState(prev => {
         const newFilters = { ...prev.filters, [key]: value };
 
+        // Clear existing timeout
         if (debounceTimeoutRef.current) {
           clearTimeout(debounceTimeoutRef.current);
         }
 
+        // Different debounce delays for search vs other filters
         const delay = key === 'search' ? 300 : 100;
 
         debounceTimeoutRef.current = setTimeout(() => {
@@ -97,6 +108,7 @@ export function usePuppyFilters({
     [applyFilters]
   );
 
+  // Clear all filters and reset to initial state
   const clearFilters = useCallback(() => {
     if (debounceTimeoutRef.current) {
       clearTimeout(debounceTimeoutRef.current);

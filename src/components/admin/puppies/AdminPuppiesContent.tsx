@@ -19,6 +19,7 @@ export default function AdminPuppiesContent({
   dict,
   locale,
 }: AdminPuppiesContentProps) {
+  // Custom hook for managing puppy filtering and search
   const {
     filters,
     isLoading: isFiltering,
@@ -33,6 +34,7 @@ export default function AdminPuppiesContent({
 
   return (
     <div className="space-y-6">
+      {/* Filters section */}
       <AdminPuppiesFiltersComponent
         categories={categories}
         filters={filters}
@@ -43,6 +45,7 @@ export default function AdminPuppiesContent({
         dict={dict}
       />
 
+      {/* Puppies table with filtering states */}
       <AdminPuppiesTableComponent
         puppies={filteredPuppies}
         dict={dict}
