@@ -28,9 +28,9 @@ export default function PuppyAvailableListComponent({
       try {
         setLoading(true);
         setError('');
-        
+
         const result = await getFilteredPuppiesAction({
-          available: true
+          available: true,
         });
 
         if (result.success && result.puppies) {
@@ -51,7 +51,7 @@ export default function PuppyAvailableListComponent({
 
   if (error) {
     return (
-      <div className={`text-center py-12 ${className}`}>
+      <div className={`py-12 text-center ${className}`}>
         <div className="mx-auto max-w-sm">
           <div className="mb-4 text-6xl">⚠️</div>
           <h3 className="mb-2 text-lg font-semibold text-gray-900">
