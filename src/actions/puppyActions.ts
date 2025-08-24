@@ -70,6 +70,16 @@ export async function getPuppyByIdAction(id: string) {
 export async function getAllPuppiesAction() {
   try {
     const result = await getAllPuppiesUseCase.execute();
+
+    console.log('getAllPuppiesAction - Success:', result.success);
+    console.log('getAllPuppiesAction - Puppies count:', result.puppies?.length);
+    if (result.puppies && result.puppies.length > 0) {
+      console.log(
+        'getAllPuppiesAction - Sample puppy media:',
+        result.puppies[0].media
+      );
+    }
+
     return result;
   } catch (error) {
     console.error('Error getting all puppies:', error);

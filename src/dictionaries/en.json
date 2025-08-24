@@ -241,6 +241,10 @@
     "resultsCount": "{count} {status} {count, plural, one {pet} other {pets}}",
     "filtered": "found",
     "total": "available",
+    "empty": {
+      "title": "No pets available",
+      "description": "We don't have any pets available at the moment. Please check back soon!"
+    },
     "filters": {
       "title": "Filter by",
       "clearFilters": "Clear filters",

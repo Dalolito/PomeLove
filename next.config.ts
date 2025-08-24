@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
       {
         protocol: 'http',
         hostname: '127.0.0.1',
-      }
+      },
     ],
     // Image optimization settings
     formats: ['image/webp', 'image/avif'],

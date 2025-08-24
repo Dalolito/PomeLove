@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
+import Link from 'next/link';
 import { Puppy } from '@/domain/entities/Puppy';
 import { Dictionary } from '@/lib/types/dictionary';
 import { calculatePuppyAgeUtil } from '@/lib/utils/calculatePuppyAgeUtil';
@@ -24,18 +25,28 @@ export default function PuppyCardComponent({
 }: PuppyCardComponentProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  // Get the first available image or fallback to placeholder
-  const getMainImage = (): string => {
-    if (puppy.media && puppy.media.length > 0) {
-      const firstImage = puppy.media.find(media => media.type === 'image');
-      if (firstImage && firstImage.url) {
-        return firstImage.url;
-      }
+  const getMainImage = useCallback((): string => {
+    if (!puppy.media || puppy.media.length === 0) {
+      return '/placeholder-puppy.svg';
     }
-    return '/placeholder-puppy.svg';
-  };
 
-  // Format price according to locale
+    const firstValidImage = puppy.media.find(
+      media =>
+        media &&
+        media.type === 'image' &&
+        media.url &&
+        media.url.trim() !== '' &&
+        !media.url.includes('undefined') &&
+        !media.url.includes('null')
+    );
+
+    if (firstValidImage && firstValidImage.url) {
+      return firstValidImage.url;
+    }
+
+    return '/placeholder-puppy.svg';
+  }, [puppy.media]);
+
   const formatPrice = (price: number): string => {
     return new Intl.NumberFormat(locale === 'es' ? 'es-CO' : 'en-US', {
       style: 'currency',
@@ -44,31 +55,35 @@ export default function PuppyCardComponent({
     }).format(price);
   };
 
-  // Handle WhatsApp contact click
-  const handleContactClick = () => {
+  const handleContactClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     const message = encodeURIComponent(
       `${dict.buttons.search_puppy}: ${puppy.name} - ${puppy.category.name}`
     );
     window.open(`https://wa.me/573004439574?text=${message}`, '_blank');
   };
 
+  const handleImageLoad = useCallback(() => {
+    setImageLoaded(true);
+  }, []);
+
   return (
-    <div
-      className={`group overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:scale-[1.02] hover:border-blue-300 hover:shadow-xl ${className}`}
+    <Link
+      href={`/${locale}/puppy/${puppy.id}`}
+      className={`group block overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:scale-[1.02] hover:border-blue-300 hover:shadow-xl ${className}`}
     >
-      {/* Image section */}
       <div className="relative aspect-square">
         <PuppyCardImageComponent
           src={getMainImage()}
-          alt={puppy.name}
+          alt={`${puppy.name} - ${puppy.category?.name || 'Mascota'}`}
           priority={priority}
           className="absolute inset-0"
-          onLoad={() => setImageLoaded(true)}
+          onLoad={handleImageLoad}
         />
 
-        {/* Availability badge */}
         {puppy.available && (
-          <div className="absolute left-3 top-3">
+          <div className="absolute left-3 top-3 z-10">
             <span className="inline-flex items-center rounded-full bg-emerald-500 px-2.5 py-0.5 text-xs font-medium text-white shadow-sm">
               {dict.admin.table.status.available}
             </span>
@@ -76,57 +91,47 @@ export default function PuppyCardComponent({
         )}
       </div>
 
-      {/* Content section */}
       <div className="space-y-3 p-4">
-        {/* Name and age */}
         <div className="flex items-center justify-between">
           <h3 className="truncate text-lg font-semibold text-gray-900">
-            {puppy.name}
+            {puppy.name || 'Sin nombre'}
           </h3>
           <span className="ml-2 whitespace-nowrap text-sm text-gray-500">
             {calculatePuppyAgeUtil(puppy.birthDate, dict)}
           </span>
         </div>
 
-        {/* Category and gender badges */}
         <div className="flex items-center gap-2">
           <span className="inline-flex items-center rounded-full border border-sky-200 bg-sky-100 px-2.5 py-0.5 text-xs font-medium text-sky-800">
-            {puppy.category.name}
+            {puppy.category?.name || 'Sin categoría'}
           </span>
           <span className="inline-flex items-center rounded-full border border-rose-200 bg-rose-100 px-2.5 py-0.5 text-xs font-medium text-rose-800">
-            {dict.admin.forms.gender[puppy.gender]}
+            {dict.admin.forms.gender[puppy.gender] || puppy.gender}
           </span>
         </div>
 
-        {/* Description */}
         <p
           className="line-clamp-2 text-sm text-gray-600"
-          title={puppy.description}
+          title={puppy.description || ''}
         >
-          {puppy.description}
+          {puppy.description || 'Sin descripción disponible'}
         </p>
 
-        {/* Action buttons */}
         <div className="flex flex-col gap-2">
-          <PrimaryButtonComponent
-            href={`/${locale}/puppy/${puppy.id}`}
-            fullWidth
-            size="md"
-            className="!hover:bg-blue-600 transform !bg-blue-500 transition-transform duration-200 active:scale-95"
-          >
-            {dict.buttons.view_details}
-          </PrimaryButtonComponent>
+          <div className="text-center">
+            <span className="inline-flex w-full items-center justify-center rounded-md border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-medium text-blue-600 transition-colors duration-200 hover:bg-blue-100">
+              {dict.buttons.view_details}
+            </span>
+          </div>
 
-          <PrimaryButtonComponent
+          <button
             onClick={handleContactClick}
-            fullWidth
-            size="md"
-            className="!hover:bg-emerald-600 transform !bg-emerald-500 transition-transform duration-200 active:scale-95"
+            className="w-full transform rounded-md border border-transparent bg-emerald-500 px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 active:scale-95"
           >
             {dict.buttons.ask_about_puppy}
-          </PrimaryButtonComponent>
+          </button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

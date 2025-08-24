@@ -238,6 +238,10 @@ export interface Dictionary {
     resultsCount: string;
     filtered: string;
     total: string;
+    empty: {
+      title: string;
+      description: string;
+    };
     filters: {
       title: string;
       clearFilters: string;

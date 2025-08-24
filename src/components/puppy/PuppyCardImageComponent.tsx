@@ -22,6 +22,7 @@ export default function PuppyCardImageComponent({
 
   const handleImageLoad = () => {
     setIsLoading(false);
+    setImageError(false);
     onLoad?.();
   };
 
@@ -30,12 +31,13 @@ export default function PuppyCardImageComponent({
     setIsLoading(false);
   };
 
-  const imageSrc = imageError ? '/placeholder-puppy.svg' : src;
+  const imageSrc =
+    imageError || !src || src.trim() === '' ? '/placeholder-puppy.svg' : src;
 
   return (
     <div className={`relative overflow-hidden ${className}`}>
       {isLoading && (
-        <div className="absolute inset-0 animate-pulse bg-gray-200" />
+        <div className="absolute inset-0 animate-pulse rounded bg-gray-200" />
       )}
 
       <img
@@ -48,7 +50,7 @@ export default function PuppyCardImageComponent({
         onLoad={handleImageLoad}
         loading={priority ? 'eager' : 'lazy'}
         decoding="async"
-        fetchPriority={priority ? 'high' : 'auto'}
+        key={src}
       />
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
