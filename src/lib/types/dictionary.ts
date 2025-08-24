@@ -273,4 +273,53 @@ export interface Dictionary {
     messageTemplate: string;
     basicMessage: string;
   };
+  about?: {
+    hero?: {
+      title: string;
+      subtitle: string;
+      cta: string;
+    };
+    happyClients?: {
+      title: string;
+      subtitle: string;
+      stats?: {
+        puppies: string;
+        countries: string;
+        years: string;
+        korean: string;
+      };
+    };
+    experience?: {
+      title: string;
+      subtitle: string;
+      timeline?: {
+        [key: string]: string;
+      };
+    };
+    breeding?: {
+      title: string;
+      subtitle: string;
+      features?: string[];
+    };
+    certifications?: {
+      title: string;
+      subtitle: string;
+      badges?: string[];
+      difference?: {
+        title: string;
+        description: string;
+      };
+    };
+    exports?: {
+      title: string;
+      subtitle: string;
+      process?: string[];
+      processTitle?: string;
+      countriesTitle?: string;
+      cta?: {
+        title: string;
+        description: string;
+      };
+    };
+  };
 }
