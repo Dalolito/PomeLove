@@ -7,7 +7,8 @@ import FormTextareaComponent from '@/components/ui/FormTextareaComponent';
 
 interface FormData {
   name: string;
-  description: string;
+  description_es: string;
+  description_en: string;
   birthDate: string;
   gender: 'male' | 'female';
   categoryId: string;
@@ -83,11 +84,19 @@ export default function AdminFormBasicInfoComponent({
         />
       </div>
 
-      <div className="mt-4">
+      <div className="mt-4 space-y-4">
         <FormTextareaComponent
-          value={data.description}
-          onChange={value => onChange('description', value)}
-          label={dict.admin.forms.fields.description}
+          value={data.description_es}
+          onChange={value => onChange('description_es', value)}
+          label={`${dict.admin.forms.fields.description} (Español)`}
+          placeholder={dict.admin.forms.placeholders.description}
+          required
+        />
+
+        <FormTextareaComponent
+          value={data.description_en}
+          onChange={value => onChange('description_en', value)}
+          label={`${dict.admin.forms.fields.description} (English)`}
           placeholder={dict.admin.forms.placeholders.description}
           required
         />

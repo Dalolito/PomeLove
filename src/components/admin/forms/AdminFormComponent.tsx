@@ -27,7 +27,8 @@ export default function AdminFormComponent({
   const [error, setError] = useState<string>('');
   const [formData, setFormData] = useState<{
     name: string;
-    description: string;
+    description_es: string;
+    description_en: string;
     birthDate: string;
     gender: 'male' | 'female';
     categoryId: string;
@@ -36,7 +37,8 @@ export default function AdminFormComponent({
     motherImage: MediaFile | null;
   }>({
     name: '',
-    description: '',
+    description_es: '',
+    description_en: '',
     birthDate: '',
     gender: 'male',
     categoryId: '',
@@ -46,7 +48,13 @@ export default function AdminFormComponent({
   });
 
   const handleBasicInfoChange = (
-    field: 'name' | 'description' | 'birthDate' | 'gender' | 'categoryId',
+    field:
+      | 'name'
+      | 'description_es'
+      | 'description_en'
+      | 'birthDate'
+      | 'gender'
+      | 'categoryId',
     value: string
   ) => {
     setFormData(prev => ({
@@ -80,7 +88,8 @@ export default function AdminFormComponent({
     try {
       const result = await createPuppyAction({
         name: formData.name,
-        description: formData.description,
+        description_es: formData.description_es,
+        description_en: formData.description_en,
         birthDate: formData.birthDate,
         gender: formData.gender,
         categoryId: formData.categoryId,
@@ -139,7 +148,8 @@ export default function AdminFormComponent({
         <AdminFormBasicInfoComponent
           data={{
             name: formData.name,
-            description: formData.description,
+            description_es: formData.description_es,
+            description_en: formData.description_en,
             birthDate: formData.birthDate,
             gender: formData.gender,
             categoryId: formData.categoryId,

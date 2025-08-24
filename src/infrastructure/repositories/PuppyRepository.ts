@@ -15,7 +15,8 @@ export class PuppyRepository implements IPuppyRepository {
       const createdPuppy = await tx.puppy.create({
         data: {
           name: data.name,
-          description: data.description,
+          description_es: data.description_es,
+          description_en: data.description_en,
           birthDate: new Date(data.birthDate),
           gender: data.gender,
           categoryId: parseInt(data.categoryId),
@@ -115,7 +116,8 @@ export class PuppyRepository implements IPuppyRepository {
         where: { id: parseInt(id) },
         data: {
           name: data.name,
-          description: data.description,
+          description_es: data.description_es,
+          description_en: data.description_en,
           birthDate: data.birthDate ? new Date(data.birthDate) : undefined,
           gender: data.gender,
           categoryId: data.categoryId ? parseInt(data.categoryId) : undefined,
@@ -273,7 +275,8 @@ export class PuppyRepository implements IPuppyRepository {
   private mapToPuppyEntity(puppy: {
     id: number;
     name: string;
-    description: string;
+    description_es: string;
+    description_en: string;
     birthDate: Date;
     gender: string;
     fatherImage: string | null;
@@ -301,7 +304,8 @@ export class PuppyRepository implements IPuppyRepository {
     return {
       id: puppy.id.toString(),
       name: puppy.name,
-      description: puppy.description,
+      description_es: puppy.description_es,
+      description_en: puppy.description_en,
       birthDate: puppy.birthDate,
       gender: puppy.gender as 'male' | 'female',
       fatherImage: puppy.fatherImage,

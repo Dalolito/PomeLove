@@ -5,6 +5,7 @@ import PuppyImageComponent from '@/components/ui/PuppyImageComponent';
 import { Dictionary } from '@/lib/types/dictionary';
 import { Puppy } from '@/domain/entities/Puppy';
 import { calculatePuppyAgeUtil } from '@/lib/utils/calculatePuppyAgeUtil';
+import { getLocalizedDescription } from '@/lib/utils/getLocalizedDescription';
 
 interface AdminPuppiesTableRowProps {
   puppy: Puppy;
@@ -31,12 +32,24 @@ export default function AdminPuppiesTableRowComponent({
   };
 
   const getMainImage = (): string => {
-    if (puppy.media && puppy.media.length > 0) {
-      const firstImage = puppy.media.find(media => media.type === 'image');
-      if (firstImage) {
-        return firstImage.url;
-      }
+    if (!puppy.media || puppy.media.length === 0) {
+      return '/placeholder-puppy.svg';
     }
+
+    const firstValidImage = puppy.media.find(
+      media =>
+        media &&
+        media.type === 'image' &&
+        media.url &&
+        media.url.trim() !== '' &&
+        !media.url.includes('undefined') &&
+        !media.url.includes('null')
+    );
+
+    if (firstValidImage && firstValidImage.url) {
+      return firstValidImage.url;
+    }
+
     return '/placeholder-puppy.svg';
   };
 
@@ -85,9 +98,9 @@ export default function AdminPuppiesTableRowComponent({
       <td className="hidden max-w-xs px-2 py-3 sm:px-4 lg:table-cell">
         <div
           className="truncate text-sm text-gray-900"
-          title={puppy.description}
+          title={getLocalizedDescription(puppy, locale)}
         >
-          {puppy.description}
+          {getLocalizedDescription(puppy, locale)}
         </div>
       </td>
 

@@ -6,6 +6,7 @@ import { Puppy } from '@/domain/entities/Puppy';
 import { Dictionary } from '@/lib/types/dictionary';
 import { calculatePuppyAgeUtil } from '@/lib/utils/calculatePuppyAgeUtil';
 import { openWhatsAppContact } from '@/lib/utils/whatsappUtils';
+import { getLocalizedDescription } from '@/lib/utils/getLocalizedDescription';
 import PuppyCardImageComponent from '@/components/puppy/PuppyCardImageComponent';
 import PrimaryButtonComponent from '@/components/ui/PrimaryButtonComponent';
 
@@ -110,9 +111,10 @@ export default function PuppyCardComponent({
 
         <p
           className="line-clamp-2 text-sm text-gray-600"
-          title={puppy.description || ''}
+          title={getLocalizedDescription(puppy, locale) || ''}
         >
-          {puppy.description || dict.utils.fallbacks.noDescription}
+          {getLocalizedDescription(puppy, locale) ||
+            dict.utils.fallbacks.noDescription}
         </p>
 
         <div className="flex flex-col gap-2">

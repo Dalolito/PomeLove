@@ -25,27 +25,30 @@ export default function PuppyImageComponent({
   };
 
   const handleImageError = () => {
-    setIsLoading(false);
     setImageError(true);
+    setIsLoading(false);
   };
 
-  const imageSrc = imageError ? '/placeholder-puppy.svg' : src;
+  const imageSrc =
+    imageError || !src || src.trim() === '' ? '/placeholder-puppy.svg' : src;
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative overflow-hidden ${className}`}>
       {isLoading && (
-        <div className="absolute inset-0 animate-pulse bg-gray-200" />
+        <div className="absolute inset-0 animate-pulse rounded bg-gray-200" />
       )}
 
       <img
         src={imageSrc}
         alt={alt}
-        className={`${className} ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
-        onLoad={handleImageLoad}
+        className={`h-full w-full object-cover transition-all duration-300 ${
+          isLoading ? 'opacity-0' : 'opacity-100'
+        }`}
         onError={handleImageError}
+        onLoad={handleImageLoad}
         loading="lazy"
         decoding="async"
-        fetchPriority="high"
+        key={src}
       />
     </div>
   );

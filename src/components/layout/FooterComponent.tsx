@@ -1,8 +1,6 @@
-'use client';
-
 import React from 'react';
 import { Dictionary } from '@/lib/types/dictionary';
-import { openBasicWhatsAppContact } from '@/lib/utils/whatsappUtils';
+import WhatsAppContactButton from '@/components/layout/WhatsAppContactButton';
 
 interface FooterProps {
   title: string;
@@ -13,12 +11,7 @@ interface FooterProps {
 export default function Footer({ title, currentLocale, dict }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
-  const contactLinks: Array<{
-    name: string;
-    url: string;
-    icon: React.ReactNode;
-    onClick?: () => void;
-  }> = [
+  const staticContactLinks = [
     {
       name: 'Instagram',
       url: 'https://www.instagram.com/pomelove_korea?igsh=dTA4Njl5aXY5bnRk&utm_source=qr',
@@ -36,16 +29,6 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
           f
         </div>
       ),
-    },
-    {
-      name: 'WhatsApp',
-      url: '#',
-      icon: (
-        <div className="flex h-5 w-5 items-center justify-center rounded bg-green-500 text-xs font-bold text-white">
-          WA
-        </div>
-      ),
-      onClick: () => openBasicWhatsAppContact(dict),
     },
   ];
 
@@ -90,45 +73,43 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
 
             {/* Social links */}
             <div className="mb-6 flex gap-4">
-              {contactLinks.map(contact =>
-                contact.onClick ? (
-                  <button
-                    key={contact.name}
-                    onClick={contact.onClick}
-                    className="group flex h-10 w-10 items-center justify-center rounded-lg bg-slate-700 transition-colors hover:bg-red-500"
-                    title={contact.name}
-                  >
-                    <span className="text-slate-300 transition-colors group-hover:text-white">
-                      {contact.icon}
-                    </span>
-                  </button>
-                ) : (
-                  <a
-                    key={contact.name}
-                    href={contact.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex h-10 w-10 items-center justify-center rounded-lg bg-slate-700 transition-colors hover:bg-red-500"
-                    title={contact.name}
-                  >
-                    <span className="text-slate-300 transition-colors group-hover:text-white">
-                      {contact.icon}
-                    </span>
-                  </a>
-                )
-              )}
+              {staticContactLinks.map(contact => (
+                <a
+                  key={contact.name}
+                  href={contact.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex h-10 w-10 items-center justify-center rounded-lg bg-slate-700 transition-colors hover:bg-red-500"
+                  title={contact.name}
+                >
+                  <span className="text-slate-300 transition-colors group-hover:text-white">
+                    {contact.icon}
+                  </span>
+                </a>
+              ))}
+
+              {/* WhatsApp button - client component */}
+              <WhatsAppContactButton dict={dict}>
+                <span className="text-slate-300 transition-colors group-hover:text-white">
+                  <div className="flex h-5 w-5 items-center justify-center rounded bg-green-500 text-xs font-bold text-white">
+                    WA
+                  </div>
+                </span>
+              </WhatsAppContactButton>
             </div>
 
             {/* Contact info */}
             <div className="space-y-2 text-sm text-slate-300">
               <p className="flex items-center gap-2">
                 <span>📱</span>
-                <button
-                  onClick={() => openBasicWhatsAppContact(dict)}
+                <a
+                  href="https://wa.me/573004439574"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="transition-colors hover:text-white"
                 >
                   +57 300 443 9574
-                </button>
+                </a>
               </p>
               <p className="flex items-center gap-2">
                 <span>📍</span>
