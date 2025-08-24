@@ -9,7 +9,6 @@ import CatalogHeaderComponent from '@/components/catalog/CatalogHeaderComponent'
 import CatalogFiltersComponent from '@/components/catalog/CatalogFiltersComponent';
 import PuppyGridComponent from '@/components/puppy/PuppyGridComponent';
 
-
 interface CatalogContentComponentProps {
   initialPuppies: Puppy[];
   categories: Category[];

@@ -16,69 +16,81 @@ export default function AboutUsExperienceComponent({
   const timelineItems = [
     {
       year: '2014',
-      title: dict.about?.experience?.timeline?.['2014'] || 'Inicio como criadores especializados',
-      description: 'Comenzamos nuestra pasión por los Pomeranias con dedicación y amor.',
+      title:
+        dict.about?.experience?.timeline?.['2014'] ||
+        'Inicio como criadores especializados',
+      description:
+        'Comenzamos nuestra pasión por los Pomeranias con dedicación y amor.',
       icon: '🌱',
     },
     {
-      year: '2019', 
-      title: dict.about?.experience?.timeline?.['2019'] || 'Primera importación de líneas coreanas',
-      description: 'Nos enfocamos en la importación de líneas exclusivas de calidad, especialmente Pomeranias Coreanos.',
+      year: '2019',
+      title:
+        dict.about?.experience?.timeline?.['2019'] ||
+        'Primera importación de líneas coreanas',
+      description:
+        'Nos enfocamos en la importación de líneas exclusivas de calidad, especialmente Pomeranias Coreanos.',
       icon: '🇰🇷',
     },
     {
       year: '2021',
-      title: dict.about?.experience?.timeline?.['2021'] || 'Certificación FCI y AKC',
-      description: 'Nos registramos ante el FCI y AKC como criadores responsables.',
+      title:
+        dict.about?.experience?.timeline?.['2021'] || 'Certificación FCI y AKC',
+      description:
+        'Nos registramos ante el FCI y AKC como criadores responsables.',
       icon: '🏆',
     },
     {
       year: '2024',
-      title: dict.about?.experience?.timeline?.['2024'] || 'Más de 15 países de exportación',
-      description: 'Hemos exportado a EE. UU., Ecuador, México, Portugal, Chile, Panamá, República Dominicana, España, Rusia, entre otros.',
+      title:
+        dict.about?.experience?.timeline?.['2024'] ||
+        'Más de 15 países de exportación',
+      description:
+        'Hemos exportado a EE. UU., Ecuador, México, Portugal, Chile, Panamá, República Dominicana, España, Rusia, entre otros.',
       icon: '🌍',
     },
   ];
 
   return (
-    <section className="py-20 bg-white relative overflow-hidden">
+    <section className="relative overflow-hidden bg-white py-20">
       <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-blue-50 opacity-50"></div>
-      
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-16 fade-in-up">
-          <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+
+      <div className="container relative z-10 mx-auto px-4">
+        <div className="fade-in-up mb-16 text-center">
+          <h2 className="mb-6 text-5xl font-bold text-gray-900 md:text-6xl">
             {dict.about?.experience?.title || 'Más de 10 Años de Experiencia'}
           </h2>
-          <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-            {dict.about?.experience?.subtitle || 'Con más de 10 años de experiencia en la crianza de Pomeranias, nos hemos consolidado como criadores especializados, y desde hace 5 años, nos hemos enfocado en la importación de líneas exclusivas de calidad, especialmente Pomeranias Coreanos.'}
+          <p className="mx-auto max-w-4xl text-xl leading-relaxed text-gray-600 md:text-2xl">
+            {dict.about?.experience?.subtitle ||
+              'Con más de 10 años de experiencia en la crianza de Pomeranias, nos hemos consolidado como criadores especializados, y desde hace 5 años, nos hemos enfocado en la importación de líneas exclusivas de calidad, especialmente Pomeranias Coreanos.'}
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid items-center gap-16 lg:grid-cols-2">
           <div>
             <div className="relative">
-              <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-red-500 to-purple-600"></div>
-              
+              <div className="absolute bottom-0 left-6 top-0 w-0.5 bg-gradient-to-b from-red-500 to-purple-600"></div>
+
               {timelineItems.map((item, index) => (
                 <div
                   key={index}
-                  className="relative flex items-start mb-12 last:mb-0"
+                  className="relative mb-12 flex items-start last:mb-0"
                   style={{ animationDelay: `${index * 200}ms` }}
                 >
-                  <div className="relative z-10 flex items-center justify-center w-12 h-12 bg-white border-4 border-red-500 rounded-full shadow-lg">
+                  <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full border-4 border-red-500 bg-white shadow-lg">
                     <span className="text-xl">{item.icon}</span>
                   </div>
-                  
-                  <div className="ml-6 bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex-1">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="inline-block px-3 py-1 bg-red-100 text-red-600 rounded-full text-sm font-bold">
+
+                  <div className="ml-6 flex-1 rounded-xl bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                    <div className="mb-3 flex items-center gap-3">
+                      <span className="inline-block rounded-full bg-red-100 px-3 py-1 text-sm font-bold text-red-600">
                         {item.year}
                       </span>
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    <h3 className="mb-2 text-xl font-bold text-gray-900">
                       {item.title}
                     </h3>
-                    <p className="text-gray-600 leading-relaxed">
+                    <p className="leading-relaxed text-gray-600">
                       {item.description}
                     </p>
                   </div>
@@ -88,7 +100,7 @@ export default function AboutUsExperienceComponent({
           </div>
 
           <div>
-            <AboutUsMediaCarouselComponent 
+            <AboutUsMediaCarouselComponent
               media={aboutMedia.breeding}
               variant="puppies"
               showCaptions={false}

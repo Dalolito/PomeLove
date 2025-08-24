@@ -1,5 +1,5 @@
 import { Dictionary } from '@/lib/types/dictionary';
-import PuppyImageComponent from '@/components/ui/PuppyImageComponent';
+import PuppyCarouselImageComponent from '@/components/ui/PuppyCarouselImageComponent';
 import { validateImageUrl } from '@/lib/utils/imageUtils';
 
 interface PuppyDetailParentsComponentProps {
@@ -41,10 +41,10 @@ export default function PuppyDetailParentsComponent({
               {dict.admin.forms.fields.fatherImage}
             </h3>
             <div className="mx-auto h-40 w-40 overflow-hidden rounded-lg border border-gray-200 bg-gray-100">
-              <PuppyImageComponent
+              <PuppyCarouselImageComponent
                 src={validatedFatherImage}
                 alt="Padre"
-                className="h-full w-full object-cover"
+                className="object-cover"
               />
             </div>
           </div>
@@ -56,10 +56,10 @@ export default function PuppyDetailParentsComponent({
               {dict.admin.forms.fields.motherImage}
             </h3>
             <div className="mx-auto h-40 w-40 overflow-hidden rounded-lg border border-gray-200 bg-gray-100">
-              <PuppyImageComponent
+              <PuppyCarouselImageComponent
                 src={validatedMotherImage}
                 alt="Madre"
-                className="h-full w-full object-cover"
+                className="object-cover"
               />
             </div>
           </div>

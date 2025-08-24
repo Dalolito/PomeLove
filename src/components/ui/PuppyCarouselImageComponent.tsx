@@ -2,22 +2,21 @@
 
 import { useState, useCallback, useEffect } from 'react';
 
-interface PuppyImageComponentProps {
+interface PuppyCarouselImageComponentProps {
   src: string | null | undefined;
   alt: string;
-  className?: string;
   priority?: boolean;
   onLoad?: () => void;
-  containerClassName?: string;
+  className?: string;
 }
 
-export default function PuppyImageComponent({
+export default function PuppyCarouselImageComponent({
   src,
   alt,
-  className = '',
   priority = false,
   onLoad,
-}: PuppyImageComponentProps) {
+  className = '',
+}: PuppyCarouselImageComponentProps) {
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [retryCount, setRetryCount] = useState(0);
@@ -36,7 +35,7 @@ export default function PuppyImageComponent({
 
     if (trimmedSrc.includes('unsplash.com') && !trimmedSrc.includes('w=')) {
       const separator = trimmedSrc.includes('?') ? '&' : '?';
-      return `${trimmedSrc}${separator}w=300&h=300&fit=crop&q=80`;
+      return `${trimmedSrc}${separator}w=400&h=400&fit=crop&q=80`;
     }
 
     return trimmedSrc;
@@ -53,13 +52,10 @@ export default function PuppyImageComponent({
   }, [onLoad]);
 
   const handleError = useCallback(() => {
-    console.log(`❌ Image failed to load: ${currentSrc}`);
-
     if (retryCount === 0 && !isPlaceholder(currentSrc)) {
       const separator = currentSrc.includes('?') ? '&' : '?';
       const retryUrl = `${currentSrc}${separator}retry=${Date.now()}`;
 
-      console.log(`🔄 Retrying with: ${retryUrl}`);
       setTimeout(() => {
         setRetryCount(1);
         setCurrentSrc(retryUrl);
@@ -70,10 +66,9 @@ export default function PuppyImageComponent({
 
     if (retryCount === 1 && currentSrc.includes('unsplash.com')) {
       const optimizedUnsplashUrl = currentSrc.includes('?')
-        ? `${currentSrc}&w=300&h=300&fit=crop&q=80`
-        : `${currentSrc}?w=300&h=300&fit=crop&q=80`;
+        ? `${currentSrc}&w=400&h=400&fit=crop&q=80`
+        : `${currentSrc}?w=400&h=400&fit=crop&q=80`;
 
-      console.log(`🔄 Trying optimized Unsplash URL: ${optimizedUnsplashUrl}`);
       setTimeout(() => {
         setRetryCount(2);
         setCurrentSrc(optimizedUnsplashUrl);
@@ -84,9 +79,8 @@ export default function PuppyImageComponent({
 
     if (retryCount === 2 && currentSrc.includes('unsplash.com')) {
       const simpleUnsplashUrl =
-        'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=200&h=200&fit=crop&q=70';
+        'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=300&h=300&fit=crop&q=70';
 
-      console.log(`🔄 Trying simple Unsplash URL: ${simpleUnsplashUrl}`);
       setTimeout(() => {
         setRetryCount(3);
         setCurrentSrc(simpleUnsplashUrl);
@@ -95,7 +89,6 @@ export default function PuppyImageComponent({
       return;
     }
 
-    console.log(`❌ All retries failed, using placeholder`);
     setHasError(true);
     setIsLoading(false);
     setCurrentSrc('/placeholder-puppy.svg');
@@ -115,7 +108,7 @@ export default function PuppyImageComponent({
       : currentSrc;
 
   return (
-    <div className={`relative overflow-hidden ${className}`}>
+    <div className={`relative h-full w-full ${className}`}>
       {isLoading && !isPlaceholder(currentSrc) && (
         <div className="absolute inset-0 z-10 flex animate-pulse items-center justify-center bg-gray-200">
           <svg
@@ -136,9 +129,9 @@ export default function PuppyImageComponent({
         key={currentSrc}
         src={finalSrc || '/placeholder-puppy.svg'}
         alt={alt}
-        className={`h-full w-full transition-all duration-300 ${
+        className={`h-full w-full object-contain transition-all duration-300 ${
           isLoading && !isPlaceholder(currentSrc) ? 'opacity-0' : 'opacity-100'
-        } ${className}`}
+        }`}
         onLoad={handleLoad}
         onError={handleError}
         loading={priority ? 'eager' : 'lazy'}
@@ -146,12 +139,6 @@ export default function PuppyImageComponent({
         crossOrigin="anonymous"
         referrerPolicy="no-referrer-when-downgrade"
       />
-
-      {process.env.NODE_ENV === 'development' && retryCount > 0 && (
-        <div className="absolute right-2 top-2 rounded bg-yellow-500 px-1 py-0.5 text-xs text-black">
-          R{retryCount}
-        </div>
-      )}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import PuppyImageComponent from '@/components/ui/PuppyImageComponent';
+import PuppyCarouselImageComponent from '@/components/ui/PuppyCarouselImageComponent';
 
 interface MediaItem {
   id: string;
@@ -31,14 +31,14 @@ export default function AboutUsMediaCarouselComponent({
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const nextSlide = useCallback(() => {
-    setCurrentIndex((prevIndex) => 
+    setCurrentIndex(prevIndex =>
       prevIndex === media.length - 1 ? 0 : prevIndex + 1
     );
     setImageLoaded(false);
   }, [media.length]);
 
   const prevSlide = useCallback(() => {
-    setCurrentIndex((prevIndex) => 
+    setCurrentIndex(prevIndex =>
       prevIndex === 0 ? media.length - 1 : prevIndex - 1
     );
     setImageLoaded(false);
@@ -82,7 +82,7 @@ export default function AboutUsMediaCarouselComponent({
 
   if (media.length === 0) {
     return (
-      <div className="flex items-center justify-center p-8 bg-gray-100 rounded-lg">
+      <div className="flex items-center justify-center rounded-lg bg-gray-100 p-8">
         <p className="text-gray-500">No hay media disponible</p>
       </div>
     );
@@ -104,9 +104,9 @@ export default function AboutUsMediaCarouselComponent({
   };
 
   return (
-    <div className={`relative group ${className}`}>
+    <div className={`group relative ${className}`}>
       <div
-        className={`relative ${getAspectRatio()} bg-gray-900 rounded-xl overflow-hidden shadow-2xl`}
+        className={`relative ${getAspectRatio()} overflow-hidden rounded-xl bg-gray-900 shadow-2xl`}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -120,21 +120,32 @@ export default function AboutUsMediaCarouselComponent({
             muted
             loop
             playsInline
-            className="w-full h-full object-cover"
+            className="h-full w-full object-cover"
           >
-            <source src={currentItem.url} type="video/mp4" />
+            <source
+              src={
+                currentItem.url && currentItem.url.trim() !== ''
+                  ? currentItem.url
+                  : '/placeholder-puppy.svg'
+              }
+              type="video/mp4"
+            />
           </video>
         ) : (
-          <div className="relative w-full h-full bg-gradient-to-br from-gray-200 via-gray-100 to-gray-50 flex items-center justify-center">
+          <div className="relative flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-200 via-gray-100 to-gray-50">
             {!imageLoaded && (
               <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
-                <div className="w-8 h-8 border-4 border-red-500 border-t-transparent rounded-full animate-spin"></div>
+                <div className="h-8 w-8 animate-spin rounded-full border-4 border-red-500 border-t-transparent"></div>
               </div>
             )}
-            <PuppyImageComponent
-              src={currentItem?.url || '/placeholder-puppy.svg'}
+            <PuppyCarouselImageComponent
+              src={
+                currentItem?.url && currentItem.url.trim() !== ''
+                  ? currentItem.url
+                  : '/placeholder-puppy.svg'
+              }
               alt="Imagen de carrusel"
-              className={`w-full h-full object-contain transition-opacity duration-300 ${
+              className={`transition-opacity duration-300 ${
                 imageLoaded ? 'opacity-100' : 'opacity-0'
               }`}
               priority={true}
@@ -147,13 +158,13 @@ export default function AboutUsMediaCarouselComponent({
 
         {media.length > 1 && (
           <>
-            <div 
-              className="absolute left-0 top-0 w-1/2 h-full cursor-pointer z-10"
+            <div
+              className="absolute left-0 top-0 z-10 h-full w-1/2 cursor-pointer"
               onClick={prevSlide}
               aria-label="Anterior"
             />
-            <div 
-              className="absolute right-0 top-0 w-1/2 h-full cursor-pointer z-10"
+            <div
+              className="absolute right-0 top-0 z-10 h-full w-1/2 cursor-pointer"
               onClick={nextSlide}
               aria-label="Siguiente"
             />
@@ -162,14 +173,14 @@ export default function AboutUsMediaCarouselComponent({
       </div>
 
       {media.length > 1 && (
-        <div className="flex justify-center mt-4 gap-2">
+        <div className="mt-4 flex justify-center gap-2">
           {media.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              className={`h-3 w-3 rounded-full transition-all duration-300 ${
                 index === currentIndex
-                  ? 'bg-red-500 scale-125'
+                  ? 'scale-125 bg-red-500'
                   : 'bg-gray-300 hover:bg-gray-400'
               }`}
               aria-label={`Ir a imagen ${index + 1}`}

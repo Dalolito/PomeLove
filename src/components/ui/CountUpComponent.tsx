@@ -47,7 +47,7 @@ export default function CountUpComponent({
     const updateCount = () => {
       const now = Date.now();
       const progress = Math.min((now - startTime) / duration, 1);
-      
+
       setCount(Math.floor(progress * end));
 
       if (now < endTime) {
@@ -60,7 +60,9 @@ export default function CountUpComponent({
 
   return (
     <div ref={elementRef} className={className}>
-      {prefix}{count}{suffix}
+      {prefix}
+      {count}
+      {suffix}
     </div>
   );
 }

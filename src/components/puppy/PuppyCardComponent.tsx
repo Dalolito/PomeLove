@@ -7,7 +7,7 @@ import { Dictionary } from '@/lib/types/dictionary';
 import { calculatePuppyAgeUtil } from '@/lib/utils/calculatePuppyAgeUtil';
 import { openWhatsAppContact } from '@/lib/utils/whatsappUtils';
 import { getLocalizedDescription } from '@/lib/utils/getLocalizedDescription';
-import PuppyImageComponent from '@/components/ui/PuppyImageComponent';
+import PuppyCardImageComponent from '@/components/ui/PuppyCardImageComponent';
 import PrimaryButtonComponent from '@/components/ui/PrimaryButtonComponent';
 
 interface PuppyCardComponentProps {
@@ -26,8 +26,6 @@ export default function PuppyCardComponent({
   className = '',
 }: PuppyCardComponentProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
-
-
 
   const mainImage = useMemo((): string => {
     if (
@@ -93,11 +91,10 @@ export default function PuppyCardComponent({
       className={`group block overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:scale-[1.02] hover:border-blue-300 hover:shadow-xl ${className}`}
     >
       <div className="relative aspect-square">
-        <PuppyImageComponent
+        <PuppyCardImageComponent
           src={mainImage}
           alt={`${puppy.name} - ${puppy.category?.name || dict.utils.fallbacks.pet}`}
           priority={priority}
-          className="absolute inset-0"
           onLoad={handleImageLoad}
         />
 
