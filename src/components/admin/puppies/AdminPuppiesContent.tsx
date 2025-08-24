@@ -5,7 +5,6 @@ import { Category } from '@/domain/entities/Category';
 import { usePuppyFilters } from '@/hooks/usePuppyFilters';
 import AdminPuppiesFiltersComponent from '@/components/admin/puppies/AdminPuppiesFiltersComponent';
 import AdminPuppiesTableComponent from '@/components/admin/table/AdminPuppiesTableComponent';
-import ImageDebugComponent from '@/components/debug/ImageDebugComponent';
 
 interface AdminPuppiesContentProps {
   initialPuppies: Puppy[];
@@ -51,8 +50,6 @@ export default function AdminPuppiesContent({
         isFiltering={isFiltering}
         hasActiveFilters={hasActiveFilters}
       />
-
-      <ImageDebugComponent puppies={filteredPuppies} />
     </div>
   );
 }

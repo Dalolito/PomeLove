@@ -1,40 +1,46 @@
 export const validateImageUrl = (url: string | null | undefined): string => {
-  if (!url || 
-      typeof url !== 'string' ||
-      url.trim() === '' || 
-      url.includes('undefined') || 
-      url.includes('null') ||
-      url === 'null' ||
-      url === 'undefined'
+  if (
+    !url ||
+    typeof url !== 'string' ||
+    url.trim() === '' ||
+    url.includes('undefined') ||
+    url.includes('null') ||
+    url === 'null' ||
+    url === 'undefined'
   ) {
     return '/placeholder-puppy.svg';
   }
 
-  return url.trim();
-};
+  const cleanUrl = url.trim();
 
-export const preloadImage = (src: string): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    if (!src || src === '/placeholder-puppy.svg') {
-      resolve();
-      return;
-    }
-
-    const img = new Image();
-    img.onload = () => resolve();
-    img.onerror = () => reject(new Error(`Failed to preload image: ${src}`));
-    img.src = src;
-  });
-};
-
-export const preloadImages = async (urls: string[]): Promise<void> => {
-  const validUrls = urls.filter(url => validateImageUrl(url) !== '/placeholder-puppy.svg');
-  
-  try {
-    await Promise.allSettled(
-      validUrls.map(url => preloadImage(url))
-    );
-  } catch (error) {
-    console.warn('Some images failed to preload:', error);
+  if (cleanUrl === '' || cleanUrl === 'null' || cleanUrl === 'undefined') {
+    return '/placeholder-puppy.svg';
   }
+
+  return cleanUrl;
+};
+
+export const getFirstValidImage = (
+  mediaArray: Array<{ url?: string | null; type?: string }>
+): string => {
+  if (!Array.isArray(mediaArray)) {
+    return '/placeholder-puppy.svg';
+  }
+
+  const validImage = mediaArray.find(
+    item =>
+      item &&
+      item.type === 'image' &&
+      item.url &&
+      typeof item.url === 'string' &&
+      item.url.trim() !== '' &&
+      item.url !== 'null' &&
+      item.url !== 'undefined' &&
+      !item.url.includes('undefined') &&
+      !item.url.includes('null')
+  );
+
+  return validImage
+    ? validateImageUrl(validImage.url)
+    : '/placeholder-puppy.svg';
 };

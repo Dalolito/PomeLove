@@ -3,7 +3,6 @@ import { Puppy } from '@/domain/entities/Puppy';
 import { Dictionary } from '@/lib/types/dictionary';
 import PuppyCardComponent from '@/components/puppy/PuppyCardComponent';
 import PuppyCardSkeletonComponent from '@/components/puppy/PuppyCardSkeletonComponent';
-import { validateImageUrl } from '@/lib/utils/imageUtils';
 
 interface PuppyGridComponentProps {
   puppies: Puppy[];
@@ -27,35 +26,12 @@ function PuppyGridComponent({
       return [];
     }
 
-    return puppies
-      .filter(puppy => {
-        if (!puppy || !puppy.id) {
-          return false;
-        }
-        return true;
-      })
-      .map(puppy => {
-        const cleanedPuppy = { ...puppy };
-
-        if (puppy.media && Array.isArray(puppy.media)) {
-          cleanedPuppy.media = puppy.media
-            .filter(media => media && media.type && media.url)
-            .map(media => ({
-              ...media,
-              url: validateImageUrl(media.url)
-            }));
-        }
-
-        if (puppy.fatherImage) {
-          cleanedPuppy.fatherImage = validateImageUrl(puppy.fatherImage);
-        }
-
-        if (puppy.motherImage) {
-          cleanedPuppy.motherImage = validateImageUrl(puppy.motherImage);
-        }
-
-        return cleanedPuppy;
-      });
+    return puppies.filter(puppy => {
+      if (!puppy || !puppy.id) {
+        return false;
+      }
+      return true;
+    });
   }, [puppies]);
 
   const handleCardError = useCallback((puppyId: string, error: any) => {

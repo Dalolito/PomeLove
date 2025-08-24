@@ -95,7 +95,7 @@ const puppyDescriptionsEN = [
   'An intelligent and playful puppy, always ready to learn new tricks. His agile mind and playful disposition make him the perfect companion for training.',
   'A calm and observant puppy, perfect for serene homes. His contemplative nature and natural calm make him ideal for people seeking a relaxed companion.',
   'An energetic and bold puppy who loves challenges and adventure. His bravery and adventurous spirit make him the perfect companion for explorers.',
-  'A loving and dependent puppy who constantly seeks his family\'s affection. His unconditional love and need for companionship make him perfect for loving homes.',
+  "A loving and dependent puppy who constantly seeks his family's affection. His unconditional love and need for companionship make him perfect for loving homes.",
   'An independent and confident puppy, perfect for busy people. His autonomy and self-confidence make him the ideal companion for active lifestyles.',
   'A playful and mischievous puppy, always inventing new ways to have fun. His creativity and sense of humor make him the life of the party in any home.',
   'A serene and wise puppy with a mature personality for his age. His calm and natural wisdom make him the perfect counselor for stressful moments.',

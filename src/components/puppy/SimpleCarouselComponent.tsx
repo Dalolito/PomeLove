@@ -20,11 +20,27 @@ export default function SimpleCarouselComponent({
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
-  const validMedia = media.filter(
-    item => item && item.type === 'image' && item.url && item.url.trim() !== ''
-  );
+  const validMedia =
+    media?.filter(
+      item =>
+        item &&
+        item.type === 'image' &&
+        item.url &&
+        typeof item.url === 'string' &&
+        item.url.trim() !== '' &&
+        item.url !== 'null' &&
+        item.url !== 'undefined' &&
+        !item.url.includes('undefined') &&
+        !item.url.includes('null')
+    ) || [];
 
   const hasMedia = validMedia.length > 0;
+
+  useEffect(() => {
+    if (selectedIndex >= validMedia.length && validMedia.length > 0) {
+      setSelectedIndex(0);
+    }
+  }, [selectedIndex, validMedia.length]);
 
   if (!hasMedia) {
     return (
@@ -53,7 +69,9 @@ export default function SimpleCarouselComponent({
   };
 
   const goToSlide = (index: number) => {
-    setSelectedIndex(index);
+    if (index >= 0 && index < validMedia.length) {
+      setSelectedIndex(index);
+    }
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -105,6 +123,18 @@ export default function SimpleCarouselComponent({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [validMedia.length]);
 
+  const getCurrentImageUrl = (): string => {
+    if (selectedIndex >= 0 && selectedIndex < validMedia.length) {
+      const currentMedia = validMedia[selectedIndex];
+      if (currentMedia && currentMedia.url && currentMedia.url.trim() !== '') {
+        return currentMedia.url.trim();
+      }
+    }
+    return '/placeholder-puppy.svg';
+  };
+
+  const currentImageUrl = getCurrentImageUrl();
+
   return (
     <>
       <div
@@ -117,7 +147,7 @@ export default function SimpleCarouselComponent({
           onTouchEnd={handleTouchEnd}
         >
           <PuppyImageComponent
-            src={validMedia[selectedIndex]?.url || '/placeholder-puppy.svg'}
+            src={currentImageUrl}
             alt={`${puppyName} - Image ${selectedIndex + 1}`}
             className="h-full w-full cursor-pointer transition-transform duration-200 hover:scale-105"
           />
@@ -244,7 +274,7 @@ export default function SimpleCarouselComponent({
 
           <div className="relative max-h-[90vh] max-w-[90vw] p-4">
             <PuppyImageComponent
-              src={validMedia[selectedIndex]?.url || '/placeholder-puppy.svg'}
+              src={currentImageUrl}
               alt={`${puppyName} - Enlarged view`}
               className="max-h-full max-w-full"
             />

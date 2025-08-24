@@ -6,7 +6,6 @@ import { Dictionary } from '@/lib/types/dictionary';
 import { getFilteredPuppiesAction } from '@/actions/puppyActions';
 import PuppyGridComponent from '@/components/puppy/PuppyGridComponent';
 import ImagePreloaderComponent from '@/components/ui/ImagePreloaderComponent';
-import { validateImageUrl } from '@/lib/utils/imageUtils';
 
 interface PuppyAvailableListComponentProps {
   dict: Dictionary;
@@ -14,33 +13,6 @@ interface PuppyAvailableListComponentProps {
   maxPuppies?: number;
   className?: string;
 }
-
-const cleanPuppyData = (puppy: Puppy): Puppy => {
-  if (!puppy || !puppy.id) {
-    return puppy;
-  }
-
-  const cleanedPuppy = { ...puppy };
-
-  if (puppy.media && Array.isArray(puppy.media)) {
-    cleanedPuppy.media = puppy.media
-      .filter(media => media && media.type && media.url)
-      .map(media => ({
-        ...media,
-        url: validateImageUrl(media.url)
-      }));
-  }
-
-  if (puppy.fatherImage) {
-    cleanedPuppy.fatherImage = validateImageUrl(puppy.fatherImage);
-  }
-
-  if (puppy.motherImage) {
-    cleanedPuppy.motherImage = validateImageUrl(puppy.motherImage);
-  }
-
-  return cleanedPuppy;
-};
 
 export default function PuppyAvailableListComponent({
   dict,
@@ -63,8 +35,7 @@ export default function PuppyAvailableListComponent({
         });
 
         if (result.success && result.puppies) {
-          const cleanedPuppies = result.puppies.map(cleanPuppyData);
-          const limitedPuppies = cleanedPuppies.slice(0, maxPuppies);
+          const limitedPuppies = result.puppies.slice(0, maxPuppies);
           setPuppies(limitedPuppies);
         } else {
           setError(result.error || 'Error fetching puppies');
@@ -85,9 +56,12 @@ export default function PuppyAvailableListComponent({
       .map(puppy => {
         if (puppy.media && puppy.media.length > 0) {
           const firstImage = puppy.media.find(media => media.type === 'image');
-          if (firstImage?.url) {
-            const validatedUrl = validateImageUrl(firstImage.url);
-            return validatedUrl !== '/placeholder-puppy.svg' ? validatedUrl : null;
+          if (
+            firstImage?.url &&
+            typeof firstImage.url === 'string' &&
+            firstImage.url.trim() !== ''
+          ) {
+            return firstImage.url.trim();
           }
         }
         return null;

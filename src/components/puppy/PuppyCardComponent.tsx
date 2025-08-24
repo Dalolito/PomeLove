@@ -28,7 +28,11 @@ export default function PuppyCardComponent({
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const mainImage = useMemo((): string => {
-    if (!puppy.media || puppy.media.length === 0) {
+    if (
+      !puppy.media ||
+      !Array.isArray(puppy.media) ||
+      puppy.media.length === 0
+    ) {
       return '/placeholder-puppy.svg';
     }
 
@@ -39,36 +43,47 @@ export default function PuppyCardComponent({
         media.url &&
         typeof media.url === 'string' &&
         media.url.trim() !== '' &&
-        !media.url.includes('undefined') &&
-        !media.url.includes('null') &&
         media.url !== 'null' &&
-        media.url !== 'undefined'
+        media.url !== 'undefined' &&
+        !media.url.includes('undefined') &&
+        !media.url.includes('null')
     );
 
     if (validImages.length === 0) {
       return '/placeholder-puppy.svg';
     }
 
-    return validImages[0].url;
+    const firstValidUrl = validImages[0].url.trim();
+    return firstValidUrl || '/placeholder-puppy.svg';
   }, [puppy.media]);
 
-  const formatPrice = useCallback((price: number): string => {
-    return new Intl.NumberFormat(locale === 'es' ? 'es-CO' : 'en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-    }).format(price);
-  }, [locale]);
+  const formatPrice = useCallback(
+    (price: number): string => {
+      return new Intl.NumberFormat(locale === 'es' ? 'es-CO' : 'en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0,
+      }).format(price);
+    },
+    [locale]
+  );
 
-  const handleContactClick = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    openWhatsAppContact(puppy, dict, locale);
-  }, [puppy, dict, locale]);
+  const handleContactClick = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      openWhatsAppContact(puppy, dict, locale);
+    },
+    [puppy, dict, locale]
+  );
 
   const handleImageLoad = useCallback(() => {
     setImageLoaded(true);
   }, []);
+
+  if (!puppy || !puppy.id || !puppy.name) {
+    return null;
+  }
 
   return (
     <Link
@@ -82,7 +97,6 @@ export default function PuppyCardComponent({
           priority={priority}
           className="absolute inset-0"
           onLoad={handleImageLoad}
-          retryCount={3}
         />
 
         {puppy.available && (
