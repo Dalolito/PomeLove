@@ -7,6 +7,7 @@ import {
   updatePuppyUseCase,
   deletePuppyUseCase,
   getFilteredPuppiesUseCase,
+  getPuppyDetailUseCase,
 } from '@/infrastructure/config/dependencies';
 import { CreatePuppyData, UpdatePuppyData } from '@/domain/entities/Puppy';
 import { PuppyFilters } from '@/lib/types/filters';
@@ -69,6 +70,16 @@ export async function getPuppyByIdAction(id: string) {
 export async function getAllPuppiesAction() {
   try {
     const result = await getAllPuppiesUseCase.execute();
+
+    console.log('getAllPuppiesAction - Success:', result.success);
+    console.log('getAllPuppiesAction - Puppies count:', result.puppies?.length);
+    if (result.puppies && result.puppies.length > 0) {
+      console.log(
+        'getAllPuppiesAction - Sample puppy media:',
+        result.puppies[0].media
+      );
+    }
+
     return result;
   } catch (error) {
     console.error('Error getting all puppies:', error);
@@ -96,5 +107,15 @@ export async function getFilteredPuppiesAction(filters: PuppyFilters) {
   } catch (error) {
     console.error('Error getting filtered puppies:', error);
     return { success: false, error: 'GET_FILTERED_PUPPIES_FAILED' };
+  }
+}
+
+export async function getPuppyDetailAction(id: string) {
+  try {
+    const result = await getPuppyDetailUseCase.execute(id);
+    return result;
+  } catch (error) {
+    console.error('Error getting puppy detail:', error);
+    return { success: false, error: 'GET_PUPPY_DETAIL_FAILED' };
   }
 }

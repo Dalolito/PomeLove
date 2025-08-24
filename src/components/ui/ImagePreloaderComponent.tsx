@@ -12,8 +12,10 @@ export default function ImagePreloaderComponent({
   useEffect(() => {
     const preloadImages = () => {
       images.forEach(src => {
-        if (src && src !== '/placeholder-puppy.svg') {
+        if (src && src !== '/placeholder-puppy.svg' && src.trim() !== '') {
           const img = new Image();
+          img.onload = () => console.log('Preloaded image:', src);
+          img.onerror = () => console.warn('Failed to preload image:', src);
           img.src = src;
         }
       });

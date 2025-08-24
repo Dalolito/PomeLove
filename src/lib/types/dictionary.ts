@@ -19,6 +19,7 @@ export interface Dictionary {
     about_us: string;
     view_details: string;
     ask_about_puppy: string;
+    back_to_catalog: string;
   };
   home: {
     available_now: string;
@@ -237,6 +238,10 @@ export interface Dictionary {
     resultsCount: string;
     filtered: string;
     total: string;
+    empty: {
+      title: string;
+      description: string;
+    };
     filters: {
       title: string;
       clearFilters: string;
