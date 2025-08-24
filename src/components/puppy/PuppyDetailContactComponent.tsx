@@ -58,12 +58,10 @@ export default function PuppyDetailContactComponent({
         </PrimaryButtonComponent>
       </div>
 
-             <div className="mt-6 border-t border-gray-200 pt-6 text-center">
-         <p className="text-sm text-gray-500">📞 {dict.footer.phone}</p>
-         <p className="text-sm text-gray-500">
-           📍 {dict.footer.location}
-         </p>
-       </div>
+      <div className="mt-6 border-t border-gray-200 pt-6 text-center">
+        <p className="text-sm text-gray-500">📞 {dict.footer.phone}</p>
+        <p className="text-sm text-gray-500">📍 {dict.footer.location}</p>
+      </div>
     </div>
   );
 }

@@ -28,7 +28,10 @@ export function useSingleImageUpload({
     (file: File): string | null => {
       // Validar tamaño
       if (file.size > maxFileSize * 1024 * 1024) {
-        return dict.admin.media.upload.errors.fileSize.replace('{size}', maxFileSize.toString());
+        return dict.admin.media.upload.errors.fileSize.replace(
+          '{size}',
+          maxFileSize.toString()
+        );
       }
 
       // Validar tipo
@@ -74,7 +77,10 @@ export function useSingleImageUpload({
           onUploadSuccess?.(mediaFile);
           return mediaFile;
         } else {
-          const errorMessage = result.error || dict.admin.media.upload.errors.uploadFailed || dict.utils.errors.unexpectedImageUpload;
+          const errorMessage =
+            result.error ||
+            dict.admin.media.upload.errors.uploadFailed ||
+            dict.utils.errors.unexpectedImageUpload;
           setError(errorMessage);
           onUploadError?.(errorMessage);
           return null;

@@ -55,7 +55,8 @@ export default function AdminCategoryFormComponent({
       }
     } catch {
       setError(
-        dict.admin.forms.errors?.createFailed || dict.admin.categories.errors.createFailed
+        dict.admin.forms.errors?.createFailed ||
+          dict.admin.categories.errors.createFailed
       );
     } finally {
       setIsSubmitting(false);

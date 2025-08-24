@@ -10,7 +10,7 @@ export function openWhatsAppContact(
   try {
     const message = generateWhatsAppMessage(puppy, dict, locale);
     const whatsappUrl = buildWhatsAppUrl(message);
-    
+
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   } catch (error) {
     console.error('Error opening WhatsApp:', error);
@@ -23,8 +23,9 @@ function generateWhatsAppMessage(
   dict: Dictionary,
   locale: string
 ): string {
-  const messageTemplate = dict.whatsapp?.messageTemplate || 
-    dict.whatsapp?.basicMessage || 
+  const messageTemplate =
+    dict.whatsapp?.messageTemplate ||
+    dict.whatsapp?.basicMessage ||
     dict.utils.errors.unexpected;
 
   const genderText = dict.admin.forms.gender[puppy.gender] || puppy.gender;
@@ -32,21 +33,21 @@ function generateWhatsAppMessage(
   return replaceText(messageTemplate, {
     puppyName: puppy.name,
     category: puppy.category.name,
-    gender: genderText
+    gender: genderText,
   });
 }
 
 function buildWhatsAppUrl(message: string): string {
   const phoneNumber = '573004439574';
   const encodedMessage = encodeURIComponent(message);
-  
+
   return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
 }
 
 export function openBasicWhatsAppContact(dict: Dictionary): void {
-  const basicMessage = dict.whatsapp?.basicMessage || 
-    dict.utils.errors.unexpected;
+  const basicMessage =
+    dict.whatsapp?.basicMessage || dict.utils.errors.unexpected;
   const whatsappUrl = buildWhatsAppUrl(basicMessage);
-  
+
   window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 }
