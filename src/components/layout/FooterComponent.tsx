@@ -1,4 +1,8 @@
+'use client';
+
+import React from 'react';
 import { Dictionary } from '@/lib/types/dictionary';
+import { openBasicWhatsAppContact } from '@/lib/utils/whatsappUtils';
 
 interface FooterProps {
   title: string;
@@ -8,6 +12,42 @@ interface FooterProps {
 
 export default function Footer({ title, currentLocale, dict }: FooterProps) {
   const currentYear = new Date().getFullYear();
+
+  const contactLinks: Array<{
+    name: string;
+    url: string;
+    icon: React.ReactNode;
+    onClick?: () => void;
+  }> = [
+    {
+      name: 'Instagram',
+      url: 'https://www.instagram.com/pomelove_korea?igsh=dTA4Njl5aXY5bnRk&utm_source=qr',
+      icon: (
+        <div className="flex h-5 w-5 items-center justify-center rounded bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 text-xs font-bold text-white">
+          IG
+        </div>
+      ),
+    },
+    {
+      name: 'Facebook',
+      url: 'https://www.facebook.com/catalina.londonoagudelo',
+      icon: (
+        <div className="flex h-5 w-5 items-center justify-center rounded bg-blue-600 text-xs font-bold text-white">
+          f
+        </div>
+      ),
+    },
+    {
+      name: 'WhatsApp',
+      url: '#',
+      icon: (
+        <div className="flex h-5 w-5 items-center justify-center rounded bg-green-500 text-xs font-bold text-white">
+          WA
+        </div>
+      ),
+      onClick: () => openBasicWhatsAppContact(dict),
+    },
+  ];
 
   const footerLinks = [
     {
@@ -50,57 +90,45 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
 
             {/* Social links */}
             <div className="mb-6 flex gap-4">
-              <a
-                href="https://www.instagram.com/pomelove_korea?igsh=dTA4Njl5aXY5bnRk&utm_source=qr"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex h-10 w-10 items-center justify-center rounded-lg bg-slate-700 transition-colors hover:bg-red-500"
-                title="Instagram"
-              >
-                <span className="text-slate-300 transition-colors group-hover:text-white">
-                  <div className="flex h-5 w-5 items-center justify-center rounded bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 text-xs font-bold text-white">
-                    IG
-                  </div>
-                </span>
-              </a>
-              <a
-                href="https://www.facebook.com/catalina.londonoagudelo"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex h-10 w-10 items-center justify-center rounded-lg bg-slate-700 transition-colors hover:bg-red-500"
-                title="Facebook"
-              >
-                <span className="text-slate-300 transition-colors group-hover:text-white">
-                  <div className="flex h-5 w-5 items-center justify-center rounded bg-blue-600 text-xs font-bold text-white">
-                    f
-                  </div>
-                </span>
-              </a>
-              <a
-                href="https://wa.me/573004439574"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex h-10 w-10 items-center justify-center rounded-lg bg-slate-700 transition-colors hover:bg-red-500"
-                title="WhatsApp"
-              >
-                <span className="text-slate-300 transition-colors group-hover:text-white">
-                  <div className="flex h-5 w-5 items-center justify-center rounded bg-green-500 text-xs font-bold text-white">
-                    WA
-                  </div>
-                </span>
-              </a>
+              {contactLinks.map(contact =>
+                contact.onClick ? (
+                  <button
+                    key={contact.name}
+                    onClick={contact.onClick}
+                    className="group flex h-10 w-10 items-center justify-center rounded-lg bg-slate-700 transition-colors hover:bg-red-500"
+                    title={contact.name}
+                  >
+                    <span className="text-slate-300 transition-colors group-hover:text-white">
+                      {contact.icon}
+                    </span>
+                  </button>
+                ) : (
+                  <a
+                    key={contact.name}
+                    href={contact.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex h-10 w-10 items-center justify-center rounded-lg bg-slate-700 transition-colors hover:bg-red-500"
+                    title={contact.name}
+                  >
+                    <span className="text-slate-300 transition-colors group-hover:text-white">
+                      {contact.icon}
+                    </span>
+                  </a>
+                )
+              )}
             </div>
 
             {/* Contact info */}
             <div className="space-y-2 text-sm text-slate-300">
               <p className="flex items-center gap-2">
                 <span>📱</span>
-                <a
-                  href="https://wa.me/573004439574"
+                <button
+                  onClick={() => openBasicWhatsAppContact(dict)}
                   className="transition-colors hover:text-white"
                 >
                   +57 300 443 9574
-                </a>
+                </button>
               </p>
               <p className="flex items-center gap-2">
                 <span>📍</span>
