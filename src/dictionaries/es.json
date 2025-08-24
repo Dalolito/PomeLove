@@ -280,5 +280,74 @@
   "whatsapp": {
     "messageTemplate": "¡Hola! Estoy interesado en {puppyName} ({category} - {gender}), ¿me podrías dar más información?",
     "basicMessage": "Hola! Me gustaría obtener información sobre sus mascotas disponibles."
+  },
+  "about": {
+    "hero": {
+      "title": "Más de 10 Años de Experiencia",
+      "subtitle": "Con más de 10 años de experiencia en la crianza de Pomeranias, nos hemos consolidado como criadores especializados, y desde hace 5 años, nos hemos enfocado en la importación de líneas exclusivas de calidad, especialmente Pomeranias Coreanos.",
+      "cta": "Conoce nuestros cachorros"
+    },
+    "happyClients": {
+      "title": "Más de 100 Cachorros Vendidos",
+      "subtitle": "Hemos tenido el privilegio de exportar nuestros cachorros a más de 15 países alrededor del mundo",
+      "carouselTitle": "Clientes felices con sus cachorros",
+      "countriesTitle": "Algunos países de exportación",
+      "stats": {
+        "puppies": "Cachorros vendidos",
+        "countries": "Países de exportación",
+        "years": "Años de experiencia",
+        "korean": "Años importando líneas coreanas"
+      }
+    },
+    "experience": {
+      "title": "Más de 10 Años de Experiencia",
+      "subtitle": "Con más de 10 años de experiencia en la crianza de Pomeranias, nos hemos consolidado como criadores especializados, y desde hace 5 años, nos hemos enfocado en la importación de líneas exclusivas de calidad, especialmente Pomeranias Coreanos.",
+      "timeline": {
+        "2014": "Inicio como criadores especializados",
+        "2019": "Primera importación de líneas coreanas",
+        "2021": "Certificación FCI y AKC",
+        "2024": "Más de 15 países de exportación"
+      }
+    },
+    "breeding": {
+      "title": "Crianza en Entorno Familiar",
+      "subtitle": "En nuestro criadero, ubicado en un espacio amplio y seguro, nuestros cachorros son criados en un entorno familiar, lleno de juguetes, estructuras y actividades que favorecen su desarrollo físico y emocional.",
+      "features": [
+        "Espacio amplio y seguro",
+        "Entorno familiar",
+        "Desarrollo físico y emocional",
+        "Socialización temprana"
+      ]
+    },
+    "certifications": {
+      "title": "Certificaciones Internacionales",
+      "subtitle": "Nos enorgullece estar registrados ante el FCI (Federación Cinológica Internacional) y el AKC (American Kennel Club) como criadores responsables, lo que nos permite ofrecer perros 100% legítimos y de calidad garantizada.",
+      "badges": [
+        "100% legítimos",
+        "No revendedores",
+        "Criadores directos",
+        "Calidad garantizada"
+      ],
+      "difference": {
+        "title": "La Diferencia POMELOVE KOREA",
+        "description": "A diferencia de otras páginas, nosotros NO SOMOS REVENDEDORES ni intermediarios. Vendemos exclusivamente nuestros propios ejemplares, criados y seleccionados con la mayor dedicación y cuidado."
+      }
+    },
+    "exports": {
+      "title": "Exportadores de Pomeranias",
+      "subtitle": "Además de ser criadores, somos también exportadores de Pomeranias. Hemos tenido el privilegio de exportar nuestros cachorros a más de 15 países alrededor del mundo.",
+      "process": [
+        "Selección personalizada",
+        "Protocolos de bienestar",
+        "Viaje en cabina",
+        "Llegada sana y feliz"
+      ],
+      "processTitle": "Nuestro Proceso de Exportación",
+      "countriesTitle": "Países de Exportación",
+      "cta": {
+        "title": "En nuestro criadero, no solo te ofrecemos un cachorro, sino un compañero de vida 🐕",
+        "description": "Nuestra pasión por esta raza nos ha llevado a ofrecer solo lo mejor para nuestros cachorros, siempre garantizando estándares elevados en todos nuestros procesos."
+      }
+    }
   }
 }

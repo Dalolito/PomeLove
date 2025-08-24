@@ -5,7 +5,6 @@ import { CatalogFilters, CatalogFilterState } from '@/lib/types/filters';
 import { Puppy } from '@/domain/entities/Puppy';
 import { Category } from '@/domain/entities/Category';
 import { getFilteredPuppiesAction } from '@/actions/puppyActions';
-import { validateImageUrl } from '@/lib/utils/imageUtils';
 
 interface UseCatalogFiltersProps {
   initialPuppies: Puppy[];
@@ -14,30 +13,7 @@ interface UseCatalogFiltersProps {
 }
 
 const cleanPuppyData = (puppy: Puppy): Puppy => {
-  if (!puppy || !puppy.id) {
-    return puppy;
-  }
-
-  const cleanedPuppy = { ...puppy };
-
-  if (puppy.media && Array.isArray(puppy.media)) {
-    cleanedPuppy.media = puppy.media
-      .filter(media => media && media.type && media.url)
-      .map(media => ({
-        ...media,
-        url: validateImageUrl(media.url),
-      }));
-  }
-
-  if (puppy.fatherImage) {
-    cleanedPuppy.fatherImage = validateImageUrl(puppy.fatherImage);
-  }
-
-  if (puppy.motherImage) {
-    cleanedPuppy.motherImage = validateImageUrl(puppy.motherImage);
-  }
-
-  return cleanedPuppy;
+  return puppy;
 };
 
 export function useCatalogFilters({

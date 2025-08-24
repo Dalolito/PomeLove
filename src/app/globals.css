@@ -13,6 +13,63 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hover-scale {
+    transition: transform 0.3s ease;
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  .bg-clip-text {
+    background-clip: text;
+    -webkit-background-clip: text;
+  }
+
+  .text-transparent {
+    color: transparent;
+  }
+
+  .backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+  }
 }
 
 /* Test para verificar que Tailwind funciona */

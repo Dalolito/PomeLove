@@ -8,7 +8,6 @@ import { useCatalogFilters } from '@/hooks/useCatalogFilters';
 import CatalogHeaderComponent from '@/components/catalog/CatalogHeaderComponent';
 import CatalogFiltersComponent from '@/components/catalog/CatalogFiltersComponent';
 import PuppyGridComponent from '@/components/puppy/PuppyGridComponent';
-import { validateImageUrl } from '@/lib/utils/imageUtils';
 
 interface CatalogContentComponentProps {
   initialPuppies: Puppy[];
@@ -32,34 +31,7 @@ export default function CatalogContentComponent({
       return [];
     }
 
-    return initialPuppies
-      .map(puppy => {
-        if (!puppy || !puppy.id) {
-          return null;
-        }
-
-        const cleanedPuppy = { ...puppy };
-
-        if (puppy.media && Array.isArray(puppy.media)) {
-          cleanedPuppy.media = puppy.media
-            .filter(media => media && media.type && media.url)
-            .map(media => ({
-              ...media,
-              url: validateImageUrl(media.url),
-            }));
-        }
-
-        if (puppy.fatherImage) {
-          cleanedPuppy.fatherImage = validateImageUrl(puppy.fatherImage);
-        }
-
-        if (puppy.motherImage) {
-          cleanedPuppy.motherImage = validateImageUrl(puppy.motherImage);
-        }
-
-        return cleanedPuppy;
-      })
-      .filter(Boolean) as Puppy[];
+    return initialPuppies.filter(puppy => puppy && puppy.id);
   }, [initialPuppies]);
 
   const {

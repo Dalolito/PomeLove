@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { MediaFile } from '@/application/useCases/utils/MediaUploadUseCase';
-import PuppyImageComponent from '@/components/ui/PuppyImageComponent';
+import PuppyCarouselImageComponent from '@/components/ui/PuppyCarouselImageComponent';
 
 interface SimpleCarouselComponentProps {
   media: MediaFile[];
@@ -48,10 +48,9 @@ export default function SimpleCarouselComponent({
         className={`rounded-lg border border-gray-200 bg-white shadow-sm ${className}`}
       >
         <div className="flex aspect-square items-center justify-center bg-gray-100">
-          <PuppyImageComponent
+          <PuppyCarouselImageComponent
             src="/placeholder-puppy.svg"
             alt={puppyName}
-            className="h-full w-full"
           />
         </div>
       </div>
@@ -146,10 +145,10 @@ export default function SimpleCarouselComponent({
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          <PuppyImageComponent
+          <PuppyCarouselImageComponent
             src={currentImageUrl}
             alt={`${puppyName} - Image ${selectedIndex + 1}`}
-            className="h-full w-full cursor-pointer transition-transform duration-200 hover:scale-105"
+            className="cursor-pointer transition-transform duration-200 hover:scale-105"
           />
 
           {validMedia.length > 1 && (
@@ -231,10 +230,9 @@ export default function SimpleCarouselComponent({
                       : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >
-                  <PuppyImageComponent
+                  <PuppyCarouselImageComponent
                     src={mediaItem.url}
                     alt={`${puppyName} - Thumbnail ${index + 1}`}
-                    className="h-full w-full"
                   />
                 </button>
               ))}
@@ -273,7 +271,7 @@ export default function SimpleCarouselComponent({
           </button>
 
           <div className="relative max-h-[90vh] max-w-[90vw] p-4">
-            <PuppyImageComponent
+            <PuppyCarouselImageComponent
               src={currentImageUrl}
               alt={`${puppyName} - Enlarged view`}
               className="max-h-full max-w-full"

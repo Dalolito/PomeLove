@@ -275,5 +275,74 @@
   "whatsapp": {
     "messageTemplate": "Hello! I'm interested in {puppyName} ({category} - {gender}), could you give me more information?",
     "basicMessage": "Hello! I would like to get information about your available pets."
+  },
+  "about": {
+    "hero": {
+      "title": "Over 10 Years of Experience",
+      "subtitle": "With over 10 years of experience in Pomeranian breeding, we have established ourselves as specialized breeders, and for the past 5 years, we have focused on importing exclusive quality lines, especially Korean Pomeranians.",
+      "cta": "Meet our puppies"
+    },
+    "happyClients": {
+      "title": "Over 100 Puppies Sold",
+      "subtitle": "We have had the privilege of exporting our puppies to over 15 countries around the world",
+      "carouselTitle": "Happy clients with their puppies",
+      "countriesTitle": "Some export countries",
+      "stats": {
+        "puppies": "Puppies sold",
+        "countries": "Export countries",
+        "years": "Years of experience",
+        "korean": "Years importing Korean lines"
+      }
+    },
+    "experience": {
+      "title": "Over 10 Years of Experience",
+      "subtitle": "With over 10 years of experience in Pomeranian breeding, we have established ourselves as specialized breeders, and for the past 5 years, we have focused on importing exclusive quality lines, especially Korean Pomeranians.",
+      "timeline": {
+        "2014": "Started as specialized breeders",
+        "2019": "First Korean line importation",
+        "2021": "FCI and AKC certification",
+        "2024": "Over 15 export countries"
+      }
+    },
+    "breeding": {
+      "title": "Family Environment Breeding",
+      "subtitle": "In our kennel, located in a spacious and safe environment, our puppies are raised in a family environment, full of toys, structures and activities that favor their physical and emotional development.",
+      "features": [
+        "Spacious and safe space",
+        "Family environment",
+        "Physical and emotional development",
+        "Early socialization"
+      ]
+    },
+    "certifications": {
+      "title": "International Certifications",
+      "subtitle": "We are proud to be registered with FCI (Fédération Cynologique Internationale) and AKC (American Kennel Club) as responsible breeders, which allows us to offer 100% legitimate dogs with guaranteed quality.",
+      "badges": [
+        "100% legitimate",
+        "No resellers",
+        "Direct breeders",
+        "Guaranteed quality"
+      ],
+      "difference": {
+        "title": "The POMELOVE KOREA Difference",
+        "description": "Unlike other pages, we are NOT RESELLERS or intermediaries. We sell exclusively our own specimens, bred and selected with the greatest dedication and care."
+      }
+    },
+    "exports": {
+      "title": "Pomeranian Exporters",
+      "subtitle": "In addition to being breeders, we are also Pomeranian exporters. We have had the privilege of exporting our puppies to over 15 countries around the world.",
+      "process": [
+        "Personalized selection",
+        "Welfare protocols",
+        "Cabin travel",
+        "Healthy and happy arrival"
+      ],
+      "processTitle": "Our Export Process",
+      "countriesTitle": "Export Countries",
+      "cta": {
+        "title": "In our kennel, we not only offer you a puppy, but a life companion 🐕",
+        "description": "Our passion for this breed has led us to offer only the best for our puppies, always guaranteeing high standards in all our processes."
+      }
+    }
   }
 }

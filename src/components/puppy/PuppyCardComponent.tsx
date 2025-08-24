@@ -7,7 +7,7 @@ import { Dictionary } from '@/lib/types/dictionary';
 import { calculatePuppyAgeUtil } from '@/lib/utils/calculatePuppyAgeUtil';
 import { openWhatsAppContact } from '@/lib/utils/whatsappUtils';
 import { getLocalizedDescription } from '@/lib/utils/getLocalizedDescription';
-import PuppyImageComponent from '@/components/ui/PuppyImageComponent';
+import PuppyCardImageComponent from '@/components/ui/PuppyCardImageComponent';
 import PrimaryButtonComponent from '@/components/ui/PrimaryButtonComponent';
 
 interface PuppyCardComponentProps {
@@ -91,18 +91,23 @@ export default function PuppyCardComponent({
       className={`group block overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:scale-[1.02] hover:border-blue-300 hover:shadow-xl ${className}`}
     >
       <div className="relative aspect-square">
-        <PuppyImageComponent
+        <PuppyCardImageComponent
           src={mainImage}
           alt={`${puppy.name} - ${puppy.category?.name || dict.utils.fallbacks.pet}`}
           priority={priority}
-          className="absolute inset-0"
           onLoad={handleImageLoad}
         />
 
-        {puppy.available && (
+        {puppy.available ? (
           <div className="absolute left-3 top-3 z-10">
             <span className="inline-flex items-center rounded-full bg-emerald-500 px-2.5 py-0.5 text-xs font-medium text-white shadow-sm">
               {dict.admin.table.status.available}
+            </span>
+          </div>
+        ) : (
+          <div className="absolute left-3 top-3 z-10">
+            <span className="inline-flex items-center rounded-full bg-gray-500 px-2.5 py-0.5 text-xs font-medium text-white shadow-sm">
+              {dict.admin.table.status.unavailable}
             </span>
           </div>
         )}
@@ -142,12 +147,14 @@ export default function PuppyCardComponent({
             </span>
           </div>
 
-          <button
-            onClick={handleContactClick}
-            className="w-full transform rounded-md border border-transparent bg-emerald-500 px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 active:scale-95"
-          >
-            {dict.buttons.ask_about_puppy}
-          </button>
+          {puppy.available && (
+            <button
+              onClick={handleContactClick}
+              className="w-full transform rounded-md border border-transparent bg-emerald-500 px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 active:scale-95"
+            >
+              {dict.buttons.ask_about_puppy}
+            </button>
+          )}
         </div>
       </div>
     </Link>
