@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { MediaFile } from '@/application/useCases/admin/MediaUploadUseCase';
+import { MediaFile } from '@/application/useCases/utils/MediaUploadUseCase';
 import { useFileUpload } from '@/hooks/useFileUpload';
 import UploadAreaComponent from '@/components/admin/forms/UploadAreaComponent';
 import FileGridComponent from '@/components/admin/forms/FileGridComponent';

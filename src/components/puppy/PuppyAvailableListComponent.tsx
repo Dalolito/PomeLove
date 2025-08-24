@@ -41,7 +41,7 @@ export default function PuppyAvailableListComponent({
           setError(result.error || 'Error fetching puppies');
         }
       } catch {
-        setError('Error inesperado');
+        setError(dict.utils.errors.unexpected);
       } finally {
         setLoading(false);
       }
@@ -68,9 +68,9 @@ export default function PuppyAvailableListComponent({
       <div className={`py-12 text-center ${className}`}>
         <div className="mx-auto max-w-sm">
           <div className="mb-4 text-6xl">⚠️</div>
-          <h3 className="mb-2 text-lg font-semibold text-gray-900">
-            Error al cargar mascotas
-          </h3>
+                   <h3 className="mb-2 text-lg font-semibold text-gray-900">
+           {dict.admin.table.empty.title}
+         </h3>
           <p className="text-gray-600">{error}</p>
         </div>
       </div>

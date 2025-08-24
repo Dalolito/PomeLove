@@ -21,6 +21,18 @@
     "ask_about_puppy": "Ask about this puppy",
     "back_to_catalog": "Back to catalog"
   },
+  "utils": {
+    "fallbacks": {
+      "noName": "No name",
+      "noCategory": "No category",
+      "noDescription": "No description available",
+      "pet": "Pet"
+    },
+    "errors": {
+      "unexpected": "Unexpected error",
+      "unexpectedImageUpload": "Unexpected error uploading image"
+    }
+  },
   "home": {
     "available_now": "Available now",
     "availableDescription": "Our adorable puppies are ready to find their perfect home",
@@ -38,7 +50,9 @@
     "links": {
       "contact": "Contact"
     },
-    "copyright": "All rights reserved."
+    "copyright": "All rights reserved.",
+    "phone": "+57 300 443 9574",
+    "instagramUrl": "https://www.instagram.com/pomelove_korea?igsh=dTA4Njl5aXY5bnRk&utm_source=qr"
   },
   "admin": {
     "menu": "Admin Menu",
@@ -257,5 +271,9 @@
       "available": "Available",
       "unavailable": "Unavailable"
     }
+  },
+  "whatsapp": {
+    "messageTemplate": "Hello! I'm interested in {puppyName} ({category} - {gender}), could you give me more information?",
+    "basicMessage": "Hello! I would like to get information about your available pets."
   }
 }

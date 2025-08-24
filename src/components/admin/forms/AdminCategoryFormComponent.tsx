@@ -50,12 +50,12 @@ export default function AdminCategoryFormComponent({
         setError(
           dict.admin.forms.errors?.[errorKey] ||
             dict.admin.forms.errors?.createFailed ||
-            'Error al crear la categoría'
+            dict.admin.categories.errors.createFailed
         );
       }
     } catch {
       setError(
-        dict.admin.forms.errors?.createFailed || 'Error al crear la categoría'
+        dict.admin.forms.errors?.createFailed || dict.admin.categories.errors.createFailed
       );
     } finally {
       setIsSubmitting(false);

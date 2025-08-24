@@ -37,7 +37,7 @@ export default function PuppyDetailComponent({
           />
 
           <div className="lg:hidden">
-            <PuppyDetailContactComponent puppy={puppy} dict={dict} />
+            <PuppyDetailContactComponent puppy={puppy} dict={dict} locale={locale} />
           </div>
         </div>
 
@@ -51,7 +51,7 @@ export default function PuppyDetailComponent({
           />
 
           <div className="hidden lg:block">
-            <PuppyDetailContactComponent puppy={puppy} dict={dict} />
+            <PuppyDetailContactComponent puppy={puppy} dict={dict} locale={locale} />
           </div>
         </div>
       </div>

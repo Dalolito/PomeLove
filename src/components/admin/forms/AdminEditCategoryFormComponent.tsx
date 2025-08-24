@@ -62,13 +62,13 @@ export default function AdminEditCategoryFormComponent({
         setError(
           dict.admin.forms.errors?.[errorKey] ||
             dict.admin.forms.errors?.updateFailed ||
-            'Error al actualizar la categoría'
+            dict.admin.categories.errors.updateFailed
         );
       }
     } catch {
       setError(
         dict.admin.forms.errors?.updateFailed ||
-          'Error al actualizar la categoría'
+          dict.admin.categories.errors.updateFailed
       );
     } finally {
       setIsSubmitting(false);

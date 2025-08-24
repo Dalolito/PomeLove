@@ -2,9 +2,11 @@
 
 import { useState, useCallback } from 'react';
 import { MediaFile } from '@/application/useCases/utils/MediaUploadUseCase';
+import { Dictionary } from '@/lib/types/dictionary';
 import { uploadImageAction } from '@/actions/uploadActions';
 
 interface UseSingleImageUploadProps {
+  dict: Dictionary;
   maxFileSize?: number;
   uploadType?: 'puppies' | 'parents';
   onUploadSuccess?: (file: MediaFile) => void;
@@ -12,11 +14,12 @@ interface UseSingleImageUploadProps {
 }
 
 export function useSingleImageUpload({
+  dict,
   maxFileSize = 5,
   uploadType = 'puppies',
   onUploadSuccess,
   onUploadError,
-}: UseSingleImageUploadProps = {}) {
+}: UseSingleImageUploadProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string>('');
   const [isDragOver, setIsDragOver] = useState(false);
@@ -25,12 +28,12 @@ export function useSingleImageUpload({
     (file: File): string | null => {
       // Validar tamaño
       if (file.size > maxFileSize * 1024 * 1024) {
-        return `El archivo debe ser menor a ${maxFileSize}MB`;
+        return dict.admin.media.upload.errors.fileSize.replace('{size}', maxFileSize.toString());
       }
 
       // Validar tipo
       if (!file.type.startsWith('image/')) {
-        return 'Solo se permiten archivos de imagen';
+        return dict.admin.media.upload.errors.fileType;
       }
 
       return null;
@@ -71,13 +74,13 @@ export function useSingleImageUpload({
           onUploadSuccess?.(mediaFile);
           return mediaFile;
         } else {
-          const errorMessage = result.error || 'Error al subir la imagen';
+          const errorMessage = result.error || dict.admin.media.upload.errors.uploadFailed || dict.utils.errors.unexpectedImageUpload;
           setError(errorMessage);
           onUploadError?.(errorMessage);
           return null;
         }
       } catch {
-        const errorMessage = 'Error inesperado al subir la imagen';
+        const errorMessage = dict.utils.errors.unexpectedImageUpload;
         setError(errorMessage);
         onUploadError?.(errorMessage);
         return null;

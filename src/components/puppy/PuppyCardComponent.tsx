@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Puppy } from '@/domain/entities/Puppy';
 import { Dictionary } from '@/lib/types/dictionary';
 import { calculatePuppyAgeUtil } from '@/lib/utils/calculatePuppyAgeUtil';
+import { openWhatsAppContact } from '@/lib/utils/whatsappUtils';
 import PuppyCardImageComponent from '@/components/puppy/PuppyCardImageComponent';
 import PrimaryButtonComponent from '@/components/ui/PrimaryButtonComponent';
 
@@ -58,10 +59,7 @@ export default function PuppyCardComponent({
   const handleContactClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const message = encodeURIComponent(
-      `${dict.buttons.search_puppy}: ${puppy.name} - ${puppy.category.name}`
-    );
-    window.open(`https://wa.me/573004439574?text=${message}`, '_blank');
+    openWhatsAppContact(puppy, dict, locale);
   };
 
   const handleImageLoad = useCallback(() => {
@@ -74,13 +72,13 @@ export default function PuppyCardComponent({
       className={`group block overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:scale-[1.02] hover:border-blue-300 hover:shadow-xl ${className}`}
     >
       <div className="relative aspect-square">
-        <PuppyCardImageComponent
-          src={getMainImage()}
-          alt={`${puppy.name} - ${puppy.category?.name || 'Mascota'}`}
-          priority={priority}
-          className="absolute inset-0"
-          onLoad={handleImageLoad}
-        />
+                 <PuppyCardImageComponent
+           src={getMainImage()}
+           alt={`${puppy.name} - ${puppy.category?.name || dict.utils.fallbacks.pet}`}
+           priority={priority}
+           className="absolute inset-0"
+           onLoad={handleImageLoad}
+         />
 
         {puppy.available && (
           <div className="absolute left-3 top-3 z-10">
@@ -92,30 +90,30 @@ export default function PuppyCardComponent({
       </div>
 
       <div className="space-y-3 p-4">
-        <div className="flex items-center justify-between">
-          <h3 className="truncate text-lg font-semibold text-gray-900">
-            {puppy.name || 'Sin nombre'}
-          </h3>
-          <span className="ml-2 whitespace-nowrap text-sm text-gray-500">
-            {calculatePuppyAgeUtil(puppy.birthDate, dict)}
-          </span>
-        </div>
+                 <div className="flex items-center justify-between">
+           <h3 className="truncate text-lg font-semibold text-gray-900">
+             {puppy.name || dict.utils.fallbacks.noName}
+           </h3>
+           <span className="ml-2 whitespace-nowrap text-sm text-gray-500">
+             {calculatePuppyAgeUtil(puppy.birthDate, dict)}
+           </span>
+         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="inline-flex items-center rounded-full border border-sky-200 bg-sky-100 px-2.5 py-0.5 text-xs font-medium text-sky-800">
-            {puppy.category?.name || 'Sin categoría'}
-          </span>
-          <span className="inline-flex items-center rounded-full border border-rose-200 bg-rose-100 px-2.5 py-0.5 text-xs font-medium text-rose-800">
-            {dict.admin.forms.gender[puppy.gender] || puppy.gender}
-          </span>
-        </div>
+                 <div className="flex items-center gap-2">
+           <span className="inline-flex items-center rounded-full border border-sky-200 bg-sky-100 px-2.5 py-0.5 text-xs font-medium text-sky-800">
+             {puppy.category?.name || dict.utils.fallbacks.noCategory}
+           </span>
+           <span className="inline-flex items-center rounded-full border border-rose-200 bg-rose-100 px-2.5 py-0.5 text-xs font-medium text-rose-800">
+             {dict.admin.forms.gender[puppy.gender] || puppy.gender}
+           </span>
+         </div>
 
-        <p
-          className="line-clamp-2 text-sm text-gray-600"
-          title={puppy.description || ''}
-        >
-          {puppy.description || 'Sin descripción disponible'}
-        </p>
+                 <p
+           className="line-clamp-2 text-sm text-gray-600"
+           title={puppy.description || ''}
+         >
+           {puppy.description || dict.utils.fallbacks.noDescription}
+         </p>
 
         <div className="flex flex-col gap-2">
           <div className="text-center">

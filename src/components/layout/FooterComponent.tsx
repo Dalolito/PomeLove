@@ -9,36 +9,6 @@ interface FooterProps {
 export default function Footer({ title, currentLocale, dict }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
-  const contactLinks = [
-    {
-      name: 'Instagram',
-      url: 'https://www.instagram.com/pomelove_korea?igsh=dTA4Njl5aXY5bnRk&utm_source=qr',
-      icon: (
-        <div className="flex h-5 w-5 items-center justify-center rounded bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 text-xs font-bold text-white">
-          IG
-        </div>
-      ),
-    },
-    {
-      name: 'Facebook',
-      url: 'https://www.facebook.com/catalina.londonoagudelo',
-      icon: (
-        <div className="flex h-5 w-5 items-center justify-center rounded bg-blue-600 text-xs font-bold text-white">
-          f
-        </div>
-      ),
-    },
-    {
-      name: 'WhatsApp',
-      url: 'https://wa.me/573004439574',
-      icon: (
-        <div className="flex h-5 w-5 items-center justify-center rounded bg-green-500 text-xs font-bold text-white">
-          WA
-        </div>
-      ),
-    },
-  ];
-
   const footerLinks = [
     {
       title: dict.footer?.sections?.company || 'Company',
@@ -80,20 +50,45 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
 
             {/* Social links */}
             <div className="mb-6 flex gap-4">
-              {contactLinks.map(contact => (
-                <a
-                  key={contact.name}
-                  href={contact.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex h-10 w-10 items-center justify-center rounded-lg bg-slate-700 transition-colors hover:bg-red-500"
-                  title={contact.name}
-                >
-                  <span className="text-slate-300 transition-colors group-hover:text-white">
-                    {contact.icon}
-                  </span>
-                </a>
-              ))}
+              <a
+                href="https://www.instagram.com/pomelove_korea?igsh=dTA4Njl5aXY5bnRk&utm_source=qr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex h-10 w-10 items-center justify-center rounded-lg bg-slate-700 transition-colors hover:bg-red-500"
+                title="Instagram"
+              >
+                <span className="text-slate-300 transition-colors group-hover:text-white">
+                  <div className="flex h-5 w-5 items-center justify-center rounded bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 text-xs font-bold text-white">
+                    IG
+                  </div>
+                </span>
+              </a>
+              <a
+                href="https://www.facebook.com/catalina.londonoagudelo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex h-10 w-10 items-center justify-center rounded-lg bg-slate-700 transition-colors hover:bg-red-500"
+                title="Facebook"
+              >
+                <span className="text-slate-300 transition-colors group-hover:text-white">
+                  <div className="flex h-5 w-5 items-center justify-center rounded bg-blue-600 text-xs font-bold text-white">
+                    f
+                  </div>
+                </span>
+              </a>
+              <a
+                href="https://wa.me/573004439574"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex h-10 w-10 items-center justify-center rounded-lg bg-slate-700 transition-colors hover:bg-red-500"
+                title="WhatsApp"
+              >
+                <span className="text-slate-300 transition-colors group-hover:text-white">
+                  <div className="flex h-5 w-5 items-center justify-center rounded bg-green-500 text-xs font-bold text-white">
+                    WA
+                  </div>
+                </span>
+              </a>
             </div>
 
             {/* Contact info */}

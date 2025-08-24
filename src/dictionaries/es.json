@@ -21,6 +21,18 @@
     "ask_about_puppy": "Preguntar sobre este perro",
     "back_to_catalog": "Volver al catálogo"
   },
+  "utils": {
+    "fallbacks": {
+      "noName": "Sin nombre",
+      "noCategory": "Sin categoría",
+      "noDescription": "Sin descripción disponible",
+      "pet": "Mascota"
+    },
+    "errors": {
+      "unexpected": "Error inesperado",
+      "unexpectedImageUpload": "Error inesperado al subir la imagen"
+    }
+  },
   "home": {
     "available_now": "Disponibles ahora",
     "availableDescription": "Nuestros adorables cachorritos están listos para encontrar su hogar perfecto",
@@ -39,7 +51,9 @@
       "contact": "Contacto"
     },
     "copyright": "Todos los derechos reservados.",
-    "location": "Medellín, Colombia"
+    "location": "Medellín, Colombia",
+    "phone": "+57 300 443 9574",
+    "instagramUrl": "https://www.instagram.com/pomelove_korea?igsh=dTA4Njl5aXY5bnRk&utm_source=qr"
   },
   "admin": {
     "menu": "Menú Admin",
@@ -262,5 +276,9 @@
       "available": "Disponibles",
       "unavailable": "No disponibles"
     }
+  },
+  "whatsapp": {
+    "messageTemplate": "¡Hola! Estoy interesado en {puppyName} ({category} - {gender}), ¿me podrías dar más información?",
+    "basicMessage": "Hola! Me gustaría obtener información sobre sus mascotas disponibles."
   }
 }

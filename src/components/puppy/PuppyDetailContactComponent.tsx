@@ -2,31 +2,28 @@
 
 import { Puppy } from '@/domain/entities/Puppy';
 import { Dictionary } from '@/lib/types/dictionary';
+import { openWhatsAppContact } from '@/lib/utils/whatsappUtils';
 import PrimaryButtonComponent from '@/components/ui/PrimaryButtonComponent';
 
 interface PuppyDetailContactComponentProps {
   puppy: Puppy;
   dict: Dictionary;
+  locale?: string;
   className?: string;
 }
 
 export default function PuppyDetailContactComponent({
   puppy,
   dict,
+  locale = 'es',
   className = '',
 }: PuppyDetailContactComponentProps) {
   const handleWhatsAppContact = () => {
-    const message = encodeURIComponent(
-      `${dict.buttons.ask_about_puppy}: ${puppy.name} - ${puppy.category.name}`
-    );
-    window.open(`https://wa.me/573004439574?text=${message}`, '_blank');
+    openWhatsAppContact(puppy, dict, locale);
   };
 
   const handleInstagramContact = () => {
-    window.open(
-      'https://www.instagram.com/pomelove_korea?igsh=dTA4Njl5aXY5bnRk&utm_source=qr',
-      '_blank'
-    );
+    window.open(dict.footer.instagramUrl, '_blank');
   };
 
   return (
@@ -61,12 +58,12 @@ export default function PuppyDetailContactComponent({
         </PrimaryButtonComponent>
       </div>
 
-      <div className="mt-6 border-t border-gray-200 pt-6 text-center">
-        <p className="text-sm text-gray-500">📞 +57 300 443 9574</p>
-        <p className="text-sm text-gray-500">
-          📍 {dict.footer?.location || 'Medellín, Colombia'}
-        </p>
-      </div>
+             <div className="mt-6 border-t border-gray-200 pt-6 text-center">
+         <p className="text-sm text-gray-500">📞 {dict.footer.phone}</p>
+         <p className="text-sm text-gray-500">
+           📍 {dict.footer.location}
+         </p>
+       </div>
     </div>
   );
 }

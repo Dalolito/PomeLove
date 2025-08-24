@@ -2,8 +2,10 @@
 
 import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import { Dictionary } from '@/lib/types/dictionary';
 
 interface UseFormSubmissionProps<T> {
+  dict: Dictionary;
   initialData: T;
   submitAction: (
     data: T
@@ -15,6 +17,7 @@ interface UseFormSubmissionProps<T> {
 }
 
 export function useFormSubmission<T>({
+  dict,
   initialData,
   submitAction,
   onSuccess,
@@ -49,12 +52,12 @@ export function useFormSubmission<T>({
             router.push(redirectPath);
           }
         } else {
-          const errorMessage = result.error || 'Error inesperado';
+          const errorMessage = result.error || dict.utils.errors.unexpected;
           setError(errorMessage);
           onError?.(errorMessage);
         }
       } catch {
-        const errorMessage = 'Error inesperado';
+        const errorMessage = dict.utils.errors.unexpected;
         setError(errorMessage);
         onError?.(errorMessage);
       } finally {

@@ -60,13 +60,13 @@ export default function AdminFormSingleImageUploadComponent({
         setError(
           dict.admin.media.upload.errors[errorKey] ||
             dict.admin.media.upload.errors.uploadFailed ||
-            'Error al subir la imagen'
+            dict.utils.errors.unexpectedImageUpload
         );
       }
     } catch {
       setError(
         dict.admin.media.upload.errors.uploadFailed ||
-          'Error al subir la imagen'
+          dict.utils.errors.unexpectedImageUpload
       );
     } finally {
       setIsUploading(false);
