@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react';
 import { MediaFile } from '@/application/useCases/utils/MediaUploadUseCase';
 import { uploadImageAction } from '@/actions/uploadActions';
-
+import PuppyImageComponent from '@/components/ui/PuppyImageComponent';
 import { Dictionary } from '@/lib/types/dictionary';
 
 interface SingleImageUploadProps {
@@ -106,10 +106,10 @@ export default function AdminFormSingleImageUploadComponent({
 
       {value ? (
         <div className="group relative mx-auto h-40 w-40 overflow-hidden rounded-lg border border-gray-200">
-          <img
+          <PuppyImageComponent
             src={value.url}
             alt={label}
-            className="h-full w-full object-cover"
+            className="h-full w-full"
           />
           <button
             type="button"
@@ -178,7 +178,6 @@ export default function AdminFormSingleImageUploadComponent({
         </div>
       )}
 
-      {/* Error Message */}
       {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
     </div>
   );

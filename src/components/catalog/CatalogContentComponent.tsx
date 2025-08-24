@@ -8,6 +8,7 @@ import { useCatalogFilters } from '@/hooks/useCatalogFilters';
 import CatalogHeaderComponent from '@/components/catalog/CatalogHeaderComponent';
 import CatalogFiltersComponent from '@/components/catalog/CatalogFiltersComponent';
 import PuppyGridComponent from '@/components/puppy/PuppyGridComponent';
+import { validateImageUrl } from '@/lib/utils/imageUtils';
 
 interface CatalogContentComponentProps {
   initialPuppies: Puppy[];
@@ -26,6 +27,39 @@ export default function CatalogContentComponent({
 }: CatalogContentComponentProps) {
   const [forceUpdate, setForceUpdate] = useState(0);
 
+  const cleanedPuppies = useMemo(() => {
+    if (!initialPuppies || !Array.isArray(initialPuppies)) {
+      return [];
+    }
+
+    return initialPuppies.map(puppy => {
+      if (!puppy || !puppy.id) {
+        return null;
+      }
+
+      const cleanedPuppy = { ...puppy };
+
+      if (puppy.media && Array.isArray(puppy.media)) {
+        cleanedPuppy.media = puppy.media
+          .filter(media => media && media.type && media.url)
+          .map(media => ({
+            ...media,
+            url: validateImageUrl(media.url)
+          }));
+      }
+
+      if (puppy.fatherImage) {
+        cleanedPuppy.fatherImage = validateImageUrl(puppy.fatherImage);
+      }
+
+      if (puppy.motherImage) {
+        cleanedPuppy.motherImage = validateImageUrl(puppy.motherImage);
+      }
+
+      return cleanedPuppy;
+    }).filter(Boolean) as Puppy[];
+  }, [initialPuppies]);
+
   const {
     filters,
     selectedCategory,
@@ -35,25 +69,17 @@ export default function CatalogContentComponent({
     updateFilter,
     clearFilters,
   } = useCatalogFilters({
-    initialPuppies,
+    initialPuppies: cleanedPuppies,
     categories,
   });
 
   useEffect(() => {
-    // Force re-render after a short delay to ensure images load
     const timer = setTimeout(() => {
       setForceUpdate(prev => prev + 1);
     }, 100);
 
     return () => clearTimeout(timer);
-  }, [initialPuppies]);
-
-  console.log('CatalogContent - Initial puppies:', initialPuppies?.length);
-  console.log('CatalogContent - Filtered puppies:', filteredPuppies?.length);
-  console.log(
-    'CatalogContent - Sample puppy media:',
-    filteredPuppies?.[0]?.media
-  );
+  }, [cleanedPuppies]);
 
   return (
     <div className={`container mx-auto px-4 py-8 ${className}`}>

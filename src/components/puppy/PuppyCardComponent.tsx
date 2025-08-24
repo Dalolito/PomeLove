@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { Puppy } from '@/domain/entities/Puppy';
 import { Dictionary } from '@/lib/types/dictionary';
 import { calculatePuppyAgeUtil } from '@/lib/utils/calculatePuppyAgeUtil';
 import { openWhatsAppContact } from '@/lib/utils/whatsappUtils';
 import { getLocalizedDescription } from '@/lib/utils/getLocalizedDescription';
-import PuppyCardImageComponent from '@/components/puppy/PuppyCardImageComponent';
+import PuppyImageComponent from '@/components/ui/PuppyImageComponent';
 import PrimaryButtonComponent from '@/components/ui/PrimaryButtonComponent';
 
 interface PuppyCardComponentProps {
@@ -27,41 +27,44 @@ export default function PuppyCardComponent({
 }: PuppyCardComponentProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  const getMainImage = useCallback((): string => {
+  const mainImage = useMemo((): string => {
     if (!puppy.media || puppy.media.length === 0) {
       return '/placeholder-puppy.svg';
     }
 
-    const firstValidImage = puppy.media.find(
+    const validImages = puppy.media.filter(
       media =>
         media &&
         media.type === 'image' &&
         media.url &&
+        typeof media.url === 'string' &&
         media.url.trim() !== '' &&
         !media.url.includes('undefined') &&
-        !media.url.includes('null')
+        !media.url.includes('null') &&
+        media.url !== 'null' &&
+        media.url !== 'undefined'
     );
 
-    if (firstValidImage && firstValidImage.url) {
-      return firstValidImage.url;
+    if (validImages.length === 0) {
+      return '/placeholder-puppy.svg';
     }
 
-    return '/placeholder-puppy.svg';
+    return validImages[0].url;
   }, [puppy.media]);
 
-  const formatPrice = (price: number): string => {
+  const formatPrice = useCallback((price: number): string => {
     return new Intl.NumberFormat(locale === 'es' ? 'es-CO' : 'en-US', {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 0,
     }).format(price);
-  };
+  }, [locale]);
 
-  const handleContactClick = (e: React.MouseEvent) => {
+  const handleContactClick = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     openWhatsAppContact(puppy, dict, locale);
-  };
+  }, [puppy, dict, locale]);
 
   const handleImageLoad = useCallback(() => {
     setImageLoaded(true);
@@ -73,12 +76,13 @@ export default function PuppyCardComponent({
       className={`group block overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:scale-[1.02] hover:border-blue-300 hover:shadow-xl ${className}`}
     >
       <div className="relative aspect-square">
-        <PuppyCardImageComponent
-          src={getMainImage()}
+        <PuppyImageComponent
+          src={mainImage}
           alt={`${puppy.name} - ${puppy.category?.name || dict.utils.fallbacks.pet}`}
           priority={priority}
           className="absolute inset-0"
           onLoad={handleImageLoad}
+          retryCount={3}
         />
 
         {puppy.available && (

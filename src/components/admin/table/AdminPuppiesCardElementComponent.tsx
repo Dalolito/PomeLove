@@ -1,4 +1,5 @@
 import AdminPuppiesTableButtonsComponent from '@/components/admin/table/AdminPuppiesTableButtonsComponent';
+import PuppyImageComponent from '@/components/ui/PuppyImageComponent';
 import { Dictionary } from '@/lib/types/dictionary';
 import { Puppy } from '@/domain/entities/Puppy';
 import { calculatePuppyAgeUtil } from '@/lib/utils/calculatePuppyAgeUtil';
@@ -63,23 +64,14 @@ export default function AdminPuppiesCardElementComponent({
       className={`rounded-lg border border-gray-200 bg-white p-4 shadow-sm ${className}`}
     >
       <div className="flex items-start gap-4">
-        {/* Image */}
         <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg bg-gray-100">
-          <img
+          <PuppyImageComponent
             src={getMainImage()}
             alt={puppy.name}
-            className="h-full w-full object-cover"
-            onError={e => {
-              const target = e.target as HTMLImageElement;
-              if (target.src !== '/placeholder-puppy.svg') {
-                target.src = '/placeholder-puppy.svg';
-              }
-            }}
-            loading="lazy"
+            className="h-full w-full"
           />
         </div>
 
-        {/* Content */}
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between">
             <div className="min-w-0 flex-1">
@@ -91,7 +83,6 @@ export default function AdminPuppiesCardElementComponent({
               </p>
             </div>
 
-            {/* Actions */}
             <div className="ml-2 flex-shrink-0">
               <AdminPuppiesTableButtonsComponent
                 puppyId={puppy.id!}
@@ -106,14 +97,12 @@ export default function AdminPuppiesCardElementComponent({
             </div>
           </div>
 
-          {/* Category */}
           <div className="mt-2">
             <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800">
               {puppy.category.name}
             </span>
           </div>
 
-          {/* Description */}
           <div className="mt-2">
             <p
               className="line-clamp-2 text-sm text-gray-600"
@@ -123,7 +112,6 @@ export default function AdminPuppiesCardElementComponent({
             </p>
           </div>
 
-          {/* Birth Date */}
           <div className="mt-2 text-xs text-gray-500">
             {dict.admin.table.headers.birthDate}:{' '}
             {formatDate(puppy.birthDate, locale)}

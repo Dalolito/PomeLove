@@ -2,7 +2,7 @@
 
 import { MediaFile } from '@/application/useCases/utils/MediaUploadUseCase';
 import { replaceText, formatFileSize } from '@/lib/utils/textUtils';
-
+import PuppyImageComponent from '@/components/ui/PuppyImageComponent';
 import { Dictionary } from '@/lib/types/dictionary';
 
 interface FileGridProps {
@@ -39,13 +39,12 @@ export default function FileGridComponent({
             key={file.id}
             className="group relative overflow-hidden rounded-lg border border-gray-200 bg-white"
           >
-            {/* Preview */}
             <div className="relative aspect-square bg-gray-100">
               {file.type === 'image' ? (
-                <img
+                <PuppyImageComponent
                   src={file.url}
                   alt={file.name}
-                  className="h-full w-full object-cover"
+                  className="h-full w-full"
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center bg-gray-900">
@@ -53,7 +52,6 @@ export default function FileGridComponent({
                 </div>
               )}
 
-              {/* Loading overlay */}
               {uploadingFiles.has(file.id) && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
                   <div className="text-xs text-white">
@@ -63,7 +61,6 @@ export default function FileGridComponent({
               )}
             </div>
 
-            {/* File Info */}
             <div className="p-3">
               <p
                 className="truncate text-sm font-medium text-gray-900"
@@ -77,7 +74,6 @@ export default function FileGridComponent({
               </p>
             </div>
 
-            {/* Remove Button */}
             <button
               onClick={e => {
                 e.stopPropagation();

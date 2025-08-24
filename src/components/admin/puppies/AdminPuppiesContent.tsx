@@ -5,6 +5,7 @@ import { Category } from '@/domain/entities/Category';
 import { usePuppyFilters } from '@/hooks/usePuppyFilters';
 import AdminPuppiesFiltersComponent from '@/components/admin/puppies/AdminPuppiesFiltersComponent';
 import AdminPuppiesTableComponent from '@/components/admin/table/AdminPuppiesTableComponent';
+import ImageDebugComponent from '@/components/debug/ImageDebugComponent';
 
 interface AdminPuppiesContentProps {
   initialPuppies: Puppy[];
@@ -19,7 +20,6 @@ export default function AdminPuppiesContent({
   dict,
   locale,
 }: AdminPuppiesContentProps) {
-  // Custom hook for managing puppy filtering and search
   const {
     filters,
     isLoading: isFiltering,
@@ -34,7 +34,6 @@ export default function AdminPuppiesContent({
 
   return (
     <div className="space-y-6">
-      {/* Filters section */}
       <AdminPuppiesFiltersComponent
         categories={categories}
         filters={filters}
@@ -45,7 +44,6 @@ export default function AdminPuppiesContent({
         dict={dict}
       />
 
-      {/* Puppies table with filtering states */}
       <AdminPuppiesTableComponent
         puppies={filteredPuppies}
         dict={dict}
@@ -53,6 +51,8 @@ export default function AdminPuppiesContent({
         isFiltering={isFiltering}
         hasActiveFilters={hasActiveFilters}
       />
+
+      <ImageDebugComponent puppies={filteredPuppies} />
     </div>
   );
 }

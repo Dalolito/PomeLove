@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { validateImageUrl } from '@/lib/utils/imageUtils';
 
 interface PuppyCardImageComponentProps {
   src: string;
@@ -31,8 +32,7 @@ export default function PuppyCardImageComponent({
     setIsLoading(false);
   };
 
-  const imageSrc =
-    imageError || !src || src.trim() === '' ? '/placeholder-puppy.svg' : src;
+  const imageSrc = imageError ? '/placeholder-puppy.svg' : validateImageUrl(src);
 
   return (
     <div className={`relative overflow-hidden ${className}`}>
