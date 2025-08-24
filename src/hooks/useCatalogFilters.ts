@@ -6,7 +6,6 @@ import { Puppy } from '@/domain/entities/Puppy';
 import { Category } from '@/domain/entities/Category';
 import { getFilteredPuppiesAction } from '@/actions/puppyActions';
 
-
 interface UseCatalogFiltersProps {
   initialPuppies: Puppy[];
   categories: Category[];

@@ -11,7 +11,7 @@ export const aboutMedia = {
     },
     {
       id: '2',
-      url: '/media/happy-client-2.jpeg', 
+      url: '/media/happy-client-2.jpeg',
       type: 'image' as const,
     },
     {
@@ -38,7 +38,7 @@ export const aboutMedia = {
       id: '7',
       url: '/media/sended-dog-8.mp4',
       type: 'video' as const,
-    }
+    },
   ],
   facilities: [
     {
@@ -47,7 +47,7 @@ export const aboutMedia = {
       type: 'image' as const,
     },
     {
-      id: '8', 
+      id: '8',
       url: '/media/sended-dog-2.jpeg',
       type: 'image' as const,
     },
@@ -55,7 +55,7 @@ export const aboutMedia = {
       id: '9',
       url: '/media/sended-dog-3.jpeg',
       type: 'image' as const,
-    }
+    },
   ],
   breeding: [
     {
@@ -72,6 +72,6 @@ export const aboutMedia = {
       id: '12',
       url: '/media/sended-dog-6.jpeg',
       type: 'image' as const,
-    }
-  ]
+    },
+  ],
 };
