@@ -10,18 +10,18 @@ export default function ImagePreloaderComponent({
   images,
 }: ImagePreloaderComponentProps) {
   useEffect(() => {
-    const preloadImages = () => {
-      images.forEach(src => {
-        if (src && src !== '/placeholder-puppy.svg' && src.trim() !== '') {
-          const img = new Image();
-          img.onload = () => console.log('Preloaded image:', src);
-          img.onerror = () => console.warn('Failed to preload image:', src);
-          img.src = src;
-        }
-      });
-    };
+    if (!images || !Array.isArray(images)) {
+      return;
+    }
 
-    preloadImages();
+    images.forEach(src => {
+      if (!src || typeof src !== 'string' || src.trim() === '') {
+        return;
+      }
+
+      const img = new Image();
+      img.src = src.trim();
+    });
   }, [images]);
 
   return null;

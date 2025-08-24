@@ -9,6 +9,7 @@ import AdminFormParentsComponent from '@/components/admin/forms/AdminFormParents
 import AdminFormUploadMediaComponent from '@/components/admin/forms/AdminFormUploadMediaComponent';
 import AdminFormActionButtonsComponent from '@/components/admin/forms/AdminFormActionButtonsComponent';
 import { updatePuppyAction } from '@/actions/puppyActions';
+import { getLocalizedDescription } from '@/lib/utils/getLocalizedDescription';
 
 interface AdminEditFormComponentProps {
   puppy: Puppy;
@@ -31,7 +32,8 @@ export default function AdminEditFormComponent({
 
   const [formData, setFormData] = useState<{
     name: string;
-    description: string;
+    description_es: string;
+    description_en: string;
     birthDate: string;
     gender: 'male' | 'female';
     categoryId: string;
@@ -41,7 +43,8 @@ export default function AdminEditFormComponent({
     available: boolean;
   }>({
     name: '',
-    description: '',
+    description_es: '',
+    description_en: '',
     birthDate: '',
     gender: 'male',
     categoryId: '',
@@ -81,7 +84,8 @@ export default function AdminEditFormComponent({
 
       setFormData({
         name: puppy.name,
-        description: puppy.description,
+        description_es: puppy.description_es,
+        description_en: puppy.description_en,
         birthDate: birthDateString,
         gender: puppy.gender,
         categoryId: puppy.category.id,
@@ -94,7 +98,13 @@ export default function AdminEditFormComponent({
   }, [puppy]);
 
   const handleBasicInfoChange = (
-    field: 'name' | 'description' | 'birthDate' | 'gender' | 'categoryId',
+    field:
+      | 'name'
+      | 'description_es'
+      | 'description_en'
+      | 'birthDate'
+      | 'gender'
+      | 'categoryId',
     value: string
   ) => {
     setFormData(prev => ({
@@ -128,7 +138,8 @@ export default function AdminEditFormComponent({
     try {
       const result = await updatePuppyAction(puppy.id!, {
         name: formData.name,
-        description: formData.description,
+        description_es: formData.description_es,
+        description_en: formData.description_en,
         birthDate: formData.birthDate,
         gender: formData.gender,
         categoryId: formData.categoryId,
@@ -189,7 +200,8 @@ export default function AdminEditFormComponent({
         <AdminFormBasicInfoComponent
           data={{
             name: formData.name,
-            description: formData.description,
+            description_es: formData.description_es,
+            description_en: formData.description_en,
             birthDate: formData.birthDate,
             gender: formData.gender,
             categoryId: formData.categoryId,

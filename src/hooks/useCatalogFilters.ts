@@ -5,12 +5,40 @@ import { CatalogFilters, CatalogFilterState } from '@/lib/types/filters';
 import { Puppy } from '@/domain/entities/Puppy';
 import { Category } from '@/domain/entities/Category';
 import { getFilteredPuppiesAction } from '@/actions/puppyActions';
+import { validateImageUrl } from '@/lib/utils/imageUtils';
 
 interface UseCatalogFiltersProps {
   initialPuppies: Puppy[];
   categories: Category[];
   onFilteredResults?: (puppies: Puppy[]) => void;
 }
+
+const cleanPuppyData = (puppy: Puppy): Puppy => {
+  if (!puppy || !puppy.id) {
+    return puppy;
+  }
+
+  const cleanedPuppy = { ...puppy };
+
+  if (puppy.media && Array.isArray(puppy.media)) {
+    cleanedPuppy.media = puppy.media
+      .filter(media => media && media.type && media.url)
+      .map(media => ({
+        ...media,
+        url: validateImageUrl(media.url),
+      }));
+  }
+
+  if (puppy.fatherImage) {
+    cleanedPuppy.fatherImage = validateImageUrl(puppy.fatherImage);
+  }
+
+  if (puppy.motherImage) {
+    cleanedPuppy.motherImage = validateImageUrl(puppy.motherImage);
+  }
+
+  return cleanedPuppy;
+};
 
 export function useCatalogFilters({
   initialPuppies,
@@ -64,8 +92,9 @@ export function useCatalogFilters({
         const selectedCategory = findSelectedCategory(filters.categoryId);
 
         if (!hasActiveFilters) {
-          setFilteredPuppies(initialPuppies);
-          onFilteredResults?.(initialPuppies);
+          const cleanedPuppies = initialPuppies.map(cleanPuppyData);
+          setFilteredPuppies(cleanedPuppies);
+          onFilteredResults?.(cleanedPuppies);
         } else {
           const apiFilters = {
             categoryId: filters.categoryId,
@@ -77,8 +106,9 @@ export function useCatalogFilters({
           const result = await getFilteredPuppiesAction(apiFilters);
 
           if (result.success && result.puppies) {
-            setFilteredPuppies(result.puppies);
-            onFilteredResults?.(result.puppies);
+            const cleanedPuppies = result.puppies.map(cleanPuppyData);
+            setFilteredPuppies(cleanedPuppies);
+            onFilteredResults?.(cleanedPuppies);
           }
         }
 
@@ -137,12 +167,14 @@ export function useCatalogFilters({
       hasActiveFilters: false,
     });
 
-    setFilteredPuppies(initialPuppies);
-    onFilteredResults?.(initialPuppies);
+    const cleanedPuppies = initialPuppies.map(cleanPuppyData);
+    setFilteredPuppies(cleanedPuppies);
+    onFilteredResults?.(cleanedPuppies);
   }, [initialPuppies, onFilteredResults]);
 
   useEffect(() => {
-    setFilteredPuppies(initialPuppies);
+    const cleanedPuppies = initialPuppies.map(cleanPuppyData);
+    setFilteredPuppies(cleanedPuppies);
     lastAppliedFiltersRef.current = '';
   }, [initialPuppies]);
 

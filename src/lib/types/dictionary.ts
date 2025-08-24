@@ -21,6 +21,18 @@ export interface Dictionary {
     ask_about_puppy: string;
     back_to_catalog: string;
   };
+  utils: {
+    fallbacks: {
+      noName: string;
+      noCategory: string;
+      noDescription: string;
+      pet: string;
+    };
+    errors: {
+      unexpected: string;
+      unexpectedImageUpload: string;
+    };
+  };
   home: {
     available_now: string;
     availableDescription: string;
@@ -40,6 +52,8 @@ export interface Dictionary {
     };
     copyright: string;
     location: string;
+    phone: string;
+    instagramUrl: string;
   };
   admin: {
     menu: string;
@@ -254,5 +268,9 @@ export interface Dictionary {
       available: string;
       unavailable: string;
     };
+  };
+  whatsapp?: {
+    messageTemplate: string;
+    basicMessage: string;
   };
 }

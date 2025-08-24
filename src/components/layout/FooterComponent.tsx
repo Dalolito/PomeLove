@@ -1,4 +1,6 @@
+import React from 'react';
 import { Dictionary } from '@/lib/types/dictionary';
+import WhatsAppContactButton from '@/components/layout/WhatsAppContactButton';
 
 interface FooterProps {
   title: string;
@@ -9,7 +11,7 @@ interface FooterProps {
 export default function Footer({ title, currentLocale, dict }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
-  const contactLinks = [
+  const staticContactLinks = [
     {
       name: 'Instagram',
       url: 'https://www.instagram.com/pomelove_korea?igsh=dTA4Njl5aXY5bnRk&utm_source=qr',
@@ -25,15 +27,6 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
       icon: (
         <div className="flex h-5 w-5 items-center justify-center rounded bg-blue-600 text-xs font-bold text-white">
           f
-        </div>
-      ),
-    },
-    {
-      name: 'WhatsApp',
-      url: 'https://wa.me/573004439574',
-      icon: (
-        <div className="flex h-5 w-5 items-center justify-center rounded bg-green-500 text-xs font-bold text-white">
-          WA
         </div>
       ),
     },
@@ -80,7 +73,7 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
 
             {/* Social links */}
             <div className="mb-6 flex gap-4">
-              {contactLinks.map(contact => (
+              {staticContactLinks.map(contact => (
                 <a
                   key={contact.name}
                   href={contact.url}
@@ -94,6 +87,15 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
                   </span>
                 </a>
               ))}
+
+              {/* WhatsApp button - client component */}
+              <WhatsAppContactButton dict={dict}>
+                <span className="text-slate-300 transition-colors group-hover:text-white">
+                  <div className="flex h-5 w-5 items-center justify-center rounded bg-green-500 text-xs font-bold text-white">
+                    WA
+                  </div>
+                </span>
+              </WhatsAppContactButton>
             </div>
 
             {/* Contact info */}
@@ -102,6 +104,8 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
                 <span>📱</span>
                 <a
                   href="https://wa.me/573004439574"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="transition-colors hover:text-white"
                 >
                   +57 300 443 9574

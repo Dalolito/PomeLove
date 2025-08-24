@@ -1,11 +1,13 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { Puppy } from '@/domain/entities/Puppy';
 import { Dictionary } from '@/lib/types/dictionary';
 import { calculatePuppyAgeUtil } from '@/lib/utils/calculatePuppyAgeUtil';
-import PuppyCardImageComponent from '@/components/puppy/PuppyCardImageComponent';
+import { openWhatsAppContact } from '@/lib/utils/whatsappUtils';
+import { getLocalizedDescription } from '@/lib/utils/getLocalizedDescription';
+import PuppyImageComponent from '@/components/ui/PuppyImageComponent';
 import PrimaryButtonComponent from '@/components/ui/PrimaryButtonComponent';
 
 interface PuppyCardComponentProps {
@@ -25,48 +27,63 @@ export default function PuppyCardComponent({
 }: PuppyCardComponentProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  const getMainImage = useCallback((): string => {
-    if (!puppy.media || puppy.media.length === 0) {
+  const mainImage = useMemo((): string => {
+    if (
+      !puppy.media ||
+      !Array.isArray(puppy.media) ||
+      puppy.media.length === 0
+    ) {
       return '/placeholder-puppy.svg';
     }
 
-    const firstValidImage = puppy.media.find(
+    const validImages = puppy.media.filter(
       media =>
         media &&
         media.type === 'image' &&
         media.url &&
+        typeof media.url === 'string' &&
         media.url.trim() !== '' &&
+        media.url !== 'null' &&
+        media.url !== 'undefined' &&
         !media.url.includes('undefined') &&
         !media.url.includes('null')
     );
 
-    if (firstValidImage && firstValidImage.url) {
-      return firstValidImage.url;
+    if (validImages.length === 0) {
+      return '/placeholder-puppy.svg';
     }
 
-    return '/placeholder-puppy.svg';
+    const firstValidUrl = validImages[0].url.trim();
+    return firstValidUrl || '/placeholder-puppy.svg';
   }, [puppy.media]);
 
-  const formatPrice = (price: number): string => {
-    return new Intl.NumberFormat(locale === 'es' ? 'es-CO' : 'en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-    }).format(price);
-  };
+  const formatPrice = useCallback(
+    (price: number): string => {
+      return new Intl.NumberFormat(locale === 'es' ? 'es-CO' : 'en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0,
+      }).format(price);
+    },
+    [locale]
+  );
 
-  const handleContactClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const message = encodeURIComponent(
-      `${dict.buttons.search_puppy}: ${puppy.name} - ${puppy.category.name}`
-    );
-    window.open(`https://wa.me/573004439574?text=${message}`, '_blank');
-  };
+  const handleContactClick = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      openWhatsAppContact(puppy, dict, locale);
+    },
+    [puppy, dict, locale]
+  );
 
   const handleImageLoad = useCallback(() => {
     setImageLoaded(true);
   }, []);
+
+  if (!puppy || !puppy.id || !puppy.name) {
+    return null;
+  }
 
   return (
     <Link
@@ -74,9 +91,9 @@ export default function PuppyCardComponent({
       className={`group block overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:scale-[1.02] hover:border-blue-300 hover:shadow-xl ${className}`}
     >
       <div className="relative aspect-square">
-        <PuppyCardImageComponent
-          src={getMainImage()}
-          alt={`${puppy.name} - ${puppy.category?.name || 'Mascota'}`}
+        <PuppyImageComponent
+          src={mainImage}
+          alt={`${puppy.name} - ${puppy.category?.name || dict.utils.fallbacks.pet}`}
           priority={priority}
           className="absolute inset-0"
           onLoad={handleImageLoad}
@@ -94,7 +111,7 @@ export default function PuppyCardComponent({
       <div className="space-y-3 p-4">
         <div className="flex items-center justify-between">
           <h3 className="truncate text-lg font-semibold text-gray-900">
-            {puppy.name || 'Sin nombre'}
+            {puppy.name || dict.utils.fallbacks.noName}
           </h3>
           <span className="ml-2 whitespace-nowrap text-sm text-gray-500">
             {calculatePuppyAgeUtil(puppy.birthDate, dict)}
@@ -103,7 +120,7 @@ export default function PuppyCardComponent({
 
         <div className="flex items-center gap-2">
           <span className="inline-flex items-center rounded-full border border-sky-200 bg-sky-100 px-2.5 py-0.5 text-xs font-medium text-sky-800">
-            {puppy.category?.name || 'Sin categoría'}
+            {puppy.category?.name || dict.utils.fallbacks.noCategory}
           </span>
           <span className="inline-flex items-center rounded-full border border-rose-200 bg-rose-100 px-2.5 py-0.5 text-xs font-medium text-rose-800">
             {dict.admin.forms.gender[puppy.gender] || puppy.gender}
@@ -112,9 +129,10 @@ export default function PuppyCardComponent({
 
         <p
           className="line-clamp-2 text-sm text-gray-600"
-          title={puppy.description || ''}
+          title={getLocalizedDescription(puppy, locale) || ''}
         >
-          {puppy.description || 'Sin descripción disponible'}
+          {getLocalizedDescription(puppy, locale) ||
+            dict.utils.fallbacks.noDescription}
         </p>
 
         <div className="flex flex-col gap-2">

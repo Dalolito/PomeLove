@@ -41,7 +41,7 @@ export default function PuppyAvailableListComponent({
           setError(result.error || 'Error fetching puppies');
         }
       } catch {
-        setError('Error inesperado');
+        setError(dict.utils.errors.unexpected);
       } finally {
         setLoading(false);
       }
@@ -56,7 +56,13 @@ export default function PuppyAvailableListComponent({
       .map(puppy => {
         if (puppy.media && puppy.media.length > 0) {
           const firstImage = puppy.media.find(media => media.type === 'image');
-          return firstImage?.url;
+          if (
+            firstImage?.url &&
+            typeof firstImage.url === 'string' &&
+            firstImage.url.trim() !== ''
+          ) {
+            return firstImage.url.trim();
+          }
         }
         return null;
       })
@@ -69,7 +75,7 @@ export default function PuppyAvailableListComponent({
         <div className="mx-auto max-w-sm">
           <div className="mb-4 text-6xl">⚠️</div>
           <h3 className="mb-2 text-lg font-semibold text-gray-900">
-            Error al cargar mascotas
+            {dict.admin.table.empty.title}
           </h3>
           <p className="text-gray-600">{error}</p>
         </div>

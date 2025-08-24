@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useMemo, useCallback } from 'react';
 import { Puppy } from '@/domain/entities/Puppy';
 import { Dictionary } from '@/lib/types/dictionary';
 import PuppyCardComponent from '@/components/puppy/PuppyCardComponent';
@@ -21,6 +21,23 @@ function PuppyGridComponent({
   className = '',
   isPublic = false,
 }: PuppyGridComponentProps) {
+  const validPuppies = useMemo(() => {
+    if (!puppies || !Array.isArray(puppies)) {
+      return [];
+    }
+
+    return puppies.filter(puppy => {
+      if (!puppy || !puppy.id) {
+        return false;
+      }
+      return true;
+    });
+  }, [puppies]);
+
+  const handleCardError = useCallback((puppyId: string, error: any) => {
+    console.error(`Error rendering puppy card ${puppyId}:`, error);
+  }, []);
+
   if (loading) {
     return (
       <div
@@ -33,7 +50,7 @@ function PuppyGridComponent({
     );
   }
 
-  if (!puppies || puppies.length === 0) {
+  if (validPuppies.length === 0) {
     return (
       <div className={`py-12 text-center ${className}`}>
         <div className="mx-auto max-w-sm">
@@ -55,21 +72,21 @@ function PuppyGridComponent({
     <div
       className={`grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${className}`}
     >
-      {puppies.map((puppy, index) => {
-        if (!puppy || !puppy.id) {
-          console.warn('Puppy with invalid data found:', puppy);
+      {validPuppies.map((puppy, index) => {
+        try {
+          return (
+            <PuppyCardComponent
+              key={`puppy-${puppy.id}-${index}`}
+              puppy={puppy}
+              dict={dict}
+              locale={locale}
+              priority={index < 4}
+            />
+          );
+        } catch (error) {
+          handleCardError(puppy.id || 'unknown', error);
           return null;
         }
-
-        return (
-          <PuppyCardComponent
-            key={`puppy-${puppy.id}-${index}`}
-            puppy={puppy}
-            dict={dict}
-            locale={locale}
-            priority={index < 6}
-          />
-        );
       })}
     </div>
   );

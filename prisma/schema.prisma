@@ -17,19 +17,20 @@ model Category {
 }
 
 model Puppy {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String
-  birthDate   DateTime
-  gender      String   @default("male") 
-  categoryId  Int
-  fatherImage String?
-  motherImage String?
-  available   Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  media       PuppyMedia[]
+  id              Int      @id @default(autoincrement())
+  name            String
+  description_es  String   @default("")
+  description_en  String   @default("")
+  birthDate       DateTime
+  gender          String   @default("male") 
+  categoryId      Int
+  fatherImage     String?
+  motherImage     String?
+  available       Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  category        Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  media           PuppyMedia[]
 
   @@map("puppies")
 }

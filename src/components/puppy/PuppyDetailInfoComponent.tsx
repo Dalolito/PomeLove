@@ -1,6 +1,7 @@
 import { Puppy } from '@/domain/entities/Puppy';
 import { Dictionary } from '@/lib/types/dictionary';
 import { calculatePuppyAgeUtil } from '@/lib/utils/calculatePuppyAgeUtil';
+import { getLocalizedDescription } from '@/lib/utils/getLocalizedDescription';
 
 interface PuppyDetailInfoComponentProps {
   puppy: Puppy;
@@ -96,7 +97,9 @@ export default function PuppyDetailInfoComponent({
         <h3 className="mb-3 font-medium text-gray-900">
           {dict.admin.table.headers.description}
         </h3>
-        <p className="leading-relaxed text-gray-700">{puppy.description}</p>
+        <p className="leading-relaxed text-gray-700">
+          {getLocalizedDescription(puppy, locale)}
+        </p>
       </div>
     </div>
   );

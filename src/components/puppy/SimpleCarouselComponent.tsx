@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { MediaFile } from '@/application/useCases/utils/MediaUploadUseCase';
+import PuppyImageComponent from '@/components/ui/PuppyImageComponent';
 
 interface SimpleCarouselComponentProps {
   media: MediaFile[];
@@ -16,12 +17,30 @@ export default function SimpleCarouselComponent({
 }: SimpleCarouselComponentProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
-  const [imageError, setImageError] = useState<Set<number>>(new Set());
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
-  const validMedia = media.filter(m => m.type === 'image' && m.url);
+  const validMedia =
+    media?.filter(
+      item =>
+        item &&
+        item.type === 'image' &&
+        item.url &&
+        typeof item.url === 'string' &&
+        item.url.trim() !== '' &&
+        item.url !== 'null' &&
+        item.url !== 'undefined' &&
+        !item.url.includes('undefined') &&
+        !item.url.includes('null')
+    ) || [];
+
   const hasMedia = validMedia.length > 0;
+
+  useEffect(() => {
+    if (selectedIndex >= validMedia.length && validMedia.length > 0) {
+      setSelectedIndex(0);
+    }
+  }, [selectedIndex, validMedia.length]);
 
   if (!hasMedia) {
     return (
@@ -29,10 +48,10 @@ export default function SimpleCarouselComponent({
         className={`rounded-lg border border-gray-200 bg-white shadow-sm ${className}`}
       >
         <div className="flex aspect-square items-center justify-center bg-gray-100">
-          <img
+          <PuppyImageComponent
             src="/placeholder-puppy.svg"
             alt={puppyName}
-            className="h-full w-full object-cover"
+            className="h-full w-full"
           />
         </div>
       </div>
@@ -50,10 +69,11 @@ export default function SimpleCarouselComponent({
   };
 
   const goToSlide = (index: number) => {
-    setSelectedIndex(index);
+    if (index >= 0 && index < validMedia.length) {
+      setSelectedIndex(index);
+    }
   };
 
-  // Touch navigation
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX);
   };
@@ -103,47 +123,35 @@ export default function SimpleCarouselComponent({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [validMedia.length]);
 
-  const handleImageError = (index: number) => {
-    setImageError(prev => new Set([...prev, index]));
-  };
-
-  const handleImageLoad = (index: number) => {
-    setImageError(prev => {
-      const newSet = new Set(prev);
-      newSet.delete(index);
-      return newSet;
-    });
-  };
-
-  const getImageSrc = (index: number) => {
-    if (imageError.has(index)) {
-      return '/placeholder-puppy.svg';
+  const getCurrentImageUrl = (): string => {
+    if (selectedIndex >= 0 && selectedIndex < validMedia.length) {
+      const currentMedia = validMedia[selectedIndex];
+      if (currentMedia && currentMedia.url && currentMedia.url.trim() !== '') {
+        return currentMedia.url.trim();
+      }
     }
-    return validMedia[index]?.url || '/placeholder-puppy.svg';
+    return '/placeholder-puppy.svg';
   };
+
+  const currentImageUrl = getCurrentImageUrl();
 
   return (
     <>
       <div
         className={`rounded-lg border border-gray-200 bg-white shadow-sm ${className}`}
       >
-        {/* Main image display */}
         <div
           className="relative aspect-square overflow-hidden rounded-t-lg bg-gray-100"
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          <img
-            src={getImageSrc(selectedIndex)}
+          <PuppyImageComponent
+            src={currentImageUrl}
             alt={`${puppyName} - Image ${selectedIndex + 1}`}
-            className="h-full w-full cursor-pointer object-cover transition-transform duration-200 hover:scale-105"
-            onClick={() => setShowModal(true)}
-            onError={() => handleImageError(selectedIndex)}
-            onLoad={() => handleImageLoad(selectedIndex)}
+            className="h-full w-full cursor-pointer transition-transform duration-200 hover:scale-105"
           />
 
-          {/* Navigation controls */}
           {validMedia.length > 1 && (
             <>
               <button
@@ -188,12 +196,10 @@ export default function SimpleCarouselComponent({
             </>
           )}
 
-          {/* Position indicator */}
           <div className="absolute bottom-2 right-2 rounded-lg bg-black bg-opacity-50 px-2 py-1 text-sm text-white">
             {selectedIndex + 1} / {validMedia.length}
           </div>
 
-          {/* Dot indicators - mobile only */}
           {validMedia.length > 1 && (
             <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1 sm:hidden">
               {validMedia.map((_, index) => (
@@ -212,7 +218,6 @@ export default function SimpleCarouselComponent({
           )}
         </div>
 
-        {/* Thumbnail carousel */}
         {validMedia.length > 1 && (
           <div className="border-t border-gray-100 p-2">
             <div className="flex justify-center gap-1 overflow-x-auto">
@@ -226,12 +231,10 @@ export default function SimpleCarouselComponent({
                       : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >
-                  <img
-                    src={getImageSrc(index)}
+                  <PuppyImageComponent
+                    src={mediaItem.url}
                     alt={`${puppyName} - Thumbnail ${index + 1}`}
-                    className="h-full w-full object-cover"
-                    onError={() => handleImageError(index)}
-                    onLoad={() => handleImageLoad(index)}
+                    className="h-full w-full"
                   />
                 </button>
               ))}
@@ -270,11 +273,10 @@ export default function SimpleCarouselComponent({
           </button>
 
           <div className="relative max-h-[90vh] max-w-[90vw] p-4">
-            <img
-              src={getImageSrc(selectedIndex)}
+            <PuppyImageComponent
+              src={currentImageUrl}
               alt={`${puppyName} - Enlarged view`}
-              className="max-h-full max-w-full object-contain"
-              onError={() => handleImageError(selectedIndex)}
+              className="max-h-full max-w-full"
             />
 
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-lg bg-black bg-opacity-50 px-4 py-2 text-white">
