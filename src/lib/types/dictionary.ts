@@ -282,6 +282,8 @@ export interface Dictionary {
     happyClients?: {
       title: string;
       subtitle: string;
+      carouselTitle?: string;
+      countriesTitle?: string;
       stats?: {
         puppies: string;
         countries: string;

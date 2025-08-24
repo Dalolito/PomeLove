@@ -36,6 +36,7 @@ export default function PuppyAvailableListComponent({
 
         if (result.success && result.puppies) {
           const limitedPuppies = result.puppies.slice(0, maxPuppies);
+
           setPuppies(limitedPuppies);
         } else {
           setError(result.error || 'Error fetching puppies');

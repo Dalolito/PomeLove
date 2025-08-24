@@ -77,17 +77,22 @@ export default function AboutUsHappyClientsComponent({
         </div>
 
         <div className="max-w-4xl mx-auto mb-12">
+          <div className="text-center mb-8">
+            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              {dict.about?.happyClients?.carouselTitle || 'Clientes felices con sus cachorros'}
+            </h3>
+          </div>
           <AboutUsMediaCarouselComponent 
             media={aboutMedia.clients}
             variant="clients"
             showCaptions={false}
-            className="mb-6 max-w-2xl mx-auto"
+            className="mb-6"
           />
         </div>
 
         <div className="text-center mt-12">
           <h3 className="text-3xl font-bold text-gray-900 mb-8">
-            Países de Exportación 🌎
+            {dict.about?.happyClients?.countriesTitle || 'Algunos países de exportación'} 🌎
           </h3>
           <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
             {[

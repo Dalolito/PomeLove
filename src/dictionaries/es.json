@@ -290,6 +290,8 @@
     "happyClients": {
       "title": "Más de 100 Cachorros Vendidos",
       "subtitle": "Hemos tenido el privilegio de exportar nuestros cachorros a más de 15 países alrededor del mundo",
+      "carouselTitle": "Clientes felices con sus cachorros",
+      "countriesTitle": "Algunos países de exportación",
       "stats": {
         "puppies": "Cachorros vendidos",
         "countries": "Países de exportación", 

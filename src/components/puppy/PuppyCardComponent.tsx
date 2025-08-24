@@ -27,6 +27,8 @@ export default function PuppyCardComponent({
 }: PuppyCardComponentProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
 
+
+
   const mainImage = useMemo((): string => {
     if (
       !puppy.media ||

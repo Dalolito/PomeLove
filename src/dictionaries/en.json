@@ -285,6 +285,8 @@
     "happyClients": {
       "title": "Over 100 Puppies Sold",
       "subtitle": "We have had the privilege of exporting our puppies to over 15 countries around the world",
+      "carouselTitle": "Happy clients with their puppies",
+      "countriesTitle": "Some export countries",
       "stats": {
         "puppies": "Puppies sold",
         "countries": "Export countries",

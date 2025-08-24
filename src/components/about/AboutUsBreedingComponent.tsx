@@ -81,13 +81,6 @@ export default function AboutUsBreedingComponent({
               showCaptions={false}
               autoPlay={true}
             />
-            
-            <div className="mt-8 text-center">
-              <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                <span className="text-xl">🎥</span>
-                <span>Tour Virtual Disponible</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>

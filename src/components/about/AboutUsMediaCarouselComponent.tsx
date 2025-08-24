@@ -90,10 +90,23 @@ export default function AboutUsMediaCarouselComponent({
 
   const currentItem = media[currentIndex];
 
+  const getAspectRatio = () => {
+    switch (variant) {
+      case 'clients':
+        return 'aspect-[4/3]';
+      case 'facilities':
+        return 'aspect-[16/9]';
+      case 'puppies':
+        return 'aspect-[3/2]';
+      default:
+        return 'aspect-[4/3]';
+    }
+  };
+
   return (
     <div className={`relative group ${className}`}>
       <div
-        className="relative aspect-square bg-gray-900 rounded-xl overflow-hidden shadow-2xl"
+        className={`relative ${getAspectRatio()} bg-gray-900 rounded-xl overflow-hidden shadow-2xl`}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -112,7 +125,7 @@ export default function AboutUsMediaCarouselComponent({
             <source src={currentItem.url} type="video/mp4" />
           </video>
         ) : (
-          <div className="relative w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center p-4">
+          <div className="relative w-full h-full bg-gradient-to-br from-gray-200 via-gray-100 to-gray-50 flex items-center justify-center">
             {!imageLoaded && (
               <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
                 <div className="w-8 h-8 border-4 border-red-500 border-t-transparent rounded-full animate-spin"></div>
@@ -121,7 +134,7 @@ export default function AboutUsMediaCarouselComponent({
             <PuppyImageComponent
               src={currentItem?.url || '/placeholder-puppy.svg'}
               alt="Imagen de carrusel"
-              className={`w-auto h-auto max-w-full max-h-full object-scale-down transition-opacity duration-300 ${
+              className={`w-full h-full object-contain transition-opacity duration-300 ${
                 imageLoaded ? 'opacity-100' : 'opacity-0'
               }`}
               priority={true}
@@ -134,44 +147,17 @@ export default function AboutUsMediaCarouselComponent({
 
         {media.length > 1 && (
           <>
-            <button
+            <div 
+              className="absolute left-0 top-0 w-1/2 h-full cursor-pointer z-10"
               onClick={prevSlide}
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 opacity-0 group-hover:opacity-100"
               aria-label="Anterior"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-
-            <button
+            />
+            <div 
+              className="absolute right-0 top-0 w-1/2 h-full cursor-pointer z-10"
               onClick={nextSlide}
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 opacity-0 group-hover:opacity-100"
               aria-label="Siguiente"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
+            />
           </>
-        )}
-
-        {autoPlay && media.length > 1 && (
-          <button
-            onClick={() => setIsPlaying(!isPlaying)}
-            className="absolute top-4 right-4 w-10 h-10 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300"
-            aria-label={isPlaying ? 'Pausar' : 'Reproducir'}
-          >
-            {isPlaying ? (
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-              </svg>
-            ) : (
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-            )}
-          </button>
         )}
       </div>
 

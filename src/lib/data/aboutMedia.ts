@@ -33,6 +33,11 @@ export const aboutMedia = {
       id: '6',
       url: '/media/happy-client-6.jpeg',
       type: 'image' as const,
+    },
+    {
+      id: '7',
+      url: '/media/sended-dog-8.mp4',
+      type: 'video' as const,
     }
   ],
   facilities: [

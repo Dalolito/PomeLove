@@ -62,13 +62,14 @@ export default function PuppyImageComponent({
       <img
         src={hasError ? '/placeholder-puppy.svg' : imageSrc}
         alt={alt}
-        className={`h-full w-full object-cover transition-opacity duration-200 ${
+        className={`w-full h-full transition-opacity duration-200 ${
           isLoading && !isPlaceholder ? 'opacity-0' : 'opacity-100'
-        }`}
+        } ${className}`}
         onLoad={handleLoad}
         onError={handleError}
         loading={priority ? 'eager' : 'lazy'}
         decoding="async"
+        style={{ objectFit: 'cover' }}
       />
     </div>
   );
