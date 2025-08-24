@@ -25,7 +25,7 @@ const cleanPuppyData = (puppy: Puppy): Puppy => {
       .filter(media => media && media.type && media.url)
       .map(media => ({
         ...media,
-        url: validateImageUrl(media.url)
+        url: validateImageUrl(media.url),
       }));
   }
 

@@ -17,9 +17,9 @@ export default function PuppyDetailParentsComponent({
 }: PuppyDetailParentsComponentProps) {
   const validatedFatherImage = validateImageUrl(fatherImage);
   const validatedMotherImage = validateImageUrl(motherImage);
-  
-  const hasValidParentImages = 
-    validatedFatherImage !== '/placeholder-puppy.svg' || 
+
+  const hasValidParentImages =
+    validatedFatherImage !== '/placeholder-puppy.svg' ||
     validatedMotherImage !== '/placeholder-puppy.svg';
 
   if (!hasValidParentImages) {

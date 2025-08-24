@@ -32,7 +32,9 @@ export default function PuppyCardImageComponent({
     setIsLoading(false);
   };
 
-  const imageSrc = imageError ? '/placeholder-puppy.svg' : validateImageUrl(src);
+  const imageSrc = imageError
+    ? '/placeholder-puppy.svg'
+    : validateImageUrl(src);
 
   return (
     <div className={`relative overflow-hidden ${className}`}>

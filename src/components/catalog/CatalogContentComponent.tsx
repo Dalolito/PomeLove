@@ -32,32 +32,34 @@ export default function CatalogContentComponent({
       return [];
     }
 
-    return initialPuppies.map(puppy => {
-      if (!puppy || !puppy.id) {
-        return null;
-      }
+    return initialPuppies
+      .map(puppy => {
+        if (!puppy || !puppy.id) {
+          return null;
+        }
 
-      const cleanedPuppy = { ...puppy };
+        const cleanedPuppy = { ...puppy };
 
-      if (puppy.media && Array.isArray(puppy.media)) {
-        cleanedPuppy.media = puppy.media
-          .filter(media => media && media.type && media.url)
-          .map(media => ({
-            ...media,
-            url: validateImageUrl(media.url)
-          }));
-      }
+        if (puppy.media && Array.isArray(puppy.media)) {
+          cleanedPuppy.media = puppy.media
+            .filter(media => media && media.type && media.url)
+            .map(media => ({
+              ...media,
+              url: validateImageUrl(media.url),
+            }));
+        }
 
-      if (puppy.fatherImage) {
-        cleanedPuppy.fatherImage = validateImageUrl(puppy.fatherImage);
-      }
+        if (puppy.fatherImage) {
+          cleanedPuppy.fatherImage = validateImageUrl(puppy.fatherImage);
+        }
 
-      if (puppy.motherImage) {
-        cleanedPuppy.motherImage = validateImageUrl(puppy.motherImage);
-      }
+        if (puppy.motherImage) {
+          cleanedPuppy.motherImage = validateImageUrl(puppy.motherImage);
+        }
 
-      return cleanedPuppy;
-    }).filter(Boolean) as Puppy[];
+        return cleanedPuppy;
+      })
+      .filter(Boolean) as Puppy[];
   }, [initialPuppies]);
 
   const {
