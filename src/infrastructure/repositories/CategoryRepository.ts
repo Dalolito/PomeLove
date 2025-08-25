@@ -12,14 +12,16 @@ export class CategoryRepository implements ICategoryRepository {
     const category = await prisma.category.create({
       data: {
         name: data.name,
-        minPrice: data.minPrice,
+        minPriceCOP: data.minPriceCOP,
+        minPriceUSD: data.minPriceUSD,
       },
     });
 
     return {
       id: category.id.toString(),
       name: category.name,
-      minPrice: category.minPrice,
+      minPriceCOP: category.minPriceCOP,
+      minPriceUSD: category.minPriceUSD,
     };
   }
 
@@ -33,7 +35,8 @@ export class CategoryRepository implements ICategoryRepository {
     return {
       id: category.id.toString(),
       name: category.name,
-      minPrice: category.minPrice,
+      minPriceCOP: category.minPriceCOP,
+      minPriceUSD: category.minPriceUSD,
     };
   }
 
@@ -45,7 +48,8 @@ export class CategoryRepository implements ICategoryRepository {
     return categories.map(category => ({
       id: category.id.toString(),
       name: category.name,
-      minPrice: category.minPrice,
+      minPriceCOP: category.minPriceCOP,
+      minPriceUSD: category.minPriceUSD,
     }));
   }
 
@@ -73,23 +77,29 @@ export class CategoryRepository implements ICategoryRepository {
     return categories.map(category => ({
       id: category.id.toString(),
       name: category.name,
-      minPrice: category.minPrice,
+      minPriceCOP: category.minPriceCOP,
+      minPriceUSD: category.minPriceUSD,
     }));
   }
 
   async update(id: string, data: UpdateCategoryData): Promise<Category> {
+    const updateData: any = {};
+    if (data.name !== undefined) updateData.name = data.name;
+    if (data.minPriceCOP !== undefined)
+      updateData.minPriceCOP = data.minPriceCOP;
+    if (data.minPriceUSD !== undefined)
+      updateData.minPriceUSD = data.minPriceUSD;
+
     const category = await prisma.category.update({
       where: { id: parseInt(id) },
-      data: {
-        name: data.name,
-        minPrice: data.minPrice,
-      },
+      data: updateData,
     });
 
     return {
       id: category.id.toString(),
       name: category.name,
-      minPrice: category.minPrice,
+      minPriceCOP: category.minPriceCOP,
+      minPriceUSD: category.minPriceUSD,
     };
   }
 
@@ -113,7 +123,8 @@ export class CategoryRepository implements ICategoryRepository {
       category: {
         id: categoryWithPuppies.id.toString(),
         name: categoryWithPuppies.name,
-        minPrice: categoryWithPuppies.minPrice,
+        minPriceCOP: categoryWithPuppies.minPriceCOP,
+        minPriceUSD: categoryWithPuppies.minPriceUSD,
       },
       puppiesCount: categoryWithPuppies._count.puppies,
     };

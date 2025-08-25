@@ -40,9 +40,36 @@ export default function HomePage({
             <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl lg:text-6xl">
               {dict.header.subtitle}
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-xl text-gray-600">
-              {dict.header.experience}
+            <p className="mx-auto mt-6 max-w-3xl text-lg text-gray-600">
+              {dict.about.experience.subtitle}
             </p>
+
+            <div className="mt-12 grid grid-cols-2 gap-8 md:grid-cols-4">
+              <div className="text-center">
+                <div className="mb-2 text-3xl font-bold text-red-500">100+</div>
+                <div className="text-sm text-gray-600">
+                  {dict.about.happyClients.stats.puppies}
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="mb-2 text-3xl font-bold text-red-500">15+</div>
+                <div className="text-sm text-gray-600">
+                  {dict.about.happyClients.stats.countries}
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="mb-2 text-3xl font-bold text-red-500">10+</div>
+                <div className="text-sm text-gray-600">
+                  {dict.about.happyClients.stats.years}
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="mb-2 text-3xl font-bold text-red-500">5+</div>
+                <div className="text-sm text-gray-600">
+                  {dict.about.happyClients.stats.korean}
+                </div>
+              </div>
+            </div>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center sm:gap-6">
               <PrimaryButtonComponent
@@ -114,7 +141,11 @@ export default function HomePage({
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-8 py-4 text-lg font-medium text-red-500 shadow-lg transition-all hover:scale-105 hover:bg-gray-100 hover:shadow-xl active:scale-95"
               >
-                <span className="text-xl">💬</span>
+                <img
+                  src="/icons/icon-whatsapp.png"
+                  alt="WhatsApp"
+                  className="h-10 w-10"
+                />
                 {dict.home.whatsappText}
               </a>
 
@@ -124,7 +155,11 @@ export default function HomePage({
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-8 py-4 text-lg font-medium text-red-500 shadow-lg transition-all hover:scale-105 hover:bg-gray-100 hover:shadow-xl active:scale-95"
               >
-                <span className="text-xl">📱</span>
+                <img
+                  src="/icons/icon-instagram.png"
+                  alt="Instagram"
+                  className="h-10 w-10"
+                />
                 {dict.home.instagramText}
               </a>
             </div>

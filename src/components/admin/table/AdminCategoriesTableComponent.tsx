@@ -93,7 +93,10 @@ export default function AdminCategoriesTableComponent({
                 {dict.admin.categories.headers.name}
               </th>
               <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:px-6">
-                {dict.admin.categories.headers.minPrice}
+                {dict.admin.categories.headers.minPriceCOP}
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:px-6">
+                {dict.admin.categories.headers.minPriceUSD}
               </th>
               <th className="px-4 py-3 text-center text-xs font-medium uppercase tracking-wide text-gray-500 sm:px-6">
                 {dict.admin.categories.headers.actions}

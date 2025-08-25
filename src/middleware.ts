@@ -10,13 +10,12 @@ export function middleware(request: NextRequest) {
   }
 
   // Handle admin routes protection
-  if (pathname.includes('/admin') && !pathname.includes('/admin/login')) {
+  if (pathname.includes('/admin') && !pathname.includes('/admin-login')) {
     const token = request.cookies.get('admin-token')?.value;
-    
+
     if (!token || token !== 'authenticated') {
-      const loginUrl = pathname.startsWith('/es/admin') 
-        ? '/es/admin/login' 
-        : '/es/admin/login';
+      const locale = pathname.startsWith('/es/') ? 'es' : 'en';
+      const loginUrl = `/${locale}/admin-login`;
       return NextResponse.redirect(new URL(loginUrl, request.url));
     }
   }

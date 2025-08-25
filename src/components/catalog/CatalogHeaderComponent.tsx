@@ -7,6 +7,7 @@ interface CatalogHeaderComponentProps {
   totalPuppies: number;
   hasActiveFilters: boolean;
   dict: Dictionary;
+  locale: string;
   className?: string;
 }
 
@@ -15,14 +16,24 @@ export default function CatalogHeaderComponent({
   totalPuppies,
   hasActiveFilters,
   dict,
+  locale,
   className = '',
 }: CatalogHeaderComponentProps) {
-  const formatPrice = (price: number): string => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-    }).format(price);
+  const formatPrice = (price: number, currency: 'COP' | 'USD'): string => {
+    if (currency === 'COP') {
+      return (
+        new Intl.NumberFormat('es-CO', {
+          minimumFractionDigits: 0,
+        }).format(price) + ' COP'
+      );
+    } else {
+      return (
+        'US$' +
+        new Intl.NumberFormat('en-US', {
+          minimumFractionDigits: 0,
+        }).format(price)
+      );
+    }
   };
 
   return (
@@ -36,7 +47,12 @@ export default function CatalogHeaderComponent({
           <div className="inline-flex items-center rounded-full bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-2 shadow-lg">
             <span className="text-lg font-semibold text-white">
               {selectedCategory.name} {dict.catalog.fromPrice}{' '}
-              {formatPrice(selectedCategory.minPrice)}
+              {formatPrice(
+                locale === 'es'
+                  ? selectedCategory.minPriceCOP
+                  : selectedCategory.minPriceUSD,
+                locale === 'es' ? 'COP' : 'USD'
+              )}
             </span>
           </div>
         </div>

@@ -40,7 +40,7 @@ export default function FormInputComponent({
         placeholder={placeholder}
         required={required}
         disabled={disabled}
-        className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+        className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:cursor-not-allowed disabled:bg-gray-100"
       />
     </div>
   );

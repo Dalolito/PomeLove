@@ -82,26 +82,44 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
                   className="group flex h-10 w-10 items-center justify-center rounded-lg bg-slate-700 transition-colors hover:bg-red-500"
                   title={contact.name}
                 >
-                  <span className="text-slate-300 transition-colors group-hover:text-white">
-                    {contact.icon}
-                  </span>
+                  {contact.name === 'Instagram' ? (
+                    <img
+                      src="/icons/icon-instagram.png"
+                      alt="Instagram"
+                      className="h-5 w-5"
+                    />
+                  ) : contact.name === 'Facebook' ? (
+                    <img
+                      src="/icons/icon-facebook.png"
+                      alt="Facebook"
+                      className="h-5 w-5"
+                    />
+                  ) : (
+                    <span className="text-slate-300 transition-colors group-hover:text-white">
+                      {contact.icon}
+                    </span>
+                  )}
                 </a>
               ))}
 
               {/* WhatsApp button - client component */}
               <WhatsAppContactButton dict={dict}>
-                <span className="text-slate-300 transition-colors group-hover:text-white">
-                  <div className="flex h-5 w-5 items-center justify-center rounded bg-green-500 text-xs font-bold text-white">
-                    WA
-                  </div>
-                </span>
+                <img
+                  src="/icons/icon-whatsapp.png"
+                  alt="WhatsApp"
+                  className="h-5 w-5"
+                />
               </WhatsAppContactButton>
             </div>
 
             {/* Contact info */}
             <div className="space-y-2 text-sm text-slate-300">
               <p className="flex items-center gap-2">
-                <span>📱</span>
+                <img
+                  src="/icons/icon-whatsapp.png"
+                  alt="WhatsApp"
+                  className="h-4 w-4"
+                />
                 <a
                   href="https://wa.me/573004439574"
                   target="_blank"
@@ -112,7 +130,17 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
                 </a>
               </p>
               <p className="flex items-center gap-2">
-                <span>📍</span>
+                <svg
+                  className="h-4 w-4"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clipRule="evenodd"
+                  />
+                </svg>
                 <span>{dict.footer?.location || 'Medellín, Colombia'}</span>
               </p>
             </div>

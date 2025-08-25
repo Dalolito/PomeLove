@@ -113,46 +113,48 @@ export default function AboutUsMediaCarouselComponent({
         onMouseEnter={() => setIsPlaying(false)}
         onMouseLeave={() => setIsPlaying(autoPlay)}
       >
-        {currentItem?.type === 'video' ? (
-          <video
-            key={currentItem.id}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="h-full w-full object-cover"
-          >
-            <source
-              src={
-                currentItem.url && currentItem.url.trim() !== ''
-                  ? currentItem.url
-                  : '/placeholder-puppy.svg'
-              }
-              type="video/mp4"
-            />
-          </video>
-        ) : (
-          <div className="relative flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-200 via-gray-100 to-gray-50">
-            {!imageLoaded && (
-              <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
-                <div className="h-8 w-8 animate-spin rounded-full border-4 border-red-500 border-t-transparent"></div>
-              </div>
-            )}
-            <PuppyCarouselImageComponent
-              src={
-                currentItem?.url && currentItem.url.trim() !== ''
-                  ? currentItem.url
-                  : '/placeholder-puppy.svg'
-              }
-              alt="Imagen de carrusel"
-              className={`transition-opacity duration-300 ${
-                imageLoaded ? 'opacity-100' : 'opacity-0'
-              }`}
-              priority={true}
-              onLoad={handleImageLoad}
-            />
-          </div>
-        )}
+        <div className="relative flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-200 via-gray-100 to-gray-50">
+          {currentItem?.type === 'video' ? (
+            <video
+              key={currentItem.id}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="h-full w-full object-contain"
+            >
+              <source
+                src={
+                  currentItem.url && currentItem.url.trim() !== ''
+                    ? currentItem.url
+                    : '/placeholder-puppy.svg'
+                }
+                type="video/mp4"
+              />
+            </video>
+          ) : (
+            <>
+              {!imageLoaded && (
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
+                  <div className="h-8 w-8 animate-spin rounded-full border-4 border-red-500 border-t-transparent"></div>
+                </div>
+              )}
+              <PuppyCarouselImageComponent
+                src={
+                  currentItem?.url && currentItem.url.trim() !== ''
+                    ? currentItem.url
+                    : '/placeholder-puppy.svg'
+                }
+                alt="Imagen de carrusel"
+                className={`transition-opacity duration-300 ${
+                  imageLoaded ? 'opacity-100' : 'opacity-0'
+                }`}
+                priority={true}
+                onLoad={handleImageLoad}
+              />
+            </>
+          )}
+        </div>
 
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
 

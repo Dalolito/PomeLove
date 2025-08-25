@@ -23,7 +23,7 @@ export async function loginAction(formData: FormData) {
       sameSite: 'lax',
       maxAge: 60 * 60 * 24 * 7, // 7 days
     });
-    
+
     redirect('/es/admin/puppys');
   }
 

@@ -15,12 +15,21 @@ export default function PuppyDetailHeaderComponent({
   locale,
   className = '',
 }: PuppyDetailHeaderComponentProps) {
-  const formatPrice = (price: number): string => {
-    return new Intl.NumberFormat(locale === 'es' ? 'es-CO' : 'en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-    }).format(price);
+  const formatPrice = (price: number, currency: 'COP' | 'USD'): string => {
+    if (currency === 'COP') {
+      return (
+        new Intl.NumberFormat('es-CO', {
+          minimumFractionDigits: 0,
+        }).format(price) + ' COP'
+      );
+    } else {
+      return (
+        'US$' +
+        new Intl.NumberFormat('en-US', {
+          minimumFractionDigits: 0,
+        }).format(price)
+      );
+    }
   };
 
   return (
@@ -42,7 +51,12 @@ export default function PuppyDetailHeaderComponent({
           <div className="mb-2 inline-flex items-center rounded-full bg-gradient-to-r from-blue-500 to-blue-600 px-4 py-2 shadow-sm">
             <span className="text-sm font-medium text-white">
               {puppy.category.name} - {dict.catalog.fromPrice}{' '}
-              {formatPrice(puppy.category.minPrice)}
+              {formatPrice(
+                locale === 'es'
+                  ? puppy.category.minPriceCOP
+                  : puppy.category.minPriceUSD,
+                locale === 'es' ? 'COP' : 'USD'
+              )}
             </span>
           </div>
 

@@ -1,77 +1,97 @@
 export const aboutMedia = {
   hero: {
-    video: '/media/sended-dog-8.mp4',
-    image: '/media/sended-dog-1.jpeg',
+    video: '/media/carousel-1/video-1.mp4',
+    image: '/media/carousel-1/img-1.jpeg',
   },
   clients: [
     {
       id: '1',
-      url: '/media/happy-client-1.jpeg',
+      url: '/media/carousel-1/img-1.jpeg',
       type: 'image' as const,
     },
     {
       id: '2',
-      url: '/media/happy-client-2.jpeg',
-      type: 'image' as const,
+      url: '/media/carousel-1/video-1.mp4',
+      type: 'video' as const,
     },
     {
       id: '3',
-      url: '/media/happy-client-3.jpeg',
+      url: '/media/carousel-1/img-2.jpeg',
       type: 'image' as const,
     },
     {
       id: '4',
-      url: '/media/happy-client-4.jpeg',
+      url: '/media/carousel-1/img-3.jpeg',
       type: 'image' as const,
     },
     {
       id: '5',
-      url: '/media/happy-client-5.jpeg',
+      url: '/media/carousel-1/img-4.jpeg',
       type: 'image' as const,
     },
     {
       id: '6',
-      url: '/media/happy-client-6.jpeg',
+      url: '/media/carousel-1/img-5.jpeg',
       type: 'image' as const,
     },
     {
       id: '7',
-      url: '/media/sended-dog-8.mp4',
-      type: 'video' as const,
+      url: '/media/carousel-1/img-6.jpeg',
+      type: 'image' as const,
     },
   ],
   facilities: [
     {
-      id: '7',
-      url: '/media/sended-dog-1.jpeg',
+      id: '1',
+      url: '/media/carousel-3/img-1.jpeg',
       type: 'image' as const,
     },
     {
-      id: '8',
-      url: '/media/sended-dog-2.jpeg',
+      id: '2',
+      url: '/media/carousel-3/img-2.jpeg',
       type: 'image' as const,
     },
     {
-      id: '9',
-      url: '/media/sended-dog-3.jpeg',
+      id: '3',
+      url: '/media/carousel-3/img-3.jpeg',
+      type: 'image' as const,
+    },
+    {
+      id: '4',
+      url: '/media/carousel-3/img-4.jpeg',
+      type: 'image' as const,
+    },
+    {
+      id: '5',
+      url: '/media/carousel-3/img-5.jpeg',
       type: 'image' as const,
     },
   ],
   breeding: [
     {
-      id: '10',
-      url: '/media/sended-dog-4.jpeg',
+      id: '1',
+      url: '/media/carousel-2/img-1.jpeg',
       type: 'image' as const,
     },
     {
-      id: '11',
-      url: '/media/sended-dog-5.jpeg',
+      id: '2',
+      url: '/media/carousel-2/video-1.mp4',
+      type: 'video' as const,
+    },
+    {
+      id: '3',
+      url: '/media/carousel-2/img-2.jpeg',
       type: 'image' as const,
     },
     {
-      id: '12',
-      url: '/media/sended-dog-6.jpeg',
-      type: 'image' as const,
+      id: '4',
+      url: '/media/carousel-2/video-2.mp4',
+      type: 'video' as const,
+    },
+    {
+      id: '5',
+      url: '/media/carousel-2/vieo-3.mp4',
+      type: 'video' as const,
     },
   ],
 };

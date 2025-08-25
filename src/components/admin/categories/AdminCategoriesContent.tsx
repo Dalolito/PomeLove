@@ -37,6 +37,7 @@ export default function AdminCategoriesContent({
         onClearFilters={clearFilters}
         hasActiveFilters={hasActiveFilters}
         dict={dict}
+        locale={locale}
       />
 
       <AdminCategoriesTableComponent

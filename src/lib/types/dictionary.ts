@@ -72,15 +72,18 @@ export interface Dictionary {
       };
       fields: {
         name: string;
-        minPrice: string;
+        minPriceCOP: string;
+        minPriceUSD: string;
       };
       placeholders: {
         name: string;
-        minPrice: string;
+        minPriceCOP: string;
+        minPriceUSD: string;
       };
       headers: {
         name: string;
-        minPrice: string;
+        minPriceCOP: string;
+        minPriceUSD: string;
         actions: string;
       };
       actions: {

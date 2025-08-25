@@ -94,7 +94,9 @@
         "fatherImage": "Imagen del Padre",
         "motherImage": "Imagen de la Madre",
         "media": "Archivos Multimedia",
-        "availability": "Disponibilidad"
+        "availability": "Disponibilidad",
+        "minPriceCOP": "Precio Mínimo (COP)",
+        "minPriceUSD": "Precio Mínimo (USD)"
       },
       "placeholders": {
         "name": "Ingresa el nombre del cachorro",
@@ -131,15 +133,18 @@
       },
       "fields": {
         "name": "Nombre",
-        "minPrice": "Precio Mínimo"
+        "minPriceCOP": "Precio Mínimo (COP)",
+        "minPriceUSD": "Precio Mínimo (USD)"
       },
       "placeholders": {
         "name": "Ingresa el nombre de la categoría",
-        "minPrice": "Ingresa el precio mínimo"
+        "minPriceCOP": "Ingresa el precio mínimo en pesos colombianos",
+        "minPriceUSD": "Ingresa el precio mínimo en dólares"
       },
       "headers": {
         "name": "Nombre",
-        "minPrice": "Precio Mínimo",
+        "minPriceCOP": "Precio Mínimo (COP)",
+        "minPriceUSD": "Precio Mínimo (USD)",
         "actions": "Acciones"
       },
       "actions": {
@@ -281,10 +286,10 @@
     "filters": {
       "title": "Filtrar por",
       "clearFilters": "Limpiar filtros",
-      "category": "Raza",
+      "category": "Categorías",
       "gender": "Género",
       "availability": "Disponibilidad",
-      "allCategories": "Todas las razas",
+      "allCategories": "Todas las categorías",
       "allGenders": "Ambos géneros",
       "allAvailability": "Todas",
       "available": "Disponibles",
@@ -357,7 +362,7 @@
         "Llegada sana y feliz"
       ],
       "processTitle": "Nuestro Proceso de Exportación",
-      "countriesTitle": "Países de Exportación",
+      "countriesTitle": "Algunos países de exportación",
       "cta": {
         "title": "En nuestro criadero, no solo te ofrecemos un cachorro, sino un compañero de vida 🐕",
         "description": "Nuestra pasión por esta raza nos ha llevado a ofrecer solo lo mejor para nuestros cachorros, siempre garantizando estándares elevados en todos nuestros procesos."

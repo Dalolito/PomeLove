@@ -62,6 +62,7 @@ export default function CatalogContentComponent({
         totalPuppies={filteredPuppies?.length || 0}
         hasActiveFilters={hasActiveFilters}
         dict={dict}
+        locale={locale}
         className="mb-8"
       />
 

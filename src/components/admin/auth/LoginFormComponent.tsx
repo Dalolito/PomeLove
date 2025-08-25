@@ -23,7 +23,7 @@ export default function LoginFormComponent({
     setError('');
 
     const formData = new FormData(event.currentTarget);
-    
+
     try {
       const result = await loginAction(formData);
       if (result?.error) {
@@ -46,7 +46,7 @@ export default function LoginFormComponent({
     <div className={`rounded-lg bg-white p-8 shadow-lg ${className}`}>
       <form onSubmit={handleSubmit} className="space-y-6">
         {error && (
-          <div className="rounded-lg bg-red-50 border border-red-200 p-4">
+          <div className="rounded-lg border border-red-200 bg-red-50 p-4">
             <p className="text-sm text-red-600">{error}</p>
           </div>
         )}

@@ -152,6 +152,11 @@ export default function PuppyCardComponent({
               onClick={handleContactClick}
               className="w-full transform rounded-md border border-transparent bg-emerald-500 px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 active:scale-95"
             >
+              <img
+                src="/icons/icon-whatsapp.png"
+                alt="WhatsApp"
+                className="mr-2 inline h-7 w-7"
+              />
               {dict.buttons.ask_about_puppy}
             </button>
           )}
