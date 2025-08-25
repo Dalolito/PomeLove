@@ -189,6 +189,7 @@
       "headers": {
         "image": "Image",
         "name": "Name",
+        "age": "Age",
         "category": "Category",
         "gender": "Gender",
         "birthDate": "Birth Date",

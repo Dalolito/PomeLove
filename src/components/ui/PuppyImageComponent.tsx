@@ -53,13 +53,10 @@ export default function PuppyImageComponent({
   }, [onLoad]);
 
   const handleError = useCallback(() => {
-    console.log(`❌ Image failed to load: ${currentSrc}`);
-
     if (retryCount === 0 && !isPlaceholder(currentSrc)) {
       const separator = currentSrc.includes('?') ? '&' : '?';
       const retryUrl = `${currentSrc}${separator}retry=${Date.now()}`;
 
-      console.log(`🔄 Retrying with: ${retryUrl}`);
       setTimeout(() => {
         setRetryCount(1);
         setCurrentSrc(retryUrl);
@@ -73,7 +70,6 @@ export default function PuppyImageComponent({
         ? `${currentSrc}&w=300&h=300&fit=crop&q=80`
         : `${currentSrc}?w=300&h=300&fit=crop&q=80`;
 
-      console.log(`🔄 Trying optimized Unsplash URL: ${optimizedUnsplashUrl}`);
       setTimeout(() => {
         setRetryCount(2);
         setCurrentSrc(optimizedUnsplashUrl);
@@ -86,7 +82,6 @@ export default function PuppyImageComponent({
       const simpleUnsplashUrl =
         'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=200&h=200&fit=crop&q=70';
 
-      console.log(`🔄 Trying simple Unsplash URL: ${simpleUnsplashUrl}`);
       setTimeout(() => {
         setRetryCount(3);
         setCurrentSrc(simpleUnsplashUrl);
@@ -95,7 +90,6 @@ export default function PuppyImageComponent({
       return;
     }
 
-    console.log(`❌ All retries failed, using placeholder`);
     setHasError(true);
     setIsLoading(false);
     setCurrentSrc('/placeholder-puppy.svg');
@@ -146,12 +140,6 @@ export default function PuppyImageComponent({
         crossOrigin="anonymous"
         referrerPolicy="no-referrer-when-downgrade"
       />
-
-      {process.env.NODE_ENV === 'development' && retryCount > 0 && (
-        <div className="absolute right-2 top-2 rounded bg-yellow-500 px-1 py-0.5 text-xs text-black">
-          R{retryCount}
-        </div>
-      )}
     </div>
   );
 }

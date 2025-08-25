@@ -194,6 +194,7 @@
       "headers": {
         "image": "Imagen",
         "name": "Nombre",
+        "age": "Edad",
         "category": "Categoría",
         "gender": "Género",
         "birthDate": "Fecha Nacimiento",
