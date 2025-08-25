@@ -144,8 +144,6 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
             © {currentYear} {title}.{' '}
             {dict.footer?.copyright || 'All rights reserved.'}
           </p>
-
-
         </div>
       </div>
     </footer>

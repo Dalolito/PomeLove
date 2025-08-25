@@ -29,6 +29,7 @@ export default function AdminEditFormComponent({
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string>('');
+  const [isInitialized, setIsInitialized] = useState(false);
 
   const [formData, setFormData] = useState<{
     name: string;
@@ -55,14 +56,14 @@ export default function AdminEditFormComponent({
   });
 
   useEffect(() => {
-    if (puppy) {
+    if (puppy && !isInitialized) {
       const birthDateString = new Date(puppy.birthDate)
         .toISOString()
         .split('T')[0];
 
       const fatherImageFile: MediaFile | null = puppy.fatherImage
         ? {
-            id: 'father-' + Math.random().toString(36).substr(2, 9),
+            id: 'father-image',
             url: puppy.fatherImage,
             type: 'image',
             name: 'Father Image',
@@ -73,7 +74,7 @@ export default function AdminEditFormComponent({
 
       const motherImageFile: MediaFile | null = puppy.motherImage
         ? {
-            id: 'mother-' + Math.random().toString(36).substr(2, 9),
+            id: 'mother-image',
             url: puppy.motherImage,
             type: 'image',
             name: 'Mother Image',
@@ -94,8 +95,10 @@ export default function AdminEditFormComponent({
         motherImage: motherImageFile,
         available: puppy.available,
       });
+
+      setIsInitialized(true);
     }
-  }, [puppy]);
+  }, [puppy, isInitialized]);
 
   const handleBasicInfoChange = (
     field:
@@ -211,16 +214,6 @@ export default function AdminEditFormComponent({
           onChange={handleBasicInfoChange}
         />
 
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-          <AdminFormUploadMediaComponent
-            dict={dict}
-            maxFiles={10}
-            maxFileSize={50}
-            initialFiles={formData.media}
-            onMediaChange={handleMediaChange}
-          />
-        </div>
-
         <AdminFormParentsComponent
           data={{
             fatherImage: formData.fatherImage,
@@ -228,6 +221,14 @@ export default function AdminEditFormComponent({
           }}
           dict={dict}
           onChange={handleParentsChange}
+        />
+
+        <AdminFormUploadMediaComponent
+          dict={dict}
+          maxFiles={10}
+          maxFileSize={50}
+          initialFiles={formData.media}
+          onMediaChange={handleMediaChange}
         />
 
         <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
