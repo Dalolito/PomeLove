@@ -25,19 +25,24 @@ export default function AdminEditCategoryFormComponent({
   const [error, setError] = useState<string>('');
   const [formData, setFormData] = useState({
     name: '',
-    minPrice: '',
+    minPriceCOP: '',
+    minPriceUSD: '',
   });
 
   useEffect(() => {
     if (category) {
       setFormData({
         name: category.name,
-        minPrice: category.minPrice.toString(),
+        minPriceCOP: category.minPriceCOP.toString(),
+        minPriceUSD: category.minPriceUSD.toString(),
       });
     }
   }, [category]);
 
-  const handleFieldChange = (field: 'name' | 'minPrice', value: string) => {
+  const handleFieldChange = (
+    field: 'name' | 'minPriceCOP' | 'minPriceUSD',
+    value: string
+  ) => {
     setFormData(prev => ({
       ...prev,
       [field]: value,
@@ -52,7 +57,8 @@ export default function AdminEditCategoryFormComponent({
     try {
       const result = await updateCategoryAction(category.id, {
         name: formData.name,
-        minPrice: parseFloat(formData.minPrice),
+        minPriceCOP: parseFloat(formData.minPriceCOP),
+        minPriceUSD: parseFloat(formData.minPriceUSD),
       });
 
       if (result.success) {
@@ -125,12 +131,30 @@ export default function AdminEditCategoryFormComponent({
 
             <FormInputComponent
               type="number"
-              value={formData.minPrice}
-              onChange={value => handleFieldChange('minPrice', value)}
-              label={dict.admin.categories?.fields?.minPrice || 'Minimum Price'}
+              value={formData.minPriceCOP}
+              onChange={value => handleFieldChange('minPriceCOP', value)}
+              label={
+                dict.admin.categories?.fields?.minPriceCOP ||
+                'Minimum Price (COP)'
+              }
               placeholder={
-                dict.admin.categories?.placeholders?.minPrice ||
-                'Enter minimum price'
+                dict.admin.categories?.placeholders?.minPriceCOP ||
+                'Enter minimum price in Colombian pesos'
+              }
+              required
+            />
+
+            <FormInputComponent
+              type="number"
+              value={formData.minPriceUSD}
+              onChange={value => handleFieldChange('minPriceUSD', value)}
+              label={
+                dict.admin.categories?.fields?.minPriceUSD ||
+                'Minimum Price (USD)'
+              }
+              placeholder={
+                dict.admin.categories?.placeholders?.minPriceUSD ||
+                'Enter minimum price in US dollars'
               }
               required
             />

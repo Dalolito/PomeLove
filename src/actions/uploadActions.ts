@@ -9,8 +9,12 @@ const ALLOWED_MIME_TYPES = [
   'image/png',
   'image/webp',
   'image/gif',
+  'video/mp4',
+  'video/webm',
+  'video/ogg',
+  'video/quicktime',
 ];
-const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const MAX_FILE_SIZE = 50 * 1024 * 1024;
 
 interface UploadResult {
   success: boolean;
@@ -18,7 +22,7 @@ interface UploadResult {
   error?: string;
 }
 
-export async function uploadImageAction(
+export async function uploadMediaAction(
   formData: FormData
 ): Promise<UploadResult> {
   try {
@@ -53,7 +57,13 @@ export async function uploadImageAction(
     const url = `/uploads/${uploadDir}/${filename}`;
     return { success: true, url };
   } catch (error) {
-    console.error('Error uploading image:', error);
+    console.error('Error uploading media:', error);
     return { success: false, error: 'UPLOAD_FAILED' };
   }
+}
+
+export async function uploadImageAction(
+  formData: FormData
+): Promise<UploadResult> {
+  return uploadMediaAction(formData);
 }

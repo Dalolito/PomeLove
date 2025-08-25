@@ -7,7 +7,7 @@ export interface PuppyFilters {
 
 export interface CategoryFilters {
   search?: string;
-  sortBy?: 'name' | 'minPrice';
+  sortBy?: 'name' | 'minPriceCOP' | 'minPriceUSD';
   sortOrder?: 'asc' | 'desc';
 }
 

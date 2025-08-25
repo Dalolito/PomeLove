@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { MediaFile } from '@/application/useCases/utils/MediaUploadUseCase';
-import { uploadImageAction } from '@/actions/uploadActions';
+import { uploadMediaAction } from '@/actions/uploadActions';
 
 interface UseFileUploadProps {
   maxFiles: number;
@@ -18,25 +18,21 @@ export function useFileUpload({
   const [files, setFiles] = useState<MediaFile[]>([]);
   const [errors, setErrors] = useState<string[]>([]);
   const [uploadingFiles, setUploadingFiles] = useState<Set<string>>(new Set());
+  const onMediaChangeRef = useRef(onMediaChange);
 
-  const notifyParent = useCallback(
-    (newFiles: MediaFile[]) => {
-      if (onMediaChange) {
-        setTimeout(() => {
-          onMediaChange(newFiles);
-        }, 0);
-      }
-    },
-    [onMediaChange]
-  );
+  useEffect(() => {
+    onMediaChangeRef.current = onMediaChange;
+  }, [onMediaChange]);
 
-  const setInitialFiles = useCallback(
-    (initialFiles: MediaFile[]) => {
-      setFiles(initialFiles);
-      notifyParent(initialFiles);
-    },
-    [notifyParent]
-  );
+  const notifyParent = useCallback((newFiles: MediaFile[]) => {
+    if (onMediaChangeRef.current) {
+      onMediaChangeRef.current(newFiles);
+    }
+  }, []);
+
+  const setInitialFiles = useCallback((initialFiles: MediaFile[]) => {
+    setFiles(initialFiles);
+  }, []);
 
   const addFile = useCallback((file: File): MediaFile => {
     const fileId = Math.random().toString(36).substr(2, 9);
@@ -58,11 +54,10 @@ export function useFileUpload({
         const updated = prev.map(f =>
           f.id === fileId ? { ...f, ...updates } : f
         );
-        notifyParent(updated);
         return updated;
       });
     },
-    [notifyParent]
+    []
   );
 
   const removeFile = useCallback(
@@ -75,12 +70,11 @@ export function useFileUpload({
 
         setFiles(prev => {
           const updated = prev.filter(f => f.id !== fileId);
-          notifyParent(updated);
           return updated;
         });
       }
     },
-    [files, notifyParent]
+    [files]
   );
 
   const uploadFile = useCallback(
@@ -88,26 +82,22 @@ export function useFileUpload({
       setUploadingFiles(prev => new Set(prev).add(fileId));
 
       try {
-        if (file.type.startsWith('image/')) {
-          const formData = new FormData();
-          formData.append('file', file);
-          formData.append('type', 'puppies');
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('type', 'puppies');
 
-          const result = await uploadImageAction(formData);
+        const result = await uploadMediaAction(formData);
 
-          if (result.success && result.url) {
-            updateFile(fileId, {
-              url: result.url,
-              isUploaded: true,
-              file: undefined,
-            });
-          } else {
-            removeFile(fileId);
-            const errorMessage = result.error || 'Upload failed';
-            setErrors(prev => [...prev, `${file.name}: ${errorMessage}`]);
-          }
+        if (result.success && result.url) {
+          updateFile(fileId, {
+            url: result.url,
+            isUploaded: true,
+            file: undefined,
+          });
         } else {
-          updateFile(fileId, { isUploaded: false });
+          removeFile(fileId);
+          const errorMessage = result.error || 'Upload failed';
+          setErrors(prev => [...prev, `${file.name}: ${errorMessage}`]);
         }
       } catch {
         removeFile(fileId);
@@ -139,19 +129,22 @@ export function useFileUpload({
 
         setFiles(prev => {
           const updated = [...prev, mediaFile];
-          notifyParent(updated);
           return updated;
         });
 
         await uploadFile(file, mediaFile.id);
       }
     },
-    [files.length, maxFiles, addFile, uploadFile, notifyParent]
+    [files.length, maxFiles, addFile, uploadFile]
   );
 
   const clearErrors = useCallback(() => {
     setErrors([]);
   }, []);
+
+  useEffect(() => {
+    notifyParent(files);
+  }, [files, notifyParent]);
 
   return {
     files,

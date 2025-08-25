@@ -17,11 +17,21 @@ export default function AdminCategoriesTableRowComponent({
   locale,
   className = '',
 }: AdminCategoriesTableRowProps) {
-  const formatPrice = (price: number): string => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price);
+  const formatPrice = (price: number, currency: 'COP' | 'USD'): string => {
+    if (currency === 'COP') {
+      return (
+        new Intl.NumberFormat('es-CO', {
+          minimumFractionDigits: 0,
+        }).format(price) + ' COP'
+      );
+    } else {
+      return (
+        'US$' +
+        new Intl.NumberFormat('en-US', {
+          minimumFractionDigits: 0,
+        }).format(price)
+      );
+    }
   };
 
   return (
@@ -32,7 +42,13 @@ export default function AdminCategoriesTableRowComponent({
 
       <td className="px-4 py-4 sm:px-6">
         <div className="text-sm text-gray-900">
-          {formatPrice(category.minPrice)}
+          {formatPrice(category.minPriceCOP, 'COP')}
+        </div>
+      </td>
+
+      <td className="px-4 py-4 sm:px-6">
+        <div className="text-sm text-gray-900">
+          {formatPrice(category.minPriceUSD, 'USD')}
         </div>
       </td>
 

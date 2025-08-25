@@ -287,7 +287,8 @@ export class PuppyRepository implements IPuppyRepository {
     category: {
       id: number;
       name: string;
-      minPrice: number;
+      minPriceCOP: number;
+      minPriceUSD: number;
     };
     media?: Array<{
       id: number;
@@ -298,7 +299,8 @@ export class PuppyRepository implements IPuppyRepository {
     const category: Category = {
       id: puppy.category.id.toString(),
       name: puppy.category.name,
-      minPrice: puppy.category.minPrice,
+      minPriceCOP: puppy.category.minPriceCOP,
+      minPriceUSD: puppy.category.minPriceUSD,
     };
 
     return {

@@ -24,9 +24,13 @@ export default function AdminHamburgerMenu({
   const router = useRouter();
 
   const getAdminText = (key: string): string => {
-    const adminKey = key as keyof typeof dict.admin;
-    const value = dict.admin[adminKey];
-    return typeof value === 'string' ? value : key;
+    if (key === 'categories') {
+      return 'Categorías';
+    }
+    if (key === 'puppys') {
+      return 'Mascotas';
+    }
+    return key;
   };
 
   const menuItems: MenuItem[] = [

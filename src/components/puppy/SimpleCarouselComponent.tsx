@@ -24,7 +24,7 @@ export default function SimpleCarouselComponent({
     media?.filter(
       item =>
         item &&
-        item.type === 'image' &&
+        (item.type === 'image' || item.type === 'video') &&
         item.url &&
         typeof item.url === 'string' &&
         item.url.trim() !== '' &&
@@ -122,17 +122,29 @@ export default function SimpleCarouselComponent({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [validMedia.length]);
 
-  const getCurrentImageUrl = (): string => {
+  const getCurrentMedia = () => {
     if (selectedIndex >= 0 && selectedIndex < validMedia.length) {
-      const currentMedia = validMedia[selectedIndex];
-      if (currentMedia && currentMedia.url && currentMedia.url.trim() !== '') {
-        return currentMedia.url.trim();
-      }
+      return validMedia[selectedIndex];
     }
-    return '/placeholder-puppy.svg';
+    return null;
   };
 
-  const currentImageUrl = getCurrentImageUrl();
+  const currentMedia = getCurrentMedia();
+
+  if (!currentMedia) {
+    return (
+      <div
+        className={`rounded-lg border border-gray-200 bg-white shadow-sm ${className}`}
+      >
+        <div className="flex aspect-square items-center justify-center bg-gray-100">
+          <PuppyCarouselImageComponent
+            src="/placeholder-puppy.svg"
+            alt={puppyName}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -145,11 +157,24 @@ export default function SimpleCarouselComponent({
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          <PuppyCarouselImageComponent
-            src={currentImageUrl}
-            alt={`${puppyName} - Image ${selectedIndex + 1}`}
-            className="cursor-pointer transition-transform duration-200 hover:scale-105"
-          />
+          {currentMedia.type === 'video' ? (
+            <video
+              src={currentMedia.url}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="h-full w-full object-cover"
+            >
+              Tu navegador no soporta el elemento de video.
+            </video>
+          ) : (
+            <PuppyCarouselImageComponent
+              src={currentMedia.url}
+              alt={`${puppyName} - ${currentMedia.type} ${selectedIndex + 1}`}
+              className="cursor-pointer transition-transform duration-200 hover:scale-105"
+            />
+          )}
 
           {validMedia.length > 1 && (
             <>
@@ -196,6 +221,27 @@ export default function SimpleCarouselComponent({
           )}
 
           <div className="absolute bottom-2 right-2 rounded-lg bg-black bg-opacity-50 px-2 py-1 text-sm text-white">
+            {currentMedia.type === 'video' ? (
+              <svg
+                className="inline h-4 w-4"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+              </svg>
+            ) : (
+              <svg
+                className="inline h-4 w-4"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            )}{' '}
             {selectedIndex + 1} / {validMedia.length}
           </div>
 
@@ -210,7 +256,7 @@ export default function SimpleCarouselComponent({
                       ? 'bg-white'
                       : 'bg-white bg-opacity-50 hover:bg-opacity-75'
                   }`}
-                  aria-label={`Go to image ${index + 1}`}
+                  aria-label={`Go to ${validMedia[index].type} ${index + 1}`}
                 />
               ))}
             </div>
@@ -224,16 +270,28 @@ export default function SimpleCarouselComponent({
                 <button
                   key={`thumb-${mediaItem.id}-${index}`}
                   onClick={() => goToSlide(index)}
-                  className={`h-12 w-12 flex-shrink-0 overflow-hidden rounded border-2 transition-all ${
+                  className={`relative h-12 w-12 flex-shrink-0 overflow-hidden rounded border-2 transition-all ${
                     selectedIndex === index
                       ? 'border-blue-500 ring-1 ring-blue-200'
                       : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >
-                  <PuppyCarouselImageComponent
-                    src={mediaItem.url}
-                    alt={`${puppyName} - Thumbnail ${index + 1}`}
-                  />
+                  {mediaItem.type === 'video' ? (
+                    <div className="flex h-full w-full items-center justify-center bg-gray-800 text-white">
+                      <svg
+                        className="h-4 w-4"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+                      </svg>
+                    </div>
+                  ) : (
+                    <PuppyCarouselImageComponent
+                      src={mediaItem.url}
+                      alt={`${puppyName} - Thumbnail ${index + 1}`}
+                    />
+                  )}
                 </button>
               ))}
               {validMedia.length > 6 && (
@@ -271,13 +329,47 @@ export default function SimpleCarouselComponent({
           </button>
 
           <div className="relative max-h-[90vh] max-w-[90vw] p-4">
-            <PuppyCarouselImageComponent
-              src={currentImageUrl}
-              alt={`${puppyName} - Enlarged view`}
-              className="max-h-full max-w-full"
-            />
+            {currentMedia.type === 'video' ? (
+              <video
+                src={currentMedia.url}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="max-h-full max-w-full"
+              >
+                Tu navegador no soporta el elemento de video.
+              </video>
+            ) : (
+              <PuppyCarouselImageComponent
+                src={currentMedia.url}
+                alt={`${puppyName} - Enlarged view`}
+                className="max-h-full max-w-full"
+              />
+            )}
 
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-lg bg-black bg-opacity-50 px-4 py-2 text-white">
+              {currentMedia.type === 'video' ? (
+                <svg
+                  className="inline h-4 w-4"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+                </svg>
+              ) : (
+                <svg
+                  className="inline h-4 w-4"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              )}{' '}
               {selectedIndex + 1} / {validMedia.length}
             </div>
           </div>

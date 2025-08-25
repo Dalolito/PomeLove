@@ -13,6 +13,7 @@ interface AdminCategoriesFiltersComponentProps {
   onClearFilters: () => void;
   hasActiveFilters: boolean;
   dict: Dictionary;
+  locale: string;
   className?: string;
 }
 
@@ -23,6 +24,7 @@ export default function AdminCategoriesFiltersComponent({
   onClearFilters,
   hasActiveFilters,
   dict,
+  locale,
   className = '',
 }: AdminCategoriesFiltersComponentProps) {
   const sortByOptions = [
@@ -31,7 +33,7 @@ export default function AdminCategoriesFiltersComponent({
       label: dict.admin.categories.filters?.sortByName || 'Name',
     },
     {
-      value: 'minPrice',
+      value: locale === 'es' ? 'minPriceCOP' : 'minPriceUSD',
       label: dict.admin.categories.filters?.sortByPrice || 'Price',
     },
   ];

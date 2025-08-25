@@ -59,6 +59,19 @@
     "puppys": "Pets",
     "categories": "Categories",
     "subtitle": "Administration panel",
+    "auth": {
+      "login": {
+        "title": "Sign In",
+        "username": "Username",
+        "password": "Password",
+        "submit": "Sign In",
+        "error": "Invalid credentials"
+      },
+      "logout": {
+        "button": "Logout",
+        "confirm": "Are you sure you want to logout?"
+      }
+    },
     "dashboard": "Dashboard",
     "management": "Management",
     "settings": "Settings",
@@ -115,15 +128,18 @@
       },
       "fields": {
         "name": "Name",
-        "minPrice": "Minimum Price"
+        "minPriceCOP": "Minimum Price (COP)",
+        "minPriceUSD": "Minimum Price (USD)"
       },
       "placeholders": {
         "name": "Enter category name",
-        "minPrice": "Enter minimum price"
+        "minPriceCOP": "Enter minimum price in Colombian pesos",
+        "minPriceUSD": "Enter minimum price in US dollars"
       },
       "headers": {
         "name": "Name",
-        "minPrice": "Minimum Price",
+        "minPriceCOP": "Minimum Price (COP)",
+        "minPriceUSD": "Minimum Price (USD)",
         "actions": "Actions"
       },
       "actions": {
@@ -189,6 +205,7 @@
       "headers": {
         "image": "Image",
         "name": "Name",
+        "age": "Age",
         "category": "Category",
         "gender": "Gender",
         "birthDate": "Birth Date",
@@ -262,10 +279,10 @@
     "filters": {
       "title": "Filter by",
       "clearFilters": "Clear filters",
-      "category": "Breed",
+      "category": "Categories",
       "gender": "Gender",
       "availability": "Availability",
-      "allCategories": "All breeds",
+      "allCategories": "All categories",
       "allGenders": "Both genders",
       "allAvailability": "All",
       "available": "Available",
