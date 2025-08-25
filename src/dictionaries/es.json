@@ -60,6 +60,19 @@
     "puppys": "Mascotas",
     "categories": "Categorías",
     "subtitle": "Panel de administración",
+    "auth": {
+      "login": {
+        "title": "Iniciar Sesión",
+        "username": "Usuario",
+        "password": "Contraseña",
+        "submit": "Iniciar Sesión",
+        "error": "Credenciales incorrectas"
+      },
+      "logout": {
+        "button": "Salir",
+        "confirm": "¿Estás seguro de que quieres cerrar sesión?"
+      }
+    },
     "dashboard": "Dashboard",
     "management": "Gestión",
     "settings": "Configuración",

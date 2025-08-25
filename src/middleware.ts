@@ -4,10 +4,24 @@ import type { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Redirect root to Spanish locale
   if (pathname === '/') {
     return NextResponse.redirect(new URL('/es', request.url));
   }
 
+  // Handle admin routes protection
+  if (pathname.includes('/admin') && !pathname.includes('/admin/login')) {
+    const token = request.cookies.get('admin-token')?.value;
+    
+    if (!token || token !== 'authenticated') {
+      const loginUrl = pathname.startsWith('/es/admin') 
+        ? '/es/admin/login' 
+        : '/es/admin/login';
+      return NextResponse.redirect(new URL(loginUrl, request.url));
+    }
+  }
+
+  // Redirect old admin paths
   if (pathname.startsWith('/admin') && !pathname.startsWith('/es/admin')) {
     return NextResponse.redirect(new URL(`/es${pathname}`, request.url));
   }
@@ -16,5 +30,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next|api|favicon.ico).*)'],
+  matcher: ['/((?!_next|api|favicon.ico|uploads).*)'],
 };

@@ -1,18 +1,26 @@
 import AdminHamburgerMenuComponent from '@/components/admin/layout/AdminHamburgerMenuComponent';
 import LanguageButtonComponent from '@/components/layout/LanguageButtonComponent';
+import LogoutButtonComponent from '@/components/admin/auth/LogoutButtonComponent';
 import { Dictionary } from '@/lib/types/dictionary';
+import { headers } from 'next/headers';
 
 interface AdminHeaderProps {
   title: string;
   currentLocale: string;
   dict: Dictionary;
+  showLogout?: boolean;
 }
 
-export default function AdminHeader({
+export default async function AdminHeader({
   title,
   currentLocale,
   dict,
+  showLogout = true,
 }: AdminHeaderProps) {
+  const headersList = await headers();
+  const pathname = headersList.get('x-invoke-path') || '';
+  const isLoginPage = pathname.includes('/login');
+
   return (
     <header className="sticky top-0 z-50 border-b border-gray-100 bg-white shadow-sm">
       <div className="container mx-auto px-4 py-4">
@@ -27,6 +35,8 @@ export default function AdminHeader({
           </div>
 
           <div className="relative flex items-center gap-3">
+            {!isLoginPage && <LogoutButtonComponent dict={dict} />}
+            
             <LanguageButtonComponent
               currentLocale={currentLocale}
               dict={dict}
