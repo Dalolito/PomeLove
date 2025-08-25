@@ -1,6 +1,4 @@
 import type { Metadata } from 'next';
-import { auth } from '@/lib/auth/authUtils';
-import { redirect } from 'next/navigation';
 import AdminHeaderComponent from '@/components/admin/layout/AdminHeaderComponent';
 
 export async function generateMetadata({
@@ -42,18 +40,12 @@ export default async function AdminLayout({
   const { locale } = await params;
   const dict = await getDictionary(locale);
 
-  const session = await auth();
-  if (!session?.user) {
-    redirect(`/${locale}/admin/login`);
-  }
-
   return (
     <div className="flex min-h-screen flex-col bg-gray-50">
       <AdminHeaderComponent
         title={dict.header.title}
         currentLocale={locale}
         dict={dict}
-        session={session}
       />
 
       <main className="flex-1 px-4 py-6 lg:px-8">

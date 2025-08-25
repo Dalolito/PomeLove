@@ -1,21 +1,17 @@
 import AdminHamburgerMenuComponent from '@/components/admin/layout/AdminHamburgerMenuComponent';
 import LanguageButtonComponent from '@/components/layout/LanguageButtonComponent';
-import AdminLogoutButtonComponent from '@/components/admin/auth/AdminLogoutButtonComponent';
 import { Dictionary } from '@/lib/types/dictionary';
-import { Session } from 'next-auth';
 
 interface AdminHeaderProps {
   title: string;
   currentLocale: string;
   dict: Dictionary;
-  session: Session;
 }
 
 export default function AdminHeader({
   title,
   currentLocale,
   dict,
-  session,
 }: AdminHeaderProps) {
   return (
     <header className="sticky top-0 z-50 border-b border-gray-100 bg-white shadow-sm">
@@ -31,16 +27,10 @@ export default function AdminHeader({
           </div>
 
           <div className="relative flex items-center gap-3">
-            <span className="hidden text-sm text-gray-600 sm:block">
-              Hola, {session.user?.name}
-            </span>
-
             <LanguageButtonComponent
               currentLocale={currentLocale}
               dict={dict}
             />
-
-            <AdminLogoutButtonComponent dict={dict} />
 
             <AdminHamburgerMenuComponent
               currentLocale={currentLocale}
