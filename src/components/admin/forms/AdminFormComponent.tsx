@@ -11,7 +11,7 @@ import { createPuppyAction } from '@/actions/puppyActions';
 
 interface AdminFormComponentProps {
   dict: any;
-  categories: { id: string; name: string }[];
+  categories: { id: number; name: string }[];
   locale: string;
   className?: string;
 }
@@ -31,7 +31,7 @@ export default function AdminFormComponent({
     description_en: string;
     birthDate: string;
     gender: 'male' | 'female';
-    categoryId: string;
+    categoryId: number | '';
     media: MediaFile[];
     fatherImage: MediaFile | null;
     motherImage: MediaFile | null;
@@ -55,7 +55,7 @@ export default function AdminFormComponent({
       | 'birthDate'
       | 'gender'
       | 'categoryId',
-    value: string
+    value: string | number
   ) => {
     setFormData(prev => ({
       ...prev,
@@ -92,7 +92,7 @@ export default function AdminFormComponent({
         description_en: formData.description_en,
         birthDate: formData.birthDate,
         gender: formData.gender,
-        categoryId: formData.categoryId,
+        categoryId: typeof formData.categoryId === 'number' ? formData.categoryId : 0,
         media: formData.media,
         fatherImage: formData.fatherImage?.url || null,
         motherImage: formData.motherImage?.url || null,

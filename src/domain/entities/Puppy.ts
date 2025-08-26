@@ -39,7 +39,7 @@ export interface CreatePuppyData {
   description_en: string;
   birthDate: string;
   gender: 'male' | 'female';
-  categoryId: string;
+  categoryId: number;
   media: MediaFile[];
   fatherImage: string | null;
   motherImage: string | null;
@@ -52,7 +52,7 @@ export interface UpdatePuppyData {
   description_en?: string;
   birthDate?: string;
   gender?: 'male' | 'female';
-  categoryId?: string;
+  categoryId?: number;
   media?: MediaFile[];
   fatherImage?: string | null;
   motherImage?: string | null;

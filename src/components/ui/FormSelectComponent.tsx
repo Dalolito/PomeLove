@@ -1,11 +1,11 @@
 interface Option {
-  value: string;
+  value: string | number;
   label: string;
 }
 
 interface FormSelectProps {
-  value: string;
-  onChange: (value: string) => void;
+  value: string | number;
+  onChange: (value: string | number) => void;
   label: string;
   placeholder?: string;
   options: Option[];
@@ -29,12 +29,17 @@ export default function FormSelectComponent({
       </label>
       <select
         value={value}
-        onChange={e => onChange(e.target.value)}
+        onChange={e => {
+          const val = e.target.value;
+          // Convert to number if the option value is a number
+          const option = options.find(opt => opt.value.toString() === val);
+          onChange(option?.value || val);
+        }}
         className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
       >
         {placeholder && <option value="">{placeholder}</option>}
         {options.map(option => (
-          <option key={option.value} value={option.value}>
+          <option key={option.value} value={option.value.toString()}>
             {option.label}
           </option>
         ))}

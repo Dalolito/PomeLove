@@ -11,14 +11,14 @@ interface FormData {
   description_en: string;
   birthDate: string;
   gender: 'male' | 'female';
-  categoryId: string;
+  categoryId: number | '';
 }
 
 interface AdminFormBasicInfoComponentProps {
   data: FormData;
-  categories: { id: string; name: string }[];
+  categories: { id: number; name: string }[];
   dict: Dictionary;
-  onChange: (field: keyof FormData, value: string) => void;
+  onChange: (field: keyof FormData, value: string | number) => void;
   className?: string;
 }
 

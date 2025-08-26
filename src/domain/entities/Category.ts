@@ -1,12 +1,12 @@
 /**
  * @interface Category
- * @property {string} id - Primary key identifier
+ * @property {number} id - Primary key identifier
  * @property {string} name - Name of the category/breed (required)
  * @property {number} minPriceCOP - Minimum price in COP for this category (required)
  * @property {number} minPriceUSD - Minimum price in USD for this category (required)
  */
 export interface Category {
-  id: string;
+  id: number;
   name: string;
   minPriceCOP: number;
   minPriceUSD: number;
