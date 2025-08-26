@@ -13,7 +13,9 @@
     "lint:fix": "eslint . --fix && prettier --write .",
     "check": "npm run lint && npm run format:check && tsc --noEmit",
     "db:seed": "npx tsx prisma/seed.ts",
-    "db:reset": "npx prisma migrate reset --force && npm run db:seed"
+    "db:reset": "npx prisma migrate reset --force && npm run db:seed",
+    "db:migrate": "npx prisma migrate deploy",
+    "db:generate": "npx prisma generate"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.7",
