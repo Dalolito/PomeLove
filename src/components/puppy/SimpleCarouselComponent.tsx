@@ -20,6 +20,18 @@ export default function SimpleCarouselComponent({
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [showModal]);
+
   const validMedia =
     media?.filter(
       item =>
@@ -164,7 +176,8 @@ export default function SimpleCarouselComponent({
               muted
               loop
               playsInline
-              className="h-full w-full object-cover"
+              className="h-full w-full cursor-pointer object-cover"
+              onClick={() => setShowModal(true)}
             >
               Tu navegador no soporta el elemento de video.
             </video>
@@ -173,6 +186,7 @@ export default function SimpleCarouselComponent({
               src={currentMedia.url}
               alt={`${puppyName} - ${currentMedia.type} ${selectedIndex + 1}`}
               className="cursor-pointer transition-transform duration-200 hover:scale-105"
+              onClick={() => setShowModal(true)}
             />
           )}
 
@@ -306,7 +320,8 @@ export default function SimpleCarouselComponent({
 
       {showModal && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90"
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-90"
+          style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
           onClick={() => setShowModal(false)}
         >
           <button
@@ -328,7 +343,7 @@ export default function SimpleCarouselComponent({
             </svg>
           </button>
 
-          <div className="relative max-h-[90vh] max-w-[90vw] p-4">
+          <div className="relative flex h-[90vh] w-[90vw] items-center justify-center p-4">
             {currentMedia.type === 'video' ? (
               <video
                 src={currentMedia.url}
@@ -336,7 +351,7 @@ export default function SimpleCarouselComponent({
                 muted
                 loop
                 playsInline
-                className="max-h-full max-w-full"
+                className="h-full w-full object-contain"
               >
                 Tu navegador no soporta el elemento de video.
               </video>
@@ -344,7 +359,7 @@ export default function SimpleCarouselComponent({
               <PuppyCarouselImageComponent
                 src={currentMedia.url}
                 alt={`${puppyName} - Enlarged view`}
-                className="max-h-full max-w-full"
+                className="h-full w-full object-contain"
               />
             )}
 

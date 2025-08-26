@@ -7,6 +7,7 @@ interface PuppyCarouselImageComponentProps {
   alt: string;
   priority?: boolean;
   onLoad?: () => void;
+  onClick?: () => void;
   className?: string;
 }
 
@@ -15,6 +16,7 @@ export default function PuppyCarouselImageComponent({
   alt,
   priority = false,
   onLoad,
+  onClick,
   className = '',
 }: PuppyCarouselImageComponentProps) {
   const [hasError, setHasError] = useState(false);
@@ -134,6 +136,7 @@ export default function PuppyCarouselImageComponent({
         }`}
         onLoad={handleLoad}
         onError={handleError}
+        onClick={onClick}
         loading={priority ? 'eager' : 'lazy'}
         decoding="async"
         crossOrigin="anonymous"
