@@ -38,7 +38,11 @@ export default async function CreatePuppyPage({
       </div>
 
       {/* Form Section */}
-      <AdminFormComponent dict={dict} categories={categories} locale={locale} />
+      <AdminFormComponent
+        dict={dict}
+        categories={categories || []}
+        locale={locale}
+      />
     </div>
   );
 }

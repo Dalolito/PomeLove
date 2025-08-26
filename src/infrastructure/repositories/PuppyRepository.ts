@@ -19,7 +19,7 @@ export class PuppyRepository implements IPuppyRepository {
           description_en: data.description_en,
           birthDate: new Date(data.birthDate),
           gender: data.gender,
-          categoryId: parseInt(data.categoryId),
+          categoryId: data.categoryId,
           fatherImage: data.fatherImage,
           motherImage: data.motherImage,
           available: data.available ?? true,
@@ -120,7 +120,7 @@ export class PuppyRepository implements IPuppyRepository {
           description_en: data.description_en,
           birthDate: data.birthDate ? new Date(data.birthDate) : undefined,
           gender: data.gender,
-          categoryId: data.categoryId ? parseInt(data.categoryId) : undefined,
+          categoryId: data.categoryId,
           fatherImage: data.fatherImage,
           motherImage: data.motherImage,
           available: data.available,
@@ -297,7 +297,7 @@ export class PuppyRepository implements IPuppyRepository {
     }>;
   }): Puppy {
     const category: Category = {
-      id: puppy.category.id.toString(),
+      id: puppy.category.id,
       name: puppy.category.name,
       minPriceCOP: puppy.category.minPriceCOP,
       minPriceUSD: puppy.category.minPriceUSD,

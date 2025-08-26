@@ -37,9 +37,9 @@ export async function getFilteredCategoriesAction(filters: CategoryFilters) {
   }
 }
 
-export async function getCategoryByIdAction(id: string) {
+export async function getCategoryByIdAction(id: number) {
   try {
-    const result = await getCategoryByIdUseCase.execute(id);
+    const result = await getCategoryByIdUseCase.execute(id.toString());
     return result;
   } catch (error) {
     console.error('Error getting category by ID:', error);
@@ -47,9 +47,9 @@ export async function getCategoryByIdAction(id: string) {
   }
 }
 
-export async function getCategoryWithPuppiesAction(id: string) {
+export async function getCategoryWithPuppiesAction(id: number) {
   try {
-    const result = await getCategoryWithPuppiesUseCase.execute(id);
+    const result = await getCategoryWithPuppiesUseCase.execute(id.toString());
     return result;
   } catch (error) {
     console.error('Error getting category with puppies:', error);
@@ -71,12 +71,12 @@ export async function createCategoryAction(data: CreateCategoryData) {
 }
 
 export async function updateCategoryAction(
-  id: string,
+  id: number,
   data: UpdateCategoryData
 ) {
   try {
     const category = await updateCategoryUseCase.execute({
-      id,
+      id: id.toString(),
       ...data,
     });
 
@@ -90,9 +90,9 @@ export async function updateCategoryAction(
   }
 }
 
-export async function deleteCategoryAction(id: string) {
+export async function deleteCategoryAction(id: number) {
   try {
-    await deleteCategoryUseCase.execute({ id });
+    await deleteCategoryUseCase.execute({ id: id.toString() });
 
     revalidatePath('/[locale]/admin/categories', 'page');
 

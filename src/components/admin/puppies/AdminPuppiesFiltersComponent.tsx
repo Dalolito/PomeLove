@@ -31,7 +31,7 @@ export default function AdminPuppiesFiltersComponent({
   const categoryOptions = [
     { value: '', label: dict.admin.filters?.allCategories || 'All categories' },
     ...categories.map(category => ({
-      value: category.id,
+      value: category.id.toString(),
       label: category.name,
     })),
   ];

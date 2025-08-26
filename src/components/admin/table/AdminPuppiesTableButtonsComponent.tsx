@@ -11,6 +11,10 @@ interface AdminPuppiesTableButtonsProps {
   puppyName: string;
   dict: Dictionary;
   locale: string;
+  onView?: (id: string) => void;
+  onEdit?: (id: string) => void;
+  onDelete?: (id: string) => void;
+  isDeleting?: boolean;
   className?: string;
 }
 
@@ -19,10 +23,14 @@ export default function AdminPuppiesTableButtonsComponent({
   puppyName,
   dict,
   locale,
+  onView,
+  onEdit,
+  onDelete,
+  isDeleting = false,
   className = '',
 }: AdminPuppiesTableButtonsProps) {
   const router = useRouter();
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [isLocalDeleting, setIsLocalDeleting] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const handleEdit = () => {
@@ -34,7 +42,7 @@ export default function AdminPuppiesTableButtonsComponent({
   };
 
   const handleDeleteConfirm = async () => {
-    setIsDeleting(true);
+    setIsLocalDeleting(true);
     try {
       const result = await deletePuppyAction(puppyId);
       if (result.success) {
@@ -45,7 +53,7 @@ export default function AdminPuppiesTableButtonsComponent({
     } catch (error) {
       console.error('Error deleting puppy:', error);
     } finally {
-      setIsDeleting(false);
+      setIsLocalDeleting(false);
     }
   };
 
@@ -70,12 +78,12 @@ export default function AdminPuppiesTableButtonsComponent({
       {/* Eliminar Button */}
       <button
         onClick={handleDeleteClick}
-        disabled={isDeleting}
+        disabled={isDeleting || isLocalDeleting}
         className="flex h-12 w-full items-center justify-center rounded-lg border border-red-300 text-red-600 transition-colors hover:bg-red-50 hover:text-red-900 disabled:cursor-not-allowed disabled:opacity-50 sm:h-8 sm:w-8"
         title={`Eliminar ${puppyName}`}
         type="button"
       >
-        {isDeleting ? (
+        {isDeleting || isLocalDeleting ? (
           <div className="h-4 w-4 animate-spin rounded-full border border-red-600 border-t-transparent sm:h-3 sm:w-3" />
         ) : (
           <span className="text-base sm:text-sm">🗑️</span>
@@ -88,7 +96,7 @@ export default function AdminPuppiesTableButtonsComponent({
         onConfirm={handleDeleteConfirm}
         itemName={puppyName}
         dict={dict}
-        isLoading={isDeleting}
+        isLoading={isDeleting || isLocalDeleting}
       />
     </div>
   );

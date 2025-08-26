@@ -47,7 +47,7 @@ export function useCatalogFilters({
   const findSelectedCategory = useCallback(
     (categoryId: string | undefined): Category | null => {
       if (!categoryId) return null;
-      return categories.find(cat => cat.id === categoryId) || null;
+      return categories.find(cat => cat.id === parseInt(categoryId)) || null;
     },
     [categories]
   );

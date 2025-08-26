@@ -92,7 +92,8 @@ export default function AdminFormComponent({
         description_en: formData.description_en,
         birthDate: formData.birthDate,
         gender: formData.gender,
-        categoryId: typeof formData.categoryId === 'number' ? formData.categoryId : 0,
+        categoryId:
+          typeof formData.categoryId === 'number' ? formData.categoryId : 0,
         media: formData.media,
         fatherImage: formData.fatherImage?.url || null,
         motherImage: formData.motherImage?.url || null,

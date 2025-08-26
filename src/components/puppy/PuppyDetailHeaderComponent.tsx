@@ -69,7 +69,6 @@ export default function PuppyDetailHeaderComponent({
           <PrimaryButtonComponent
             href={`/${locale}/catalog`}
             size="md"
-            variant="outline"
             className="whitespace-nowrap"
           >
             ← {dict.buttons.back_to_catalog}

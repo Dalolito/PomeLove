@@ -31,7 +31,7 @@ export default function CatalogFiltersComponent({
       label: dict.catalog.filters.allCategories,
     },
     ...categories.map(category => ({
-      value: category.id,
+      value: category.id.toString(),
       label: category.name,
     })),
   ];

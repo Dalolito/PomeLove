@@ -25,7 +25,7 @@ export default async function EditCategoryPage({
   const { locale, id } = await params;
   const dict = await getDictionary(locale);
 
-  const categoryResult = await getCategoryByIdAction(id);
+  const categoryResult = await getCategoryByIdAction(parseInt(id));
 
   if (!categoryResult.success || !categoryResult.category) {
     notFound();

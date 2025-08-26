@@ -18,7 +18,7 @@ export class CategoryRepository implements ICategoryRepository {
     });
 
     return {
-      id: category.id.toString(),
+      id: category.id,
       name: category.name,
       minPriceCOP: category.minPriceCOP,
       minPriceUSD: category.minPriceUSD,
@@ -33,7 +33,7 @@ export class CategoryRepository implements ICategoryRepository {
     if (!category) return null;
 
     return {
-      id: category.id.toString(),
+      id: category.id,
       name: category.name,
       minPriceCOP: category.minPriceCOP,
       minPriceUSD: category.minPriceUSD,
@@ -46,7 +46,7 @@ export class CategoryRepository implements ICategoryRepository {
     });
 
     return categories.map(category => ({
-      id: category.id.toString(),
+      id: category.id,
       name: category.name,
       minPriceCOP: category.minPriceCOP,
       minPriceUSD: category.minPriceUSD,
@@ -75,7 +75,7 @@ export class CategoryRepository implements ICategoryRepository {
     });
 
     return categories.map(category => ({
-      id: category.id.toString(),
+      id: category.id,
       name: category.name,
       minPriceCOP: category.minPriceCOP,
       minPriceUSD: category.minPriceUSD,
@@ -96,7 +96,7 @@ export class CategoryRepository implements ICategoryRepository {
     });
 
     return {
-      id: category.id.toString(),
+      id: category.id,
       name: category.name,
       minPriceCOP: category.minPriceCOP,
       minPriceUSD: category.minPriceUSD,
@@ -121,7 +121,7 @@ export class CategoryRepository implements ICategoryRepository {
 
     return {
       category: {
-        id: categoryWithPuppies.id.toString(),
+        id: categoryWithPuppies.id,
         name: categoryWithPuppies.name,
         minPriceCOP: categoryWithPuppies.minPriceCOP,
         minPriceUSD: categoryWithPuppies.minPriceUSD,

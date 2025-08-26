@@ -10,7 +10,7 @@ import {
 } from '@/actions/categoryActions';
 
 interface AdminCategoriesTableButtonsProps {
-  categoryId: string;
+  categoryId: number;
   categoryName: string;
   dict: Dictionary;
   locale: string;
