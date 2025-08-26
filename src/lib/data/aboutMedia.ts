@@ -26,17 +26,27 @@ export const aboutMedia = {
     },
     {
       id: '5',
+      url: '/media/carousel-1/video-2.mp4',
+      type: 'video' as const,
+    },
+    {
+      id: '6',
       url: '/media/carousel-1/img-4.jpeg',
       type: 'image' as const,
     },
     {
-      id: '6',
+      id: '7',
       url: '/media/carousel-1/img-5.jpeg',
       type: 'image' as const,
     },
     {
-      id: '7',
+      id: '8',
       url: '/media/carousel-1/img-6.jpeg',
+      type: 'image' as const,
+    },
+    {
+      id: '9',
+      url: '/media/carousel-1/img-7.jpeg',
       type: 'image' as const,
     },
   ],

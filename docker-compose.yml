@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: pomelove_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password_123
+      MYSQL_DATABASE: pomelove_prod
+      MYSQL_USER: pomelove_user
+      MYSQL_PASSWORD: pomelove_pass_123
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init-db:/docker-entrypoint-initdb.d
+    networks:
+      - pomelove_network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pomelove_app
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=mysql://pomelove_user:pomelove_pass_123@mysql:3306/pomelove_prod
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXTAUTH_SECRET=your-super-secret-key-change-in-production
+      - ADMIN_USERNAME=pumbis
+      - ADMIN_PASSWORD=CataPerros123
+    volumes:
+      - ./public/uploads:/app/public/uploads
+      - ./logs:/app/logs
+    depends_on:
+      - mysql
+    networks:
+      - pomelove_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pomelove_phpmyadmin
+    restart: unless-stopped
+    ports:
+      - '8080:80'
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: pomelove_user
+      PMA_PASSWORD: pomelove_pass_123
+    depends_on:
+      - mysql
+    networks:
+      - pomelove_network
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  pomelove_network:
+    driver: bridge
