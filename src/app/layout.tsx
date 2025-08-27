@@ -37,7 +37,6 @@ export const metadata: Metadata = {
     apple: '/logo.png',
   },
   manifest: '/manifest.json',
-  themeColor: '#ffffff',
   openGraph: {
     type: 'website',
     locale: 'es_CO',

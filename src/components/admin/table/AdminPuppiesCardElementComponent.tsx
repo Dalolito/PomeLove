@@ -9,9 +9,6 @@ interface AdminPuppiesCardElementProps {
   puppy: Puppy;
   dict: Dictionary;
   locale: string;
-  onView?: (id: string) => void;
-  onEdit?: (id: string) => void;
-  onDelete?: (id: string) => void;
   isDeleting?: boolean;
   className?: string;
 }
@@ -20,9 +17,6 @@ export default function AdminPuppiesCardElementComponent({
   puppy,
   dict,
   locale,
-  onView,
-  onEdit,
-  onDelete,
   isDeleting = false,
   className = '',
 }: AdminPuppiesCardElementProps) {
@@ -89,9 +83,6 @@ export default function AdminPuppiesCardElementComponent({
                 puppyName={puppy.name}
                 dict={dict}
                 locale={locale}
-                onView={onView}
-                onEdit={onEdit}
-                onDelete={onDelete}
                 isDeleting={isDeleting}
               />
             </div>
