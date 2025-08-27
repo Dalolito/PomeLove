@@ -4,6 +4,28 @@ export interface Dictionary {
     subtitle: string;
     experience: string;
   };
+  metadata: {
+    home: {
+      title: string;
+      description: string;
+      keywords: string;
+    };
+    catalog: {
+      title: string;
+      description: string;
+      keywords: string;
+    };
+    about: {
+      title: string;
+      description: string;
+      keywords: string;
+    };
+    puppy: {
+      titleTemplate: string;
+      descriptionTemplate: string;
+      keywordsTemplate: string;
+    };
+  };
   navigation: {
     home: string;
     catalog: string;
@@ -51,7 +73,7 @@ export interface Dictionary {
       contact: string;
     };
     copyright: string;
-    location: string;
+    location?: string;
     phone: string;
     instagramUrl: string;
   };

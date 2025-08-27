@@ -6,9 +6,7 @@ interface AboutUsExportsProps {
   dict: Dictionary;
 }
 
-export default function AboutUsExportsComponent({
-  dict,
-}: AboutUsExportsProps) {
+export default function AboutUsExportsComponent({ dict }: AboutUsExportsProps) {
   const exportProcess = [
     {
       step: '01',

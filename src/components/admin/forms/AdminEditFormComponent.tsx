@@ -10,7 +10,6 @@ import AdminFormUploadMediaComponent from '@/components/admin/forms/AdminFormUpl
 import AdminFormActionButtonsComponent from '@/components/admin/forms/AdminFormActionButtonsComponent';
 import { updatePuppyAction } from '@/actions/puppyActions';
 
-
 interface AdminEditFormComponentProps {
   puppy: Puppy;
   dict: any;

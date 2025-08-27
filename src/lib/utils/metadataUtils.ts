@@ -1,85 +1,158 @@
-import type { Metadata } from 'next';
+import { Metadata } from 'next';
+import { Dictionary } from '@/lib/types/dictionary';
 
-interface MetadataConfig {
-  title: string;
-  description: string;
-  keywords: string;
+interface MetadataParams {
+  dict: Dictionary;
+  page?: 'home' | 'catalog' | 'about' | 'puppy';
+  puppyData?: {
+    name?: string;
+    category?: string;
+    description?: string;
+  };
+  locale?: string;
 }
 
-interface PuppyMetadataConfig {
-  titleTemplate: string;
-  descriptionTemplate: string;
-  keywordsTemplate: string;
-}
+export function generateMetadata({
+  dict,
+  page = 'home',
+  puppyData,
+  locale = 'es',
+}: MetadataParams): Metadata {
+  const baseUrl = 'https://pomeloves.com';
+  const currentUrl = `${baseUrl}/${locale}`;
 
-export function generateMetadataFromDict(
-  config: MetadataConfig,
-  locale: string
-): Metadata {
-  const isSpanish = locale === 'es';
-  
-  return {
-    title: config.title,
-    description: config.description,
-    keywords: config.keywords,
-    openGraph: {
-      title: config.title,
-      description: config.description,
-      locale: isSpanish ? 'es_CO' : 'en_US',
+  let title: string;
+  let description: string;
+  let keywords: string;
+
+  // Get metadata from dictionary based on page
+  const pageMetadata = dict.metadata[page];
+
+  if (page === 'puppy' && puppyData) {
+    // Handle puppy page with dynamic data
+    title = pageMetadata.titleTemplate
+      .replace('{name}', puppyData.name || dict.utils.fallbacks.noName)
+      .replace(
+        '{category}',
+        puppyData.category || dict.utils.fallbacks.noCategory
+      );
+
+    description = pageMetadata.descriptionTemplate
+      .replace(
+        '{category}',
+        puppyData.category || dict.utils.fallbacks.noCategory
+      )
+      .replace(
+        '{description}',
+        puppyData.description || dict.utils.fallbacks.noDescription
+      );
+
+    keywords = pageMetadata.keywordsTemplate
+      .replace('{name}', puppyData.name || dict.utils.fallbacks.noName)
+      .replace(
+        '{category}',
+        puppyData.category || dict.utils.fallbacks.noCategory
+      );
+  } else {
+    // Handle static pages
+    title = pageMetadata.title;
+    description = pageMetadata.description;
+    keywords = pageMetadata.keywords;
+  }
+
+  const metadata: Metadata = {
+    title: {
+      default: title,
+      template: '%s | POMELOVE KOREA',
     },
+    description,
+    keywords,
+    authors: [{ name: 'POMELOVE KOREA' }],
+    creator: 'POMELOVE KOREA',
+    publisher: 'POMELOVE KOREA',
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
+    metadataBase: new URL(baseUrl),
     alternates: {
-      canonical: `/${locale}`,
+      canonical: currentUrl,
       languages: {
-        'es': '/es',
-        'en': '/en',
+        es: '/es',
+        en: '/en',
       },
     },
-  };
-}
-
-export function generatePuppyMetadataFromDict(
-  config: PuppyMetadataConfig,
-  puppy: any,
-  locale: string,
-  description: string
-): Metadata {
-  const isSpanish = locale === 'es';
-  
-  const title = config.titleTemplate
-    .replace('{name}', puppy.name)
-    .replace('{category}', puppy.category.name);
-    
-  const metaDescription = config.descriptionTemplate
-    .replace('{category}', puppy.category.name)
-    .replace('{description}', description);
-    
-  const keywords = config.keywordsTemplate
-    .replace('{name}', puppy.name)
-    .replace('{category}', puppy.category.name.toLowerCase());
-
-  return {
-    title,
-    description: metaDescription,
-    keywords,
+    icons: {
+      icon: '/logo.png',
+      shortcut: '/logo.png',
+      apple: '/logo.png',
+    },
+    manifest: '/manifest.json',
     openGraph: {
-      title,
-      description: metaDescription,
-      images: puppy.media.length > 0 ? [puppy.media[0].url] : [],
-      locale: isSpanish ? 'es_CO' : 'en_US',
       type: 'website',
+      locale: locale === 'es' ? 'es_CO' : 'en_US',
+      url: currentUrl,
+      title,
+      description,
+      siteName: 'POMELOVE KOREA',
+      images: [
+        {
+          url: '/og-image.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'POMELOVE KOREA - Pomerania de Alta Calidad',
+        },
+        {
+          url: '/logo.png',
+          width: 512,
+          height: 512,
+          alt: 'POMELOVE KOREA Logo',
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title,
-      description: metaDescription,
-      images: puppy.media.length > 0 ? [puppy.media[0].url] : [],
+      description,
+      images: ['/og-image.jpg', '/logo.png'],
     },
-    alternates: {
-      canonical: `/${locale}/puppy/${puppy.id}`,
-      languages: {
-        'es': `/es/puppy/${puppy.id}`,
-        'en': `/en/puppy/${puppy.id}`,
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
       },
+    },
+    verification: {
+      google:
+        process.env.GOOGLE_VERIFICATION_CODE || 'your-google-verification-code',
+    },
+  };
+
+  return metadata;
+}
+
+// Helper function for admin pages
+export function generateAdminMetadata(dict: Dictionary): Metadata {
+  return {
+    title: {
+      default: `${dict.admin.menu} - POMELOVE KOREA`,
+      template: '%s | POMELOVE KOREA',
+    },
+    description: dict.admin.subtitle,
+    robots: {
+      index: false,
+      follow: false,
+    },
+    icons: {
+      icon: '/logo.png',
+      shortcut: '/logo.png',
+      apple: '/logo.png',
     },
   };
 }

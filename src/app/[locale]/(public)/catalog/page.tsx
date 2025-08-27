@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { getAllPuppiesAction } from '@/actions/puppyActions';
 import { getAllCategoriesAction } from '@/actions/categoryActions';
 import CatalogContentComponent from '@/components/catalog/CatalogContentComponent';
-import { generateMetadataFromDict } from '@/lib/utils/metadataUtils';
+import { generateMetadata as generatePageMetadata } from '@/lib/utils/metadataUtils';
 
 async function getDictionary(locale: string) {
   try {
@@ -27,7 +27,11 @@ export async function generateMetadata({
   const { locale } = await params;
   const dict = await getDictionary(locale);
 
-  return generateMetadataFromDict(dict.metadata.catalog, locale);
+  return generatePageMetadata({
+    dict,
+    page: 'catalog',
+    locale,
+  });
 }
 
 export default async function CatalogPage({ params }: CatalogPageProps) {

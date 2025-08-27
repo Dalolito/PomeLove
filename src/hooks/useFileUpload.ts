@@ -9,10 +9,7 @@ interface UseFileUploadProps {
   onMediaChange?: (files: MediaFile[]) => void;
 }
 
-export function useFileUpload({
-  maxFiles,
-  onMediaChange,
-}: UseFileUploadProps) {
+export function useFileUpload({ maxFiles, onMediaChange }: UseFileUploadProps) {
   const [files, setFiles] = useState<MediaFile[]>([]);
   const [errors, setErrors] = useState<string[]>([]);
   const [uploadingFiles, setUploadingFiles] = useState<Set<string>>(new Set());

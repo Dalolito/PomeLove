@@ -5,7 +5,7 @@ import PuppyAvailableListComponent from '@/components/puppy/PuppyAvailableListCo
 import PuppyCardSkeletonComponent from '@/components/puppy/PuppyCardSkeletonComponent';
 import PrimaryButtonComponent from '@/components/ui/PrimaryButtonComponent';
 import SecondaryButtonComponent from '@/components/ui/SecondaryButtonComponent';
-import { generateMetadataFromDict } from '@/lib/utils/metadataUtils';
+import { generateMetadata as generatePageMetadata } from '@/lib/utils/metadataUtils';
 
 async function getDictionary(locale: string) {
   try {
@@ -27,7 +27,11 @@ export async function generateMetadata({
   const { locale } = await params;
   const dict = await getDictionary(locale);
 
-  return generateMetadataFromDict(dict.metadata.home, locale);
+  return generatePageMetadata({
+    dict,
+    page: 'home',
+    locale,
+  });
 }
 
 export default function HomePage({

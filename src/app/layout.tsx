@@ -1,85 +1,33 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
 import type { Metadata } from 'next';
-
+import { generateMetadata as generatePageMetadata } from '@/lib/utils/metadataUtils';
 
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: 'POMELOVE KOREA - Pomerania Medellín | Criadores de Pomerania en Medellín',
-    template: '%s | POMELOVE KOREA',
-  },
-  description: 'Criadores especializados de Pomerania en Medellín con 15+ años de experiencia. Importamos líneas exclusivas de Pomerania Coreano de la más alta calidad. Pomerania Medellín, Pomerania Colombia. Encuentra tu compañero perfecto.',
-  keywords: 'pomerania medellin, pomerania, pomeranian, cachorros pomerania medellin, pomerania coreano, criadores pomerania medellin, venta pomerania medellin, pomerania colombia, pomerania antioquia',
-  authors: [{ name: 'POMELOVE KOREA' }],
-  creator: 'POMELOVE KOREA',
-  publisher: 'POMELOVE KOREA',
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  metadataBase: new URL('https://pomeloves.com'),
-  alternates: {
-    canonical: '/',
-    languages: {
-      es: '/es',
-      en: '/en',
-    },
-  },
-  icons: {
-    icon: '/logo.png',
-    shortcut: '/logo.png',
-    apple: '/logo.png',
-  },
-  manifest: '/manifest.json',
-  openGraph: {
-    type: 'website',
-    locale: 'es_CO',
-    url: 'https://pomeloves.com',
-    title: 'POMELOVE KOREA - Pomerania Medellín | Criadores de Pomerania en Medellín',
-    description: 'Criadores especializados de Pomerania en Medellín con 15+ años de experiencia. Importamos líneas exclusivas de Pomerania Coreano.',
-    siteName: 'POMELOVE KOREA',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'POMELOVE KOREA - Pomerania de Alta Calidad',
-      },
-      {
-        url: '/logo.png',
-        width: 512,
-        height: 512,
-        alt: 'POMELOVE KOREA Logo',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'POMELOVE KOREA - Pomerania Medellín | Criadores de Pomerania en Medellín',
-    description: 'Criadores especializados de Pomerania en Medellín con 15+ años de experiencia.',
-    images: ['/og-image.jpg', '/logo.png'],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  verification: {
-    google: 'your-google-verification-code', // Add your Google Search Console verification code
-  },
-};
+async function getDefaultDictionary() {
+  try {
+    const dict = await import('@/dictionaries/es.json');
+    return dict.default;
+  } catch {
+    // Fallback to English if Spanish is not available
+    const dict = await import('@/dictionaries/en.json');
+    return dict.default;
+  }
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const dict = await getDefaultDictionary();
+
+  return generatePageMetadata({
+    dict,
+    page: 'home',
+    locale: 'es',
+  });
+}
 
 export default function RootLayout({
   children,

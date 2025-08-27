@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { getPuppyDetailAction } from '@/actions/puppyActions';
 import PuppyDetailComponent from '@/components/puppy/PuppyDetailComponent';
 import { getLocalizedDescription } from '@/lib/utils/getLocalizedDescription';
-import { generatePuppyMetadataFromDict } from '@/lib/utils/metadataUtils';
+import { generateMetadata as generatePageMetadata } from '@/lib/utils/metadataUtils';
 
 async function getDictionary(locale: string) {
   try {
@@ -39,12 +39,16 @@ export async function generateMetadata({
   const description =
     getLocalizedDescription(puppy, locale).substring(0, 150) + '...';
 
-  return generatePuppyMetadataFromDict(
-    dict.metadata.puppy,
-    puppy,
+  return generatePageMetadata({
+    dict,
+    page: 'puppy',
+    puppyData: {
+      name: puppy.name,
+      category: puppy.category?.name,
+      description: description,
+    },
     locale,
-    description
-  );
+  });
 }
 
 export default async function PuppyDetailPage({

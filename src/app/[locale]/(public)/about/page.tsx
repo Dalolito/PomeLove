@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import AboutUsContentComponent from '@/components/about/AboutUsContentComponent';
-import { generateMetadataFromDict } from '@/lib/utils/metadataUtils';
+import { generateMetadata as generatePageMetadata } from '@/lib/utils/metadataUtils';
 
 async function getDictionary(locale: string) {
   try {
@@ -23,7 +23,11 @@ export async function generateMetadata({
   const { locale } = await params;
   const dict = await getDictionary(locale);
 
-  return generateMetadataFromDict(dict.metadata.about, locale);
+  return generatePageMetadata({
+    dict,
+    page: 'about',
+    locale,
+  });
 }
 
 export default async function AboutPage({ params }: AboutPageProps) {
