@@ -6,12 +6,10 @@ import AboutUsMediaCarouselComponent from './AboutUsMediaCarouselComponent';
 
 interface AboutUsBreedingProps {
   dict: Dictionary;
-  locale: string;
 }
 
 export default function AboutUsBreedingComponent({
   dict,
-  locale,
 }: AboutUsBreedingProps) {
   const features = [
     {

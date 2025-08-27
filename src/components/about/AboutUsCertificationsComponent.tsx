@@ -4,12 +4,10 @@ import { Dictionary } from '@/lib/types/dictionary';
 
 interface AboutUsCertificationsProps {
   dict: Dictionary;
-  locale: string;
 }
 
 export default function AboutUsCertificationsComponent({
   dict,
-  locale,
 }: AboutUsCertificationsProps) {
   const certifications = [
     {

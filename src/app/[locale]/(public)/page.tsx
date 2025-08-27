@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import PuppyAvailableListComponent from '@/components/puppy/PuppyAvailableListComponent';
 import PuppyCardSkeletonComponent from '@/components/puppy/PuppyCardSkeletonComponent';
 import PrimaryButtonComponent from '@/components/ui/PrimaryButtonComponent';
@@ -154,9 +155,11 @@ export default function HomePage({
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-8 py-4 text-lg font-medium text-red-500 shadow-lg transition-all hover:scale-105 hover:bg-gray-100 hover:shadow-xl active:scale-95"
               >
-                <img
+                <Image
                   src="/icons/icon-whatsapp.png"
                   alt="WhatsApp"
+                  width={40}
+                  height={40}
                   className="h-10 w-10"
                 />
                 {dict.home.whatsappText}
@@ -168,9 +171,11 @@ export default function HomePage({
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-8 py-4 text-lg font-medium text-red-500 shadow-lg transition-all hover:scale-105 hover:bg-gray-100 hover:shadow-xl active:scale-95"
               >
-                <img
+                <Image
                   src="/icons/icon-instagram.png"
                   alt="Instagram"
+                  width={40}
+                  height={40}
                   className="h-10 w-10"
                 />
                 {dict.home.instagramText}

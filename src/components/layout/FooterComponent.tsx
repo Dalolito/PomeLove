@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { Dictionary } from '@/lib/types/dictionary';
 import WhatsAppContactButton from '@/components/layout/WhatsAppContactButton';
 
@@ -83,15 +84,19 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
                   title={contact.name}
                 >
                   {contact.name === 'Instagram' ? (
-                    <img
+                    <Image
                       src="/icons/icon-instagram.png"
                       alt="Instagram"
+                      width={20}
+                      height={20}
                       className="h-5 w-5"
                     />
                   ) : contact.name === 'Facebook' ? (
-                    <img
+                    <Image
                       src="/icons/icon-facebook.png"
                       alt="Facebook"
+                      width={20}
+                      height={20}
                       className="h-5 w-5"
                     />
                   ) : (
@@ -104,9 +109,11 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
 
               {/* WhatsApp button - client component */}
               <WhatsAppContactButton dict={dict}>
-                <img
+                <Image
                   src="/icons/icon-whatsapp.png"
                   alt="WhatsApp"
+                  width={20}
+                  height={20}
                   className="h-5 w-5"
                 />
               </WhatsAppContactButton>
@@ -115,9 +122,11 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
             {/* Contact info */}
             <div className="space-y-2 text-sm text-slate-300">
               <p className="flex items-center gap-2">
-                <img
+                <Image
                   src="/icons/icon-whatsapp.png"
                   alt="WhatsApp"
+                  width={16}
+                  height={16}
                   className="h-4 w-4"
                 />
                 <a

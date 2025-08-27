@@ -23,11 +23,11 @@ export default function AboutUsContentComponent({
   return (
     <div className="w-full">
       <AboutUsHeroSectionComponent dict={dict} locale={locale} />
-      <AboutUsHappyClientsComponent dict={dict} locale={locale} />
-      <AboutUsExperienceComponent dict={dict} locale={locale} />
-      <AboutUsBreedingComponent dict={dict} locale={locale} />
-      <AboutUsCertificationsComponent dict={dict} locale={locale} />
-      <AboutUsExportsComponent dict={dict} locale={locale} />
+              <AboutUsHappyClientsComponent dict={dict} />
+              <AboutUsExperienceComponent dict={dict} />
+              <AboutUsBreedingComponent dict={dict} />
+              <AboutUsCertificationsComponent dict={dict} />
+              <AboutUsExportsComponent dict={dict} />
     </div>
   );
 }

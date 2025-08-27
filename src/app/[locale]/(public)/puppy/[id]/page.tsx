@@ -1,9 +1,9 @@
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 import { getPuppyDetailAction } from '@/actions/puppyActions';
 import PuppyDetailComponent from '@/components/puppy/PuppyDetailComponent';
 import { getLocalizedDescription } from '@/lib/utils/getLocalizedDescription';
 import { generatePuppyMetadataFromDict } from '@/lib/utils/metadataUtils';
-import type { Metadata } from 'next/types';
 
 async function getDictionary(locale: string) {
   try {

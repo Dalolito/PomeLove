@@ -9,7 +9,7 @@ import AdminFormParentsComponent from '@/components/admin/forms/AdminFormParents
 import AdminFormUploadMediaComponent from '@/components/admin/forms/AdminFormUploadMediaComponent';
 import AdminFormActionButtonsComponent from '@/components/admin/forms/AdminFormActionButtonsComponent';
 import { updatePuppyAction } from '@/actions/puppyActions';
-import { getLocalizedDescription } from '@/lib/utils/getLocalizedDescription';
+
 
 interface AdminEditFormComponentProps {
   puppy: Puppy;

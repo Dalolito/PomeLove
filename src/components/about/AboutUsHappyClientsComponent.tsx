@@ -7,12 +7,10 @@ import { aboutMedia } from '@/lib/data/aboutMedia';
 
 interface AboutUsHappyClientsProps {
   dict: Dictionary;
-  locale: string;
 }
 
 export default function AboutUsHappyClientsComponent({
   dict,
-  locale,
 }: AboutUsHappyClientsProps) {
   const clientsStats = [
     {

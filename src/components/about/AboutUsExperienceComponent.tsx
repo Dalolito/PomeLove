@@ -6,12 +6,10 @@ import AboutUsMediaCarouselComponent from './AboutUsMediaCarouselComponent';
 
 interface AboutUsExperienceProps {
   dict: Dictionary;
-  locale: string;
 }
 
 export default function AboutUsExperienceComponent({
   dict,
-  locale,
 }: AboutUsExperienceProps) {
   const timelineItems = [
     {

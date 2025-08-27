@@ -11,9 +11,6 @@ interface AdminPuppiesTableButtonsProps {
   puppyName: string;
   dict: Dictionary;
   locale: string;
-  onView?: (id: string) => void;
-  onEdit?: (id: string) => void;
-  onDelete?: (id: string) => void;
   isDeleting?: boolean;
   className?: string;
 }
@@ -23,9 +20,7 @@ export default function AdminPuppiesTableButtonsComponent({
   puppyName,
   dict,
   locale,
-  onView,
-  onEdit,
-  onDelete,
+
   isDeleting = false,
   className = '',
 }: AdminPuppiesTableButtonsProps) {

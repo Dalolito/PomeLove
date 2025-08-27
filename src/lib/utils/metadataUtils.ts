@@ -17,7 +17,7 @@ export function generateMetadataFromDict(
   locale: string
 ): Metadata {
   const isSpanish = locale === 'es';
-
+  
   return {
     title: config.title,
     description: config.description,
@@ -30,8 +30,8 @@ export function generateMetadataFromDict(
     alternates: {
       canonical: `/${locale}`,
       languages: {
-        es: '/es',
-        en: '/en',
+        'es': '/es',
+        'en': '/en',
       },
     },
   };
@@ -44,15 +44,15 @@ export function generatePuppyMetadataFromDict(
   description: string
 ): Metadata {
   const isSpanish = locale === 'es';
-
+  
   const title = config.titleTemplate
     .replace('{name}', puppy.name)
     .replace('{category}', puppy.category.name);
-
+    
   const metaDescription = config.descriptionTemplate
     .replace('{category}', puppy.category.name)
     .replace('{description}', description);
-
+    
   const keywords = config.keywordsTemplate
     .replace('{name}', puppy.name)
     .replace('{category}', puppy.category.name.toLowerCase());
@@ -77,8 +77,8 @@ export function generatePuppyMetadataFromDict(
     alternates: {
       canonical: `/${locale}/puppy/${puppy.id}`,
       languages: {
-        es: `/es/puppy/${puppy.id}`,
-        en: `/en/puppy/${puppy.id}`,
+        'es': `/es/puppy/${puppy.id}`,
+        'en': `/en/puppy/${puppy.id}`,
       },
     },
   };

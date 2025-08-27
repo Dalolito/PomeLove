@@ -12,7 +12,6 @@ interface SingleImageUploadProps {
   value: MediaFile | null;
   onChange: (file: MediaFile | null) => void;
   dict: Dictionary;
-  maxFileSize?: number;
   className?: string;
   uploadType?: 'puppies' | 'parents';
 }
@@ -23,7 +22,7 @@ export default function AdminFormSingleImageUploadComponent({
   value,
   onChange,
   dict,
-  maxFileSize: _maxFileSize = 5,
+
   className = '',
   uploadType = 'puppies',
 }: SingleImageUploadProps) {

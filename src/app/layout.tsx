@@ -1,7 +1,7 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
 import type { Metadata } from 'next';
-import { generateOrganizationSchema } from '@/lib/structuredData';
+
 
 const inter = Inter({
   subsets: ['latin'],
@@ -10,13 +10,11 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: 'POMELOVE KOREA - Pomerania de Alta Calidad',
+    default: 'POMELOVE KOREA - Pomerania Medellín | Criadores de Pomerania en Medellín',
     template: '%s | POMELOVE KOREA',
   },
-  description:
-    'Criadores especializados de Pomerania con 15+ años de experiencia. Importamos líneas exclusivas de Pomerania Coreano de la más alta calidad.',
-  keywords:
-    'pomerania, pomeranian, cachorros pomerania, pomerania coreano, criadores pomerania, venta pomerania, pomerania medellin',
+  description: 'Criadores especializados de Pomerania en Medellín con 15+ años de experiencia. Importamos líneas exclusivas de Pomerania Coreano de la más alta calidad. Pomerania Medellín, Pomerania Colombia. Encuentra tu compañero perfecto.',
+  keywords: 'pomerania medellin, pomerania, pomeranian, cachorros pomerania medellin, pomerania coreano, criadores pomerania medellin, venta pomerania medellin, pomerania colombia, pomerania antioquia',
   authors: [{ name: 'POMELOVE KOREA' }],
   creator: 'POMELOVE KOREA',
   publisher: 'POMELOVE KOREA',
@@ -33,13 +31,19 @@ export const metadata: Metadata = {
       en: '/en',
     },
   },
+  icons: {
+    icon: '/logo.png',
+    shortcut: '/logo.png',
+    apple: '/logo.png',
+  },
+  manifest: '/manifest.json',
+  themeColor: '#ffffff',
   openGraph: {
     type: 'website',
     locale: 'es_CO',
     url: 'https://pomeloves.com',
-    title: 'POMELOVE KOREA - Pomerania de Alta Calidad',
-    description:
-      'Criadores especializados de Pomerania con 15+ años de experiencia. Importamos líneas exclusivas de Pomerania Coreano.',
+    title: 'POMELOVE KOREA - Pomerania Medellín | Criadores de Pomerania en Medellín',
+    description: 'Criadores especializados de Pomerania en Medellín con 15+ años de experiencia. Importamos líneas exclusivas de Pomerania Coreano.',
     siteName: 'POMELOVE KOREA',
     images: [
       {
@@ -58,9 +62,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'POMELOVE KOREA - Pomerania de Alta Calidad',
-    description:
-      'Criadores especializados de Pomerania con 15+ años de experiencia.',
+    title: 'POMELOVE KOREA - Pomerania Medellín | Criadores de Pomerania en Medellín',
+    description: 'Criadores especializados de Pomerania en Medellín con 15+ años de experiencia.',
     images: ['/og-image.jpg', '/logo.png'],
   },
   robots: {
@@ -87,12 +90,6 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/logo.png" />
-        <link rel="shortcut icon" href="/logo.png" />
-        <link rel="apple-touch-icon" href="/logo.png" />
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#ffffff" />
-
         {/* Google Analytics */}
         <script
           async
@@ -109,14 +106,6 @@ export default function RootLayout({
                 page_location: window.location.href,
               });
             `,
-          }}
-        />
-
-        {/* Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generateOrganizationSchema()),
           }}
         />
       </head>

@@ -4,12 +4,10 @@ import { Dictionary } from '@/lib/types/dictionary';
 
 interface AboutUsExportsProps {
   dict: Dictionary;
-  locale: string;
 }
 
 export default function AboutUsExportsComponent({
   dict,
-  locale,
 }: AboutUsExportsProps) {
   const exportProcess = [
     {

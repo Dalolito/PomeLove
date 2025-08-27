@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
+import type { Metadata } from 'next';
 import AboutUsContentComponent from '@/components/about/AboutUsContentComponent';
 import { generateMetadataFromDict } from '@/lib/utils/metadataUtils';
-import type { Metadata } from 'next';
 
 async function getDictionary(locale: string) {
   try {
