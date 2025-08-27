@@ -91,6 +91,8 @@ export default function AdminFormBasicInfoComponent({
           label={`${dict.admin.forms.fields.description} (Español)`}
           placeholder={dict.admin.forms.placeholders.description}
           required
+          maxLength={1000}
+          showCharCount={true}
         />
 
         <FormTextareaComponent
@@ -99,6 +101,8 @@ export default function AdminFormBasicInfoComponent({
           label={`${dict.admin.forms.fields.description} (English)`}
           placeholder={dict.admin.forms.placeholders.description}
           required
+          maxLength={1000}
+          showCharCount={true}
         />
       </div>
     </div>

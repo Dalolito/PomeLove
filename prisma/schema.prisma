@@ -9,7 +9,7 @@ datasource db {
 
 model Category {
   id        Int      @id @default(autoincrement())
-  name      String
+  name      String   @db.VarChar(255)
   minPriceCOP Float  @default(0)
   minPriceUSD Float  @default(0)
   puppies   Puppy[]
@@ -19,14 +19,14 @@ model Category {
 
 model Puppy {
   id              Int      @id @default(autoincrement())
-  name            String
-  description_es  String   @default("")
-  description_en  String   @default("")
+  name            String   @db.VarChar(255)
+  description_es  String   @db.VarChar(1000)
+  description_en  String   @db.VarChar(1000)
   birthDate       DateTime
-  gender          String   @default("male") 
+  gender          String   @db.VarChar(10) @default("male") 
   categoryId      Int
-  fatherImage     String?
-  motherImage     String?
+  fatherImage     String?  @db.VarChar(500)
+  motherImage     String?  @db.VarChar(500)
   available       Boolean  @default(true)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
@@ -39,8 +39,8 @@ model Puppy {
 model PuppyMedia {
   id        Int      @id @default(autoincrement())
   puppyId   Int
-  mediaUrl  String
-  mediaType String
+  mediaUrl  String   @db.VarChar(500)
+  mediaType String   @db.VarChar(50)
   createdAt DateTime @default(now())
   puppy     Puppy    @relation(fields: [puppyId], references: [id], onDelete: Cascade)
 

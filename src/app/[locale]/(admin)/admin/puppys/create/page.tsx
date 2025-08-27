@@ -21,7 +21,6 @@ export default async function CreatePuppyPage({
   const { locale } = await params;
   const dict = await getDictionary(locale);
 
-  // Fetch categories for the form
   const categoriesResult = await getAllCategoriesAction();
   const categories = categoriesResult.success ? categoriesResult.data : [];
 

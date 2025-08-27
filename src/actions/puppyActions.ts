@@ -15,12 +15,18 @@ import { revalidatePath } from 'next/cache';
 
 export async function createPuppyAction(data: CreatePuppyData) {
   try {
+    if (data.description_es && data.description_es.length > 1000) {
+      return { success: false, error: 'DESCRIPTION_ES_TOO_LONG' };
+    }
+    if (data.description_en && data.description_en.length > 1000) {
+      return { success: false, error: 'DESCRIPTION_EN_TOO_LONG' };
+    }
+
     const uploadedMedia = data.media.filter(file => file.isUploaded);
     const puppyData = { ...data, media: uploadedMedia };
 
     const puppy = await createPuppyUseCase.execute(puppyData);
 
-    // Revalidar las páginas afectadas
     revalidatePath('/[locale]/admin/puppys', 'page');
 
     return { success: true, data: puppy };
@@ -32,9 +38,15 @@ export async function createPuppyAction(data: CreatePuppyData) {
 
 export async function updatePuppyAction(id: string, data: UpdatePuppyData) {
   try {
+    if (data.description_es && data.description_es.length > 1000) {
+      return { success: false, error: 'DESCRIPTION_ES_TOO_LONG' };
+    }
+    if (data.description_en && data.description_en.length > 1000) {
+      return { success: false, error: 'DESCRIPTION_EN_TOO_LONG' };
+    }
+
     let processedData = { ...data };
 
-    // Procesar media si existe
     if (data.media) {
       const uploadedMedia = data.media.filter(file => file.isUploaded);
       processedData = { ...processedData, media: uploadedMedia };
@@ -45,7 +57,6 @@ export async function updatePuppyAction(id: string, data: UpdatePuppyData) {
       ...processedData,
     });
 
-    // Revalidar las páginas afectadas
     revalidatePath('/[locale]/admin/puppys', 'page');
     revalidatePath(`/[locale]/admin/puppys/${id}`, 'page');
     revalidatePath(`/[locale]/admin/puppys/${id}/edit`, 'page');
@@ -70,16 +81,6 @@ export async function getPuppyByIdAction(id: string) {
 export async function getAllPuppiesAction() {
   try {
     const result = await getAllPuppiesUseCase.execute();
-
-    console.log('getAllPuppiesAction - Success:', result.success);
-    console.log('getAllPuppiesAction - Puppies count:', result.puppies?.length);
-    if (result.puppies && result.puppies.length > 0) {
-      console.log(
-        'getAllPuppiesAction - Sample puppy media:',
-        result.puppies[0].media
-      );
-    }
-
     return result;
   } catch (error) {
     console.error('Error getting all puppies:', error);

@@ -26,7 +26,6 @@ type ProcessResult = {
 
 export class MediaUploadUseCase {
   validateFile(file: File, config: UploadConfig): ValidationResult {
-    // Check file size
     if (file.size > config.maxFileSize * 1024 * 1024) {
       return {
         isValid: false,
@@ -34,7 +33,6 @@ export class MediaUploadUseCase {
       };
     }
 
-    // Check file type
     const isValidType = config.acceptedTypes.some(type => {
       if (type === 'image/*') return file.type.startsWith('image/');
       if (type === 'video/*') return file.type.startsWith('video/');
@@ -60,20 +58,17 @@ export class MediaUploadUseCase {
     const errors: string[] = [];
 
     Array.from(fileList).forEach(file => {
-      // Check max files limit
       if (currentFiles.length + newFiles.length >= config.maxFiles) {
         errors.push(`Maximum ${config.maxFiles} files allowed`);
         return;
       }
 
-      // Validate file
       const validation = this.validateFile(file, config);
       if (!validation.isValid) {
         errors.push(`${file.name}: ${validation.error}`);
         return;
       }
 
-      // Create media file
       const mediaFile = this.createMediaFile(file);
       newFiles.push(mediaFile);
     });

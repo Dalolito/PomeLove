@@ -1,5 +1,3 @@
-// src/application/useCases/admin/GetPuppyByIdUseCase.ts
-
 import { PuppyRepository } from '@/domain/repositories/PuppyRepository';
 import { Puppy } from '@/domain/entities/Puppy';
 

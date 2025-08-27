@@ -137,9 +137,7 @@ export default function AboutUsMediaCarouselComponent({
       }
     };
 
-    const handleVideoLoadedData = () => {
-      // Video data loaded
-    };
+    const handleVideoLoadedData = () => {};
 
     const handleVideoPause = () => {
       setIsVideoPlaying(false);

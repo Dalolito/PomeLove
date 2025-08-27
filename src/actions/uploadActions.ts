@@ -39,17 +39,14 @@ export async function uploadMediaAction(
       return { success: false, error: 'FILE_TOO_LARGE' };
     }
 
-    // Convert file to buffer
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Generate unique filename
     const timestamp = Date.now();
     const random = Math.random().toString(36).substring(2, 15);
     const extension = file.name.split('.').pop();
     const filename = `${timestamp}_${random}`;
 
-    // Upload to Cloudinary
     const uploadType = (formData.get('type') as string) || 'puppies';
     const folder =
       uploadType === 'parents' ? 'pomelove/parents' : 'pomelove/puppies';

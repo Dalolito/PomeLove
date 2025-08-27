@@ -26,7 +26,6 @@ export function useSingleImageUpload({
 
   const validateFile = useCallback(
     (file: File): string | null => {
-      // Validar tamaño
       if (file.size > maxFileSize * 1024 * 1024) {
         return dict.admin.media.upload.errors.fileSize.replace(
           '{size}',
@@ -34,7 +33,6 @@ export function useSingleImageUpload({
         );
       }
 
-      // Validar tipo
       if (!file.type.startsWith('image/')) {
         return dict.admin.media.upload.errors.fileType;
       }
@@ -46,7 +44,6 @@ export function useSingleImageUpload({
 
   const handleFileUpload = useCallback(
     async (file: File): Promise<MediaFile | null> => {
-      // Validar archivo
       const validationError = validateFile(file);
       if (validationError) {
         setError(validationError);

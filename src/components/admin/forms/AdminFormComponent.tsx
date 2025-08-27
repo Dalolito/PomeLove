@@ -102,12 +102,20 @@ export default function AdminFormComponent({
       if (result.success) {
         router.push(`/${locale}/admin/puppys`);
       } else {
-        const errorKey = result.error as keyof typeof dict.admin.forms.errors;
-        setError(
-          dict.admin.forms.errors?.[errorKey] ||
-            dict.admin.forms.errors?.createFailed ||
-            'Error creating pet'
-        );
+        let errorMessage = 'Error creating pet';
+
+        if (result.error === 'DESCRIPTION_ES_TOO_LONG') {
+          errorMessage =
+            'La descripción en español excede los 1000 caracteres permitidos';
+        } else if (result.error === 'DESCRIPTION_EN_TOO_LONG') {
+          errorMessage =
+            'La descripción en inglés excede los 1000 caracteres permitidos';
+        } else {
+          const errorKey = result.error as keyof typeof dict.admin.forms.errors;
+          errorMessage = dict.admin.forms.errors?.[errorKey] || errorMessage;
+        }
+
+        setError(errorMessage);
       }
     } catch {
       setError(dict.admin.forms.errors?.createFailed || 'Error creating pet');
