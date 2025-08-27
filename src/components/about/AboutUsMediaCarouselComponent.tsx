@@ -30,7 +30,21 @@ export default function AboutUsMediaCarouselComponent({
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(
+        window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent)
+      );
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const nextSlide = useCallback(() => {
     setCurrentIndex(prevIndex =>
@@ -55,41 +69,99 @@ export default function AboutUsMediaCarouselComponent({
   }, []);
 
   useEffect(() => {
-    if (!isPlaying || media.length <= 1) return;
+    if (!isPlaying || media.length <= 1) {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+      return;
+    }
 
-    const interval = setInterval(nextSlide, 4000);
-    return () => clearInterval(interval);
-  }, [isPlaying, nextSlide, media.length]);
+    const currentMediaItem = media[currentIndex];
+    if (!currentMediaItem) return;
+
+    let slideDelay = 4000;
+
+    if (currentMediaItem.type === 'video') {
+      slideDelay = isMobile ? 8000 : 6000;
+    }
+
+    intervalRef.current = setTimeout(nextSlide, slideDelay);
+
+    return () => {
+      if (intervalRef.current) {
+        clearTimeout(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [isPlaying, nextSlide, media.length, currentIndex, media, isMobile]);
 
   useEffect(() => {
     const currentVideo = videoRef.current;
     const currentMediaItem = media[currentIndex];
+
     if (!currentVideo || currentMediaItem?.type !== 'video') return;
 
     const handleVideoPlay = () => {
-      setIsPlaying(false);
+      setVideoLoaded(true);
     };
 
     const handleVideoPause = () => {
-      setIsPlaying(autoPlay);
+      if (currentVideo.currentTime < currentVideo.duration - 0.1) {
+        setIsPlaying(autoPlay);
+      }
+    };
+
+    const handleVideoEnded = () => {
+      if (isPlaying) {
+        nextSlide();
+      }
     };
 
     const handleVideoCanPlay = () => {
-      currentVideo.play().catch(() => {
-        console.log('Auto-play prevented by browser');
-      });
+      setVideoLoaded(true);
+
+      if (isMobile) {
+        currentVideo.muted = true;
+        currentVideo.playsInline = true;
+
+        setTimeout(() => {
+          currentVideo.play().catch(() => {
+            console.log('Autoplay prevented by browser - mobile');
+          });
+        }, 100);
+      } else {
+        currentVideo.play().catch(() => {
+          console.log('Autoplay prevented by browser - desktop');
+        });
+      }
+    };
+
+    const handleVideoLoadStart = () => {
+      setVideoLoaded(false);
+    };
+
+    const handleVideoError = () => {
+      console.error('Video error for:', currentMediaItem.url);
+      setVideoLoaded(true);
     };
 
     currentVideo.addEventListener('play', handleVideoPlay);
     currentVideo.addEventListener('pause', handleVideoPause);
+    currentVideo.addEventListener('ended', handleVideoEnded);
     currentVideo.addEventListener('canplay', handleVideoCanPlay);
+    currentVideo.addEventListener('loadstart', handleVideoLoadStart);
+    currentVideo.addEventListener('error', handleVideoError);
 
     return () => {
       currentVideo.removeEventListener('play', handleVideoPlay);
       currentVideo.removeEventListener('pause', handleVideoPause);
+      currentVideo.removeEventListener('ended', handleVideoEnded);
       currentVideo.removeEventListener('canplay', handleVideoCanPlay);
+      currentVideo.removeEventListener('loadstart', handleVideoLoadStart);
+      currentVideo.removeEventListener('error', handleVideoError);
     };
-  }, [currentIndex, media, autoPlay]);
+  }, [currentIndex, media, autoPlay, nextSlide, isPlaying, isMobile]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     e.preventDefault();
@@ -131,9 +203,25 @@ export default function AboutUsMediaCarouselComponent({
   };
 
   const handleVideoClick = () => {
-    if (currentItem?.type === 'video') {
+    if (currentItem?.type === 'video' && videoRef.current) {
+      const video = videoRef.current;
+      if (video.paused) {
+        video.play().catch(console.log);
+      } else {
+        video.pause();
+      }
+    }
+  };
+
+  const handleMouseEnter = () => {
+    if (!isMobile) {
       setIsPlaying(false);
-      setTimeout(() => setIsPlaying(autoPlay), 3000);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (!isMobile) {
+      setIsPlaying(autoPlay);
     }
   };
 
@@ -167,13 +255,12 @@ export default function AboutUsMediaCarouselComponent({
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        onMouseEnter={() => setIsPlaying(false)}
-        onMouseLeave={() => setIsPlaying(autoPlay)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         <div className="relative flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-200 via-gray-100 to-gray-50">
           {currentItem?.type === 'video' ? (
             <>
-              {/* Loading indicator for videos */}
               {!videoLoaded && (
                 <div className="absolute inset-0 z-20 flex items-center justify-center bg-gray-200">
                   <div className="h-8 w-8 animate-spin rounded-full border-4 border-red-500 border-t-transparent"></div>
@@ -182,14 +269,15 @@ export default function AboutUsMediaCarouselComponent({
 
               <video
                 ref={videoRef}
-                key={currentItem.id}
-                autoPlay
-                muted
+                key={`${currentItem.id}-${currentIndex}`}
+                autoPlay={!isMobile}
+                muted={true}
                 loop
-                playsInline
+                playsInline={true}
                 preload="auto"
                 disablePictureInPicture
                 controlsList="nodownload nofullscreen noremoteplayback"
+                controls={false}
                 className={`h-full w-full object-contain transition-opacity duration-300 ${
                   videoLoaded ? 'opacity-100' : 'opacity-0'
                 }`}
@@ -197,10 +285,10 @@ export default function AboutUsMediaCarouselComponent({
                 onError={handleVideoError}
                 onCanPlay={handleVideoLoad}
                 onClick={handleVideoClick}
-                style={{ 
-                  pointerEvents: 'none',
+                style={{
+                  pointerEvents: isMobile ? 'auto' : 'none',
                   WebkitUserSelect: 'none',
-                  userSelect: 'none'
+                  userSelect: 'none',
                 }}
               >
                 <source
@@ -213,6 +301,24 @@ export default function AboutUsMediaCarouselComponent({
                 />
                 Tu navegador no soporta videos.
               </video>
+
+              {isMobile && (
+                <button
+                  className="absolute inset-0 z-30 flex items-center justify-center bg-black bg-opacity-20 opacity-0 transition-opacity duration-300 hover:opacity-100"
+                  onClick={handleVideoClick}
+                  aria-label="Play/Pause video"
+                >
+                  <div className="rounded-full bg-white bg-opacity-80 p-3">
+                    <svg
+                      className="h-8 w-8 text-gray-800"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M8 5v10l8-5-8-5z" />
+                    </svg>
+                  </div>
+                </button>
+              )}
             </>
           ) : (
             <>
@@ -240,19 +346,62 @@ export default function AboutUsMediaCarouselComponent({
 
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
 
-        {/* Touch areas for mobile navigation - only show on mobile */}
-        {media.length > 1 && (
+        {media.length > 1 && isMobile && (
           <>
             <div
-              className="absolute left-0 top-0 z-10 h-full w-1/3 cursor-pointer md:w-1/2"
+              className="absolute left-0 top-0 z-10 h-full w-1/3 cursor-pointer"
               onClick={prevSlide}
               aria-label="Anterior"
             />
             <div
-              className="absolute right-0 top-0 z-10 h-full w-1/3 cursor-pointer md:w-1/2"
+              className="absolute right-0 top-0 z-10 h-full w-1/3 cursor-pointer"
               onClick={nextSlide}
               aria-label="Siguiente"
             />
+          </>
+        )}
+
+        {media.length > 1 && !isMobile && (
+          <>
+            <button
+              onClick={prevSlide}
+              className="absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white bg-opacity-70 p-2 text-gray-800 opacity-0 shadow-lg transition-all duration-300 hover:bg-opacity-90 group-hover:opacity-100"
+              aria-label="Previous"
+            >
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+
+            <button
+              onClick={nextSlide}
+              className="absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white bg-opacity-70 p-2 text-gray-800 opacity-0 shadow-lg transition-all duration-300 hover:bg-opacity-90 group-hover:opacity-100"
+              aria-label="Next"
+            >
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
           </>
         )}
       </div>
