@@ -74,12 +74,20 @@ export default function AboutUsMediaCarouselComponent({
       setIsPlaying(autoPlay);
     };
 
+    const handleVideoCanPlay = () => {
+      currentVideo.play().catch(() => {
+        console.log('Auto-play prevented by browser');
+      });
+    };
+
     currentVideo.addEventListener('play', handleVideoPlay);
     currentVideo.addEventListener('pause', handleVideoPause);
+    currentVideo.addEventListener('canplay', handleVideoCanPlay);
 
     return () => {
       currentVideo.removeEventListener('play', handleVideoPlay);
       currentVideo.removeEventListener('pause', handleVideoPause);
+      currentVideo.removeEventListener('canplay', handleVideoCanPlay);
     };
   }, [currentIndex, media, autoPlay]);
 
@@ -179,7 +187,7 @@ export default function AboutUsMediaCarouselComponent({
                 muted
                 loop
                 playsInline
-                preload="metadata"
+                preload="auto"
                 disablePictureInPicture
                 controlsList="nodownload nofullscreen noremoteplayback"
                 className={`h-full w-full object-contain transition-opacity duration-300 ${
@@ -189,6 +197,11 @@ export default function AboutUsMediaCarouselComponent({
                 onError={handleVideoError}
                 onCanPlay={handleVideoLoad}
                 onClick={handleVideoClick}
+                style={{ 
+                  pointerEvents: 'none',
+                  WebkitUserSelect: 'none',
+                  userSelect: 'none'
+                }}
               >
                 <source
                   src={
