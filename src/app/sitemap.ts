@@ -1,16 +1,9 @@
 import { MetadataRoute } from 'next';
-import { prisma } from '@/lib/databaseConnection';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://pomeloves.com';
 
-  // Get all puppies for dynamic routes
-  const puppies = await prisma.puppy.findMany({
-    where: { available: true },
-    select: { id: true, updatedAt: true },
-  });
-
-  // Static pages
+  // Static pages only - dynamic pages will be discovered by Google
   const staticPages = [
     {
       url: baseUrl,
@@ -56,20 +49,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // Dynamic puppy pages
-  const puppyPages = puppies.map(puppy => ({
-    url: `${baseUrl}/es/puppy/${puppy.id}`,
-    lastModified: puppy.updatedAt,
-    changeFrequency: 'weekly' as const,
-    priority: 0.7,
-  }));
-
-  const puppyPagesEn = puppies.map(puppy => ({
-    url: `${baseUrl}/en/puppy/${puppy.id}`,
-    lastModified: puppy.updatedAt,
-    changeFrequency: 'weekly' as const,
-    priority: 0.7,
-  }));
-
-  return [...staticPages, ...puppyPages, ...puppyPagesEn];
+  return staticPages;
 }
