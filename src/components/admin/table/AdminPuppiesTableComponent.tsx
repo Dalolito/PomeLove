@@ -119,7 +119,7 @@ export default function AdminPuppiesTableComponent({
                   {dict.admin.table.headers.gender}
                 </th>
                 <th className="hidden px-2 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:px-4 md:table-cell">
-                  {dict.admin.table.headers.birthDate}
+                  {dict.admin.table.headers.age}
                 </th>
                 <th className="hidden px-2 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:px-4 lg:table-cell">
                   {dict.admin.table.headers.description}

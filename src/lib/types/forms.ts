@@ -3,7 +3,8 @@ import { MediaFile } from '@/application/useCases/utils/MediaUploadUseCase';
 export interface FormData {
   name: string;
   description: string;
-  birthDate: string;
+  ageYears: number;
+  ageMonths: number;
   categoryId: string;
   media: MediaFile[];
   fatherImage: MediaFile | null;
@@ -13,7 +14,8 @@ export interface FormData {
 export interface BasicInfoData {
   name: string;
   description: string;
-  birthDate: string;
+  ageYears: number;
+  ageMonths: number;
   categoryId: string;
 }
 

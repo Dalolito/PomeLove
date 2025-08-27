@@ -1,6 +1,6 @@
 import { Puppy } from '@/domain/entities/Puppy';
 import { Dictionary } from '@/lib/types/dictionary';
-import { calculatePuppyAgeUtil } from '@/lib/utils/calculatePuppyAgeUtil';
+import { formatAge } from '@/lib/utils/formatAgeUtil';
 import { getLocalizedDescription } from '@/lib/utils/getLocalizedDescription';
 
 interface PuppyDetailInfoComponentProps {
@@ -27,7 +27,7 @@ export default function PuppyDetailInfoComponent({
     );
   };
 
-  const age = calculatePuppyAgeUtil(puppy.birthDate, dict);
+  const age = formatAge(puppy.ageYears, puppy.ageMonths, dict);
 
   return (
     <div
@@ -70,9 +70,9 @@ export default function PuppyDetailInfoComponent({
 
         <div className="flex items-center justify-between">
           <span className="font-medium text-gray-700">
-            {dict.admin.table.headers.birthDate}:
+            {dict.admin.table.headers.age}:
           </span>
-          <span className="text-gray-900">{formatDate(puppy.birthDate)}</span>
+          <span className="text-gray-900">{age}</span>
         </div>
 
         <div className="flex items-center justify-between">

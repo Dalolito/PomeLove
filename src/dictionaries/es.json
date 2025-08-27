@@ -110,7 +110,8 @@
       "fields": {
         "name": "Nombre",
         "description": "Descripción",
-        "birthDate": "Fecha de Nacimiento",
+        "ageYears": "Años",
+        "ageMonths": "Meses",
         "gender": "Género",
         "category": "Categoría",
         "fatherImage": "Imagen del Padre",
@@ -123,6 +124,8 @@
       "placeholders": {
         "name": "Ingresa el nombre del cachorro",
         "description": "Describe las características del cachorro",
+        "ageYears": "Años de edad",
+        "ageMonths": "Meses adicionales",
         "gender": "Selecciona el género",
         "category": "Selecciona una categoría"
       },
@@ -237,7 +240,7 @@
         "age": "Edad",
         "category": "Categoría",
         "gender": "Género",
-        "birthDate": "Fecha Nacimiento",
+        "age": "Edad",
         "description": "Descripción",
         "available": "Disponible",
         "actions": "Acciones"

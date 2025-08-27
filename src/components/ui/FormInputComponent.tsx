@@ -8,6 +8,8 @@ interface FormInputProps {
   required?: boolean;
   disabled?: boolean;
   className?: string;
+  min?: string;
+  max?: string;
 }
 
 export default function FormInputComponent({
@@ -20,6 +22,8 @@ export default function FormInputComponent({
   required = false,
   disabled = false,
   className = '',
+  min,
+  max,
 }: FormInputProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
@@ -41,6 +45,8 @@ export default function FormInputComponent({
         required={required}
         disabled={disabled}
         className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:cursor-not-allowed disabled:bg-gray-100"
+        min={min}
+        max={max}
       />
     </div>
   );

@@ -2,7 +2,8 @@ export interface Puppy {
   id: string;
   name: string;
   description: string;
-  birthDate: string;
+  ageYears: number;
+  ageMonths: number;
   categoryId: string;
   category?: Category;
   media: MediaFile[];

@@ -2,7 +2,7 @@ import AdminPuppiesTableButtonsComponent from '@/components/admin/table/AdminPup
 import PuppyImageComponent from '@/components/ui/PuppyImageComponent';
 import { Dictionary } from '@/lib/types/dictionary';
 import { Puppy } from '@/domain/entities/Puppy';
-import { calculatePuppyAgeUtil } from '@/lib/utils/calculatePuppyAgeUtil';
+import { formatAge } from '@/lib/utils/formatAgeUtil';
 import { getLocalizedDescription } from '@/lib/utils/getLocalizedDescription';
 
 interface AdminPuppiesCardElementProps {
@@ -73,7 +73,7 @@ export default function AdminPuppiesCardElementComponent({
                 {puppy.name}
               </h3>
               <p className="text-sm text-gray-500">
-                {calculatePuppyAgeUtil(puppy.birthDate, dict)}
+                {formatAge(puppy.ageYears, puppy.ageMonths, dict)}
               </p>
             </div>
 
@@ -104,8 +104,8 @@ export default function AdminPuppiesCardElementComponent({
           </div>
 
           <div className="mt-2 text-xs text-gray-500">
-            {dict.admin.table.headers.birthDate}:{' '}
-            {formatDate(puppy.birthDate, locale)}
+            {dict.admin.table.headers.age}:{' '}
+            {formatAge(puppy.ageYears, puppy.ageMonths, dict)}
           </div>
         </div>
       </div>

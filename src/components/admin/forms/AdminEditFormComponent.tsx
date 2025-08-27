@@ -34,7 +34,8 @@ export default function AdminEditFormComponent({
     name: string;
     description_es: string;
     description_en: string;
-    birthDate: string;
+    ageYears: number;
+    ageMonths: number;
     gender: 'male' | 'female';
     categoryId: number | '';
     media: MediaFile[];
@@ -45,7 +46,8 @@ export default function AdminEditFormComponent({
     name: '',
     description_es: '',
     description_en: '',
-    birthDate: '',
+    ageYears: 0,
+    ageMonths: 0,
     gender: 'male',
     categoryId: '',
     media: [],
@@ -56,10 +58,6 @@ export default function AdminEditFormComponent({
 
   useEffect(() => {
     if (puppy && !isInitialized) {
-      const birthDateString = new Date(puppy.birthDate)
-        .toISOString()
-        .split('T')[0];
-
       const fatherImageFile: MediaFile | null = puppy.fatherImage
         ? {
             id: 'father-image',
@@ -86,7 +84,8 @@ export default function AdminEditFormComponent({
         name: puppy.name,
         description_es: puppy.description_es,
         description_en: puppy.description_en,
-        birthDate: birthDateString,
+        ageYears: puppy.ageYears,
+        ageMonths: puppy.ageMonths,
         gender: puppy.gender,
         categoryId: puppy.category.id,
         media: puppy.media || [],
@@ -104,7 +103,8 @@ export default function AdminEditFormComponent({
       | 'name'
       | 'description_es'
       | 'description_en'
-      | 'birthDate'
+      | 'ageYears'
+      | 'ageMonths'
       | 'gender'
       | 'categoryId',
     value: string | number
@@ -142,7 +142,8 @@ export default function AdminEditFormComponent({
         name: formData.name,
         description_es: formData.description_es,
         description_en: formData.description_en,
-        birthDate: formData.birthDate,
+        ageYears: formData.ageYears,
+        ageMonths: formData.ageMonths,
         gender: formData.gender,
         categoryId:
           typeof formData.categoryId === 'number' ? formData.categoryId : 0,
@@ -212,7 +213,8 @@ export default function AdminEditFormComponent({
             name: formData.name,
             description_es: formData.description_es,
             description_en: formData.description_en,
-            birthDate: formData.birthDate,
+            ageYears: formData.ageYears,
+            ageMonths: formData.ageMonths,
             gender: formData.gender,
             categoryId: formData.categoryId,
           }}
