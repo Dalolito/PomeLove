@@ -30,14 +30,15 @@ export function generateMetadata({
 
   if (page === 'puppy' && puppyData) {
     // Handle puppy page with dynamic data
-    title = pageMetadata.titleTemplate
+    const puppyMetadata = pageMetadata as typeof dict.metadata.puppy;
+    title = puppyMetadata.titleTemplate
       .replace('{name}', puppyData.name || dict.utils.fallbacks.noName)
       .replace(
         '{category}',
         puppyData.category || dict.utils.fallbacks.noCategory
       );
 
-    description = pageMetadata.descriptionTemplate
+    description = puppyMetadata.descriptionTemplate
       .replace(
         '{category}',
         puppyData.category || dict.utils.fallbacks.noCategory
@@ -47,7 +48,7 @@ export function generateMetadata({
         puppyData.description || dict.utils.fallbacks.noDescription
       );
 
-    keywords = pageMetadata.keywordsTemplate
+    keywords = puppyMetadata.keywordsTemplate
       .replace('{name}', puppyData.name || dict.utils.fallbacks.noName)
       .replace(
         '{category}',
@@ -55,9 +56,10 @@ export function generateMetadata({
       );
   } else {
     // Handle static pages
-    title = pageMetadata.title;
-    description = pageMetadata.description;
-    keywords = pageMetadata.keywords;
+    const staticMetadata = pageMetadata as typeof dict.metadata.home;
+    title = staticMetadata.title;
+    description = staticMetadata.description;
+    keywords = staticMetadata.keywords;
   }
 
   const metadata: Metadata = {
