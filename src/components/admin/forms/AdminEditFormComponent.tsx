@@ -234,7 +234,6 @@ export default function AdminEditFormComponent({
         <AdminFormUploadMediaComponent
           dict={dict}
           maxFiles={10}
-          maxFileSize={50}
           initialFiles={formData.media}
           onMediaChange={handleMediaChange}
         />

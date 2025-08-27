@@ -172,7 +172,6 @@ export default function AdminFormComponent({
           <AdminFormUploadMediaComponent
             dict={dict}
             maxFiles={10}
-            maxFileSize={50}
             onMediaChange={handleMediaChange}
           />
         </div>

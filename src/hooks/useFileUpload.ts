@@ -6,13 +6,11 @@ import { uploadMediaAction } from '@/actions/uploadActions';
 
 interface UseFileUploadProps {
   maxFiles: number;
-  maxFileSize: number;
   onMediaChange?: (files: MediaFile[]) => void;
 }
 
 export function useFileUpload({
   maxFiles,
-  maxFileSize: _maxFileSize,
   onMediaChange,
 }: UseFileUploadProps) {
   const [files, setFiles] = useState<MediaFile[]>([]);
