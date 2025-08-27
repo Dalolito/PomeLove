@@ -244,6 +244,7 @@
       },
       "actions": {
         "newPet": "Nueva Mascota",
+        "view": "Ver",
         "edit": "Editar",
         "delete": "Eliminar"
       },

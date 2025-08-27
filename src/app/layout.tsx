@@ -13,7 +13,7 @@ async function getDefaultDictionary() {
     const dict = await import('@/dictionaries/es.json');
     return dict.default;
   } catch {
-    // Fallback to English if Spanish is not available
+
     const dict = await import('@/dictionaries/en.json');
     return dict.default;
   }
