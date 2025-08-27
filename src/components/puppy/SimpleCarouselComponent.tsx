@@ -176,7 +176,7 @@ export default function SimpleCarouselComponent({
               muted
               loop
               playsInline
-              className="h-full w-full cursor-pointer object-cover"
+              className="h-full w-full cursor-pointer object-contain"
               onClick={() => setShowModal(true)}
             >
               Tu navegador no soporta el elemento de video.
@@ -194,11 +194,11 @@ export default function SimpleCarouselComponent({
             <>
               <button
                 onClick={prevSlide}
-                className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black bg-opacity-50 p-2 text-white transition-all hover:bg-opacity-70"
+                className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-black bg-opacity-50 p-3 text-white transition-all hover:bg-opacity-70"
                 aria-label="Previous"
               >
                 <svg
-                  className="h-5 w-5"
+                  className="h-7 w-7"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -214,11 +214,11 @@ export default function SimpleCarouselComponent({
 
               <button
                 onClick={nextSlide}
-                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black bg-opacity-50 p-2 text-white transition-all hover:bg-opacity-70"
+                className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-black bg-opacity-50 p-3 text-white transition-all hover:bg-opacity-70"
                 aria-label="Next"
               >
                 <svg
-                  className="h-5 w-5"
+                  className="h-7 w-7"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

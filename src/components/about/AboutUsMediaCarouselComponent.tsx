@@ -426,11 +426,11 @@ export default function AboutUsMediaCarouselComponent({
           <>
             <button
               onClick={prevSlide}
-              className="absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white bg-opacity-70 p-2 text-gray-800 opacity-0 shadow-lg transition-all duration-300 hover:bg-opacity-90 group-hover:opacity-100"
+              className="absolute left-6 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white bg-opacity-70 p-3 text-gray-800 opacity-0 shadow-lg transition-all duration-300 hover:bg-opacity-90 group-hover:opacity-100"
               aria-label="Previous"
             >
               <svg
-                className="h-6 w-6"
+                className="h-8 w-8"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -446,11 +446,11 @@ export default function AboutUsMediaCarouselComponent({
 
             <button
               onClick={nextSlide}
-              className="absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white bg-opacity-70 p-2 text-gray-800 opacity-0 shadow-lg transition-all duration-300 hover:bg-opacity-90 group-hover:opacity-100"
+              className="absolute right-6 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white bg-opacity-70 p-3 text-gray-800 opacity-0 shadow-lg transition-all duration-300 hover:bg-opacity-90 group-hover:opacity-100"
               aria-label="Next"
             >
               <svg
-                className="h-6 w-6"
+                className="h-8 w-8"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
