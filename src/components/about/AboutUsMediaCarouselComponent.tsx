@@ -61,6 +61,28 @@ export default function AboutUsMediaCarouselComponent({
     return () => clearInterval(interval);
   }, [isPlaying, nextSlide, media.length]);
 
+  useEffect(() => {
+    const currentVideo = videoRef.current;
+    const currentMediaItem = media[currentIndex];
+    if (!currentVideo || currentMediaItem?.type !== 'video') return;
+
+    const handleVideoPlay = () => {
+      setIsPlaying(false);
+    };
+
+    const handleVideoPause = () => {
+      setIsPlaying(autoPlay);
+    };
+
+    currentVideo.addEventListener('play', handleVideoPlay);
+    currentVideo.addEventListener('pause', handleVideoPause);
+
+    return () => {
+      currentVideo.removeEventListener('play', handleVideoPlay);
+      currentVideo.removeEventListener('pause', handleVideoPause);
+    };
+  }, [currentIndex, media, autoPlay]);
+
   const handleTouchStart = (e: React.TouchEvent) => {
     e.preventDefault();
     setTouchEnd(null);
@@ -77,12 +99,15 @@ export default function AboutUsMediaCarouselComponent({
     if (!touchStart || !touchEnd) return;
 
     const distance = touchStart - touchEnd;
-    const minSwipeDistance = 30;
+    const minSwipeDistance = 50;
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
 
-    if (isLeftSwipe) nextSlide();
-    if (isRightSwipe) prevSlide();
+    if (isLeftSwipe) {
+      nextSlide();
+    } else if (isRightSwipe) {
+      prevSlide();
+    }
   };
 
   const handleImageLoad = () => {
@@ -94,7 +119,14 @@ export default function AboutUsMediaCarouselComponent({
   };
 
   const handleVideoError = () => {
-    setVideoLoaded(true); // Set to true to hide loading indicator
+    setVideoLoaded(true);
+  };
+
+  const handleVideoClick = () => {
+    if (currentItem?.type === 'video') {
+      setIsPlaying(false);
+      setTimeout(() => setIsPlaying(autoPlay), 3000);
+    }
   };
 
   if (media.length === 0) {
@@ -156,6 +188,7 @@ export default function AboutUsMediaCarouselComponent({
                 onLoadedData={handleVideoLoad}
                 onError={handleVideoError}
                 onCanPlay={handleVideoLoad}
+                onClick={handleVideoClick}
               >
                 <source
                   src={
