@@ -86,9 +86,9 @@ export function generateMetadata({
       },
     },
     icons: {
-      icon: '/logo.png',
-      shortcut: '/logo.png',
-      apple: '/logo.png',
+      icon: '/logo-1.png',
+      shortcut: '/logo-1.png',
+      apple: '/logo-1.png',
     },
     manifest: '/manifest.json',
     openGraph: {
@@ -152,9 +152,9 @@ export function generateAdminMetadata(dict: Dictionary): Metadata {
       follow: false,
     },
     icons: {
-      icon: '/logo.png',
-      shortcut: '/logo.png',
-      apple: '/logo.png',
+      icon: '/logo-1.png',
+      shortcut: '/logo-1.png',
+      apple: '/logo-1.png',
     },
   };
 }
