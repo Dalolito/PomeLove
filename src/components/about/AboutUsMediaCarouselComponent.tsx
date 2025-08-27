@@ -31,6 +31,7 @@ export default function AboutUsMediaCarouselComponent({
   const [imageLoaded, setImageLoaded] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -104,7 +105,7 @@ export default function AboutUsMediaCarouselComponent({
 
     const handleVideoCanPlay = () => {
       setVideoLoaded(true);
-      
+
       if (!isMobile) {
         currentVideo.play().catch(() => {
           console.log('Autoplay prevented by browser - desktop');
@@ -118,35 +119,60 @@ export default function AboutUsMediaCarouselComponent({
     };
 
     const handleVideoEnded = () => {
+      setIsVideoPlaying(false);
       if (isPlaying) {
         nextSlide();
       }
     };
 
+    const handleVideoLoadedData = () => {
+      // Video data loaded
+    };
+
+    const handleVideoPause = () => {
+      setIsVideoPlaying(false);
+    };
+
+    const handleVideoPlay = () => {
+      setIsVideoPlaying(true);
+    };
+
+    const handleVideoLoadStart = () => {
+      setVideoLoaded(false);
+      setIsVideoPlaying(false);
+    };
+
     currentVideo.addEventListener('canplay', handleVideoCanPlay);
     currentVideo.addEventListener('error', handleVideoError);
     currentVideo.addEventListener('ended', handleVideoEnded);
+    currentVideo.addEventListener('loadeddata', handleVideoLoadedData);
+    currentVideo.addEventListener('loadstart', handleVideoLoadStart);
+    currentVideo.addEventListener('pause', handleVideoPause);
+    currentVideo.addEventListener('play', handleVideoPlay);
 
     return () => {
       currentVideo.removeEventListener('canplay', handleVideoCanPlay);
       currentVideo.removeEventListener('error', handleVideoError);
       currentVideo.removeEventListener('ended', handleVideoEnded);
+      currentVideo.removeEventListener('loadeddata', handleVideoLoadedData);
+      currentVideo.removeEventListener('loadstart', handleVideoLoadStart);
+      currentVideo.removeEventListener('pause', handleVideoPause);
+      currentVideo.removeEventListener('play', handleVideoPlay);
     };
   }, [currentIndex, media, isPlaying, nextSlide, isMobile]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    e.preventDefault();
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    e.preventDefault();
-    setTouchEnd(e.targetTouches[0].clientX);
+    if (touchStart !== null) {
+      setTouchEnd(e.targetTouches[0].clientX);
+    }
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    e.preventDefault();
     if (!touchStart || !touchEnd) return;
 
     const distance = touchStart - touchEnd;
@@ -159,6 +185,9 @@ export default function AboutUsMediaCarouselComponent({
     } else if (isRightSwipe) {
       prevSlide();
     }
+
+    setTouchStart(null);
+    setTouchEnd(null);
   };
 
   const handleImageLoad = () => {
@@ -176,15 +205,23 @@ export default function AboutUsMediaCarouselComponent({
   const handleVideoClick = () => {
     if (currentItem?.type === 'video' && videoRef.current) {
       const video = videoRef.current;
-      
+
       if (video.paused) {
         video.muted = true;
         video.playsInline = true;
-        video.play().catch((error) => {
-          console.log('Video play failed:', error);
-        });
+        video.volume = 0;
+
+        video
+          .play()
+          .then(() => {
+            setIsVideoPlaying(true);
+          })
+          .catch(error => {
+            console.error('Video play failed:', error);
+          });
       } else {
         video.pause();
+        setIsVideoPlaying(false);
       }
     }
   };
@@ -266,23 +303,16 @@ export default function AboutUsMediaCarouselComponent({
                   WebkitUserSelect: 'none',
                   userSelect: 'none',
                 }}
+                src={currentItem.url}
               >
-                <source
-                  src={
-                    currentItem.url && currentItem.url.trim() !== ''
-                      ? currentItem.url
-                      : '/placeholder-puppy.svg'
-                  }
-                  type="video/mp4"
-                />
                 Tu navegador no soporta videos.
               </video>
 
-              {isMobile && (
+              {isMobile && !isVideoPlaying && (
                 <button
                   className="absolute inset-0 z-30 flex items-center justify-center bg-black bg-opacity-30 opacity-100 transition-opacity duration-300"
                   onClick={handleVideoClick}
-                  aria-label="Play/Pause video"
+                  aria-label="Play video"
                 >
                   <div className="rounded-full bg-white bg-opacity-90 p-4">
                     <svg
