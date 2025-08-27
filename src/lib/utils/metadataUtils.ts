@@ -25,11 +25,9 @@ export function generateMetadata({
   let description: string;
   let keywords: string;
 
-  // Get metadata from dictionary based on page
   const pageMetadata = dict.metadata[page];
 
   if (page === 'puppy' && puppyData) {
-    // Handle puppy page with dynamic data
     const puppyMetadata = pageMetadata as typeof dict.metadata.puppy;
     title = puppyMetadata.titleTemplate
       .replace('{name}', puppyData.name || dict.utils.fallbacks.noName)
@@ -55,7 +53,6 @@ export function generateMetadata({
         puppyData.category || dict.utils.fallbacks.noCategory
       );
   } else {
-    // Handle static pages
     const staticMetadata = pageMetadata as typeof dict.metadata.home;
     title = staticMetadata.title;
     description = staticMetadata.description;
@@ -86,9 +83,29 @@ export function generateMetadata({
       },
     },
     icons: {
-      icon: '/logo-1.png',
-      shortcut: '/logo-1.png',
-      apple: '/logo-1.png',
+      icon: [
+        { url: '/logo-2.png', sizes: '16x16', type: 'image/png' },
+        { url: '/logo-2.png', sizes: '32x32', type: 'image/png' },
+        { url: '/logo-2.png', sizes: '48x48', type: 'image/png' },
+        { url: '/logo-2.png', sizes: '96x96', type: 'image/png' },
+      ],
+      shortcut: '/logo-2.png',
+      apple: [
+        { url: '/logo-2.png', sizes: '180x180', type: 'image/png' },
+        { url: '/logo-2.png', sizes: '152x152', type: 'image/png' },
+        { url: '/logo-2.png', sizes: '144x144', type: 'image/png' },
+      ],
+      other: [
+        {
+          rel: 'icon',
+          url: '/logo-2.png',
+          type: 'image/png',
+        },
+        {
+          rel: 'mask-icon',
+          url: '/logo-2.png',
+        },
+      ],
     },
     manifest: '/manifest.json',
     openGraph: {
@@ -100,13 +117,13 @@ export function generateMetadata({
       siteName: 'POMELOVE KOREA',
       images: [
         {
-          url: '/og-image.jpg',
+          url: '/logo-2.png',
           width: 1200,
           height: 630,
           alt: 'POMELOVE KOREA - Pomerania de Alta Calidad',
         },
         {
-          url: '/logo.png',
+          url: '/logo-2.png',
           width: 512,
           height: 512,
           alt: 'POMELOVE KOREA Logo',
@@ -117,7 +134,7 @@ export function generateMetadata({
       card: 'summary_large_image',
       title,
       description,
-      images: ['/og-image.jpg', '/logo.png'],
+      images: ['/logo-2.png'],
     },
     robots: {
       index: true,
@@ -134,12 +151,16 @@ export function generateMetadata({
       google:
         process.env.GOOGLE_VERIFICATION_CODE || 'your-google-verification-code',
     },
+    other: {
+      'msapplication-TileImage': '/logo-2.png',
+      'msapplication-TileColor': '#ffffff',
+      'theme-color': '#ffffff',
+    },
   };
 
   return metadata;
 }
 
-// Helper function for admin pages
 export function generateAdminMetadata(dict: Dictionary): Metadata {
   return {
     title: {
@@ -152,9 +173,12 @@ export function generateAdminMetadata(dict: Dictionary): Metadata {
       follow: false,
     },
     icons: {
-      icon: '/logo-1.png',
-      shortcut: '/logo-1.png',
-      apple: '/logo-1.png',
+      icon: [
+        { url: '/logo-2.png', sizes: '16x16', type: 'image/png' },
+        { url: '/logo-2.png', sizes: '32x32', type: 'image/png' },
+      ],
+      shortcut: '/logo-2.png',
+      apple: '/logo-2.png',
     },
   };
 }

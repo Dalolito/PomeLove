@@ -1,21 +1,66 @@
 {
-  "name": "POMELOVE KOREA - Pomerania de Alta Calidad",
+  "name": "POMELOVE KOREA",
   "short_name": "POMELOVE",
-  "description": "Criadores especializados de Pomerania en Medellín con 15+ años de experiencia",
+  "description": "Criadores especializados de Pomerania de alta calidad con 15+ años de experiencia",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "theme_color": "#ef4444",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/logo-1.png",
+      "src": "/logo-2.png",
+      "sizes": "16x16",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo-2.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo-2.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo-2.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo-2.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo-2.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo-2.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
   ],
-  "categories": ["pets", "shopping"],
+  "categories": ["pets", "animals", "business"],
   "lang": "es",
-  "dir": "ltr"
+  "scope": "/",
+  "screenshots": [
+    {
+      "src": "/logo-2.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "POMELOVE KOREA - Vista principal"
+    }
+  ]
 }
