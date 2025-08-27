@@ -80,10 +80,10 @@ export default function AboutUsMediaCarouselComponent({
     const currentMediaItem = media[currentIndex];
     if (!currentMediaItem) return;
 
-    let slideDelay = 4000;
+    let slideDelay = isMobile ? 3000 : 4000;
 
     if (currentMediaItem.type === 'video') {
-      slideDelay = isMobile ? 8000 : 6000;
+      slideDelay = isMobile ? 6000 : 5000;
     }
 
     intervalRef.current = setTimeout(nextSlide, slideDelay);
@@ -129,7 +129,7 @@ export default function AboutUsMediaCarouselComponent({
           currentVideo.play().catch(() => {
             console.log('Autoplay prevented by browser - mobile');
           });
-        }, 100);
+        }, 50);
       } else {
         currentVideo.play().catch(() => {
           console.log('Autoplay prevented by browser - desktop');
@@ -146,12 +146,19 @@ export default function AboutUsMediaCarouselComponent({
       setVideoLoaded(true);
     };
 
+    const handleVideoLoadedMetadata = () => {
+      if (isMobile) {
+        setVideoLoaded(true);
+      }
+    };
+
     currentVideo.addEventListener('play', handleVideoPlay);
     currentVideo.addEventListener('pause', handleVideoPause);
     currentVideo.addEventListener('ended', handleVideoEnded);
     currentVideo.addEventListener('canplay', handleVideoCanPlay);
     currentVideo.addEventListener('loadstart', handleVideoLoadStart);
     currentVideo.addEventListener('error', handleVideoError);
+    currentVideo.addEventListener('loadedmetadata', handleVideoLoadedMetadata);
 
     return () => {
       currentVideo.removeEventListener('play', handleVideoPlay);
@@ -160,6 +167,10 @@ export default function AboutUsMediaCarouselComponent({
       currentVideo.removeEventListener('canplay', handleVideoCanPlay);
       currentVideo.removeEventListener('loadstart', handleVideoLoadStart);
       currentVideo.removeEventListener('error', handleVideoError);
+      currentVideo.removeEventListener(
+        'loadedmetadata',
+        handleVideoLoadedMetadata
+      );
     };
   }, [currentIndex, media, autoPlay, nextSlide, isPlaying, isMobile]);
 
@@ -274,7 +285,7 @@ export default function AboutUsMediaCarouselComponent({
                 muted={true}
                 loop
                 playsInline={true}
-                preload="auto"
+                preload="metadata"
                 disablePictureInPicture
                 controlsList="nodownload nofullscreen noremoteplayback"
                 controls={false}
@@ -339,6 +350,7 @@ export default function AboutUsMediaCarouselComponent({
                 }`}
                 priority={true}
                 onLoad={handleImageLoad}
+                isMobile={isMobile}
               />
             </>
           )}

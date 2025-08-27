@@ -9,6 +9,7 @@ interface PuppyCarouselImageComponentProps {
   onLoad?: () => void;
   onClick?: () => void;
   className?: string;
+  isMobile?: boolean;
 }
 
 export default function PuppyCarouselImageComponent({
@@ -18,6 +19,7 @@ export default function PuppyCarouselImageComponent({
   onLoad,
   onClick,
   className = '',
+  isMobile = false,
 }: PuppyCarouselImageComponentProps) {
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -37,7 +39,8 @@ export default function PuppyCarouselImageComponent({
 
     if (trimmedSrc.includes('unsplash.com') && !trimmedSrc.includes('w=')) {
       const separator = trimmedSrc.includes('?') ? '&' : '?';
-      return `${trimmedSrc}${separator}w=400&h=400&fit=crop&q=80`;
+      const size = isMobile ? 'w=300&h=300' : 'w=400&h=400';
+      return `${trimmedSrc}${separator}${size}&fit=crop&q=${isMobile ? '70' : '80'}`;
     }
 
     return trimmedSrc;
@@ -67,27 +70,36 @@ export default function PuppyCarouselImageComponent({
     }
 
     if (retryCount === 1 && currentSrc.includes('unsplash.com')) {
+      const size = isMobile ? 'w=300&h=300' : 'w=400&h=400';
+      const quality = isMobile ? '70' : '80';
       const optimizedUnsplashUrl = currentSrc.includes('?')
-        ? `${currentSrc}&w=400&h=400&fit=crop&q=80`
-        : `${currentSrc}?w=400&h=400&fit=crop&q=80`;
+        ? `${currentSrc}&${size}&fit=crop&q=${quality}`
+        : `${currentSrc}?${size}&fit=crop&q=${quality}`;
 
-      setTimeout(() => {
-        setRetryCount(2);
-        setCurrentSrc(optimizedUnsplashUrl);
-        setIsLoading(true);
-      }, 1000);
+      setTimeout(
+        () => {
+          setRetryCount(2);
+          setCurrentSrc(optimizedUnsplashUrl);
+          setIsLoading(true);
+        },
+        isMobile ? 500 : 1000
+      );
       return;
     }
 
     if (retryCount === 2 && currentSrc.includes('unsplash.com')) {
-      const simpleUnsplashUrl =
-        'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=300&h=300&fit=crop&q=70';
+      const size = isMobile ? 'w=200&h=200' : 'w=300&h=300';
+      const quality = isMobile ? '60' : '70';
+      const simpleUnsplashUrl = `https://images.unsplash.com/photo-1548199973-03cce0bbc87b?${size}&fit=crop&q=${quality}`;
 
-      setTimeout(() => {
-        setRetryCount(3);
-        setCurrentSrc(simpleUnsplashUrl);
-        setIsLoading(true);
-      }, 1500);
+      setTimeout(
+        () => {
+          setRetryCount(3);
+          setCurrentSrc(simpleUnsplashUrl);
+          setIsLoading(true);
+        },
+        isMobile ? 800 : 1500
+      );
       return;
     }
 
@@ -137,7 +149,7 @@ export default function PuppyCarouselImageComponent({
         onLoad={handleLoad}
         onError={handleError}
         onClick={onClick}
-        loading={priority ? 'eager' : 'lazy'}
+        loading={isMobile ? 'eager' : priority ? 'eager' : 'lazy'}
         decoding="async"
         crossOrigin="anonymous"
         referrerPolicy="no-referrer-when-downgrade"
