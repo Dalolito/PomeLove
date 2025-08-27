@@ -51,8 +51,9 @@ export async function uploadMediaAction(
 
     // Upload to Cloudinary
     const uploadType = (formData.get('type') as string) || 'puppies';
-    const folder = uploadType === 'parents' ? 'pomelove/parents' : 'pomelove/puppies';
-    
+    const folder =
+      uploadType === 'parents' ? 'pomelove/parents' : 'pomelove/puppies';
+
     const uploadResult = await cloudinary.uploader.upload(
       `data:${file.type};base64,${buffer.toString('base64')}`,
       {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import PuppyCarouselImageComponent from '@/components/ui/PuppyCarouselImageComponent';
 
 interface MediaItem {
@@ -29,12 +29,15 @@ export default function AboutUsMediaCarouselComponent({
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const nextSlide = useCallback(() => {
     setCurrentIndex(prevIndex =>
       prevIndex === media.length - 1 ? 0 : prevIndex + 1
     );
     setImageLoaded(false);
+    setVideoLoaded(false);
   }, [media.length]);
 
   const prevSlide = useCallback(() => {
@@ -42,11 +45,13 @@ export default function AboutUsMediaCarouselComponent({
       prevIndex === 0 ? media.length - 1 : prevIndex - 1
     );
     setImageLoaded(false);
+    setVideoLoaded(false);
   }, [media.length]);
 
   const goToSlide = useCallback((index: number) => {
     setCurrentIndex(index);
     setImageLoaded(false);
+    setVideoLoaded(false);
   }, []);
 
   useEffect(() => {
@@ -57,20 +62,24 @@ export default function AboutUsMediaCarouselComponent({
   }, [isPlaying, nextSlide, media.length]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
+    e.preventDefault();
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
+    e.preventDefault();
     setTouchEnd(e.targetTouches[0].clientX);
   };
 
-  const handleTouchEnd = () => {
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    e.preventDefault();
     if (!touchStart || !touchEnd) return;
 
     const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
+    const minSwipeDistance = 30;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
 
     if (isLeftSwipe) nextSlide();
     if (isRightSwipe) prevSlide();
@@ -78,6 +87,14 @@ export default function AboutUsMediaCarouselComponent({
 
   const handleImageLoad = () => {
     setImageLoaded(true);
+  };
+
+  const handleVideoLoad = () => {
+    setVideoLoaded(true);
+  };
+
+  const handleVideoError = () => {
+    setVideoLoaded(true); // Set to true to hide loading indicator
   };
 
   if (media.length === 0) {
@@ -115,23 +132,42 @@ export default function AboutUsMediaCarouselComponent({
       >
         <div className="relative flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-200 via-gray-100 to-gray-50">
           {currentItem?.type === 'video' ? (
-            <video
-              key={currentItem.id}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="h-full w-full object-contain"
-            >
-              <source
-                src={
-                  currentItem.url && currentItem.url.trim() !== ''
-                    ? currentItem.url
-                    : '/placeholder-puppy.svg'
-                }
-                type="video/mp4"
-              />
-            </video>
+            <>
+              {/* Loading indicator for videos */}
+              {!videoLoaded && (
+                <div className="absolute inset-0 z-20 flex items-center justify-center bg-gray-200">
+                  <div className="h-8 w-8 animate-spin rounded-full border-4 border-red-500 border-t-transparent"></div>
+                </div>
+              )}
+
+              <video
+                ref={videoRef}
+                key={currentItem.id}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                disablePictureInPicture
+                controlsList="nodownload nofullscreen noremoteplayback"
+                className={`h-full w-full object-contain transition-opacity duration-300 ${
+                  videoLoaded ? 'opacity-100' : 'opacity-0'
+                }`}
+                onLoadedData={handleVideoLoad}
+                onError={handleVideoError}
+                onCanPlay={handleVideoLoad}
+              >
+                <source
+                  src={
+                    currentItem.url && currentItem.url.trim() !== ''
+                      ? currentItem.url
+                      : '/placeholder-puppy.svg'
+                  }
+                  type="video/mp4"
+                />
+                Tu navegador no soporta videos.
+              </video>
+            </>
           ) : (
             <>
               {!imageLoaded && (
@@ -158,15 +194,16 @@ export default function AboutUsMediaCarouselComponent({
 
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
 
+        {/* Touch areas for mobile navigation - only show on mobile */}
         {media.length > 1 && (
           <>
             <div
-              className="absolute left-0 top-0 z-10 h-full w-1/2 cursor-pointer"
+              className="absolute left-0 top-0 z-10 h-full w-1/3 cursor-pointer md:w-1/2"
               onClick={prevSlide}
               aria-label="Anterior"
             />
             <div
-              className="absolute right-0 top-0 z-10 h-full w-1/2 cursor-pointer"
+              className="absolute right-0 top-0 z-10 h-full w-1/3 cursor-pointer md:w-1/2"
               onClick={nextSlide}
               aria-label="Siguiente"
             />
