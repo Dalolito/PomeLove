@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { getPuppyDetailAction } from '@/actions/puppyActions';
 import PuppyDetailComponent from '@/components/puppy/PuppyDetailComponent';
 import { getLocalizedDescription } from '@/lib/utils/getLocalizedDescription';
+import { generatePuppyMetadataFromDict } from '@/lib/utils/metadataUtils';
 import type { Metadata } from 'next/types';
 
 async function getDictionary(locale: string) {
@@ -35,19 +36,15 @@ export async function generateMetadata({
   }
 
   const puppy = puppyResult.puppy;
-  const title = `${puppy.name} - ${puppy.category.name} | ${dict.header.title}`;
-  const description = `${getLocalizedDescription(puppy, locale).substring(0, 150)}...`;
+  const description =
+    getLocalizedDescription(puppy, locale).substring(0, 150) + '...';
 
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      images: puppy.media.length > 0 ? [puppy.media[0].url] : [],
-      locale,
-    },
-  };
+  return generatePuppyMetadataFromDict(
+    dict.metadata.puppy,
+    puppy,
+    locale,
+    description
+  );
 }
 
 export default async function PuppyDetailPage({

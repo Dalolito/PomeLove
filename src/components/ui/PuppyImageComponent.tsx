@@ -9,6 +9,7 @@ interface PuppyImageComponentProps {
   priority?: boolean;
   onLoad?: () => void;
   containerClassName?: string;
+  title?: string;
 }
 
 export default function PuppyImageComponent({
@@ -17,6 +18,7 @@ export default function PuppyImageComponent({
   className = '',
   priority = false,
   onLoad,
+  title,
 }: PuppyImageComponentProps) {
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -130,6 +132,7 @@ export default function PuppyImageComponent({
         key={currentSrc}
         src={finalSrc || '/placeholder-puppy.svg'}
         alt={alt}
+        title={title || alt}
         className={`h-full w-full transition-all duration-300 ${
           isLoading && !isPlaceholder(currentSrc) ? 'opacity-0' : 'opacity-100'
         } ${className}`}

@@ -1,8 +1,10 @@
 import { Suspense } from 'react';
+import type { Metadata } from 'next';
 import PuppyAvailableListComponent from '@/components/puppy/PuppyAvailableListComponent';
 import PuppyCardSkeletonComponent from '@/components/puppy/PuppyCardSkeletonComponent';
 import PrimaryButtonComponent from '@/components/ui/PrimaryButtonComponent';
 import SecondaryButtonComponent from '@/components/ui/SecondaryButtonComponent';
+import { generateMetadataFromDict } from '@/lib/utils/metadataUtils';
 
 async function getDictionary(locale: string) {
   try {
@@ -15,6 +17,17 @@ async function getDictionary(locale: string) {
 }
 
 import { use } from 'react';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const dict = await getDictionary(locale);
+
+  return generateMetadataFromDict(dict.metadata.home, locale);
+}
 
 export default function HomePage({
   params,

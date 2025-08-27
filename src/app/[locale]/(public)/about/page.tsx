@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import AboutUsContentComponent from '@/components/about/AboutUsContentComponent';
+import { generateMetadataFromDict } from '@/lib/utils/metadataUtils';
 import type { Metadata } from 'next';
 
 async function getDictionary(locale: string) {
@@ -22,20 +23,7 @@ export async function generateMetadata({
   const { locale } = await params;
   const dict = await getDictionary(locale);
 
-  return {
-    title: `${dict.about?.hero?.title || 'Sobre Nosotros'} - ${dict.header.title}`,
-    description:
-      dict.about?.hero?.subtitle ||
-      'Criadores especializados en Pomeranias Coreanos',
-    openGraph: {
-      title: dict.about?.hero?.title || 'Sobre Nosotros',
-      description:
-        dict.about?.hero?.subtitle ||
-        'Criadores especializados en Pomeranias Coreanos',
-      images: ['/media/sended-dog-1.jpeg'],
-      locale,
-    },
-  };
+  return generateMetadataFromDict(dict.metadata.about, locale);
 }
 
 export default async function AboutPage({ params }: AboutPageProps) {

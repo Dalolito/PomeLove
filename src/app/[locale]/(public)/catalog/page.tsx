@@ -1,7 +1,9 @@
 import { Suspense } from 'react';
+import type { Metadata } from 'next';
 import { getAllPuppiesAction } from '@/actions/puppyActions';
 import { getAllCategoriesAction } from '@/actions/categoryActions';
 import CatalogContentComponent from '@/components/catalog/CatalogContentComponent';
+import { generateMetadataFromDict } from '@/lib/utils/metadataUtils';
 
 async function getDictionary(locale: string) {
   try {
@@ -15,6 +17,17 @@ async function getDictionary(locale: string) {
 
 interface CatalogPageProps {
   params: Promise<{ locale: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const dict = await getDictionary(locale);
+
+  return generateMetadataFromDict(dict.metadata.catalog, locale);
 }
 
 export default async function CatalogPage({ params }: CatalogPageProps) {

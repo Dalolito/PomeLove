@@ -4,6 +4,28 @@
     "subtitle": "Pomerania de Alta Calidad",
     "experience": "Criadores especializados con 15+ años de experiencia"
   },
+  "metadata": {
+    "home": {
+      "title": "POMELOVE KOREA - Pomerania Medellín | Criadores de Pomerania en Medellín",
+      "description": "Criadores especializados de Pomerania en Medellín con 15+ años de experiencia. Importamos líneas exclusivas de Pomerania Coreano de la más alta calidad. Pomerania Medellín, Pomerania Colombia. Encuentra tu compañero perfecto.",
+      "keywords": "pomerania medellin, pomerania, pomeranian, cachorros pomerania medellin, pomerania coreano, criadores pomerania medellin, venta pomerania medellin, pomerania colombia, pomerania antioquia"
+    },
+    "catalog": {
+      "title": "Catálogo de Pomerania Medellín - POMELOVE KOREA | Pomerania Disponibles",
+      "description": "Explora nuestro catálogo de Pomerania en Medellín. Cachorros de Pomerania disponibles con pedigrí coreano. Pomerania Medellín, Pomerania Colombia. Encuentra tu compañero perfecto.",
+      "keywords": "catalogo pomerania medellin, pomerania disponibles medellin, pomerania venta medellin, pomerania medellin, pomerania colombia, cachorros pomerania medellin, pomerania antioquia"
+    },
+    "about": {
+      "title": "Sobre Nosotros - POMELOVE KOREA | Criadores de Pomerania en Medellín",
+      "description": "Conoce más sobre POMELOVE KOREA, criadores especializados de Pomerania en Medellín con 15+ años de experiencia y exportación a más de 15 países. Pomerania Medellín, Pomerania Colombia.",
+      "keywords": "sobre nosotros pomerania medellin, pomerania criadores medellin, pomerania experiencia medellin, pomerania exportacion medellin, pomerania medellin, pomerania antioquia"
+    },
+    "puppy": {
+      "titleTemplate": "{name} - Pomerania {category} Medellín | POMELOVE KOREA",
+      "descriptionTemplate": "Hermoso cachorro de Pomerania {category} en Medellín. {description} Pomerania Medellín, Pomerania Colombia.",
+      "keywordsTemplate": "{name} pomerania medellin, pomerania {category} medellin, pomerania venta medellin, pomerania medellin, pomerania colombia, cachorro pomerania medellin, pomerania antioquia"
+    }
+  },
   "navigation": {
     "home": "Inicio",
     "catalog": "Buscar un peludo",

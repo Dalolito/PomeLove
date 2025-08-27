@@ -4,6 +4,28 @@
     "subtitle": "High Quality Pomeranian",
     "experience": "Specialized breeders with 15+ years of experience"
   },
+  "metadata": {
+    "home": {
+      "title": "POMELOVE KOREA - Pomeranian Medellín | Pomeranian Breeders in Medellín",
+      "description": "Specialized Pomeranian breeders in Medellín with 15+ years of experience. We import exclusive Korean Pomeranian lines of the highest quality. Pomeranian Medellín, Pomeranian Colombia. Find your perfect companion.",
+      "keywords": "pomeranian medellin, pomeranian, pomeranian puppies medellin, korean pomeranian, pomeranian breeders medellin, pomeranian for sale medellin, pomeranian colombia, pomeranian antioquia"
+    },
+    "catalog": {
+      "title": "Pomeranian Catalog Medellín - POMELOVE KOREA | Available Pomeranians",
+      "description": "Explore our catalog of Pomeranians in Medellín. Available Pomeranian puppies with Korean pedigree. Pomeranian Medellín, Pomeranian Colombia. Find your perfect companion.",
+      "keywords": "pomeranian catalog medellin, available pomeranians medellin, pomeranian for sale medellin, pomeranian medellin, pomeranian colombia, pomeranian puppies medellin, pomeranian antioquia"
+    },
+    "about": {
+      "title": "About Us - POMELOVE KOREA | Pomeranian Breeders in Medellín",
+      "description": "Learn more about POMELOVE KOREA, specialized Pomeranian breeders in Medellín with 15+ years of experience and exports to more than 15 countries. Pomeranian Medellín, Pomeranian Colombia.",
+      "keywords": "about us pomeranian medellin, pomeranian breeders medellin, pomeranian experience medellin, pomeranian export medellin, pomeranian medellin, pomeranian antioquia"
+    },
+    "puppy": {
+      "titleTemplate": "{name} - Pomeranian {category} Medellín | POMELOVE KOREA",
+      "descriptionTemplate": "Beautiful Pomeranian {category} puppy in Medellín. {description} Pomeranian Medellín, Pomeranian Colombia.",
+      "keywordsTemplate": "{name} pomeranian medellin, pomeranian {category} medellin, pomeranian for sale medellin, pomeranian medellin, pomeranian colombia, pomeranian puppy medellin, pomeranian antioquia"
+    }
+  },
   "navigation": {
     "home": "Home",
     "catalog": "Find a puppy",
