@@ -154,7 +154,8 @@ export interface Dictionary {
       fields: {
         name: string;
         description: string;
-        birthDate: string;
+        ageYears: string;
+        ageMonths: string;
         gender: string;
         category: string;
         fatherImage: string;
@@ -164,6 +165,8 @@ export interface Dictionary {
       placeholders: {
         name: string;
         description: string;
+        ageYears: string;
+        ageMonths: string;
         gender: string;
         category: string;
       };
@@ -218,7 +221,7 @@ export interface Dictionary {
         name: string;
         category: string;
         gender: string;
-        birthDate: string;
+        age: string;
         description: string;
         available: string;
         actions: string;

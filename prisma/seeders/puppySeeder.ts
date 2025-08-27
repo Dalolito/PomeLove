@@ -4,7 +4,8 @@ interface PuppyData {
   name: string;
   description_es: string;
   description_en: string;
-  birthDate: Date;
+  ageYears: number;
+  ageMonths: number;
   gender: 'male' | 'female';
   categoryId: number;
   fatherImage?: string;
@@ -131,13 +132,10 @@ const motherImages = [
   'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400&h=300&fit=crop',
 ];
 
-function getRandomBirthDate(): Date {
-  const now = new Date();
-  const threeMonthsAgo = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
-  const randomTime =
-    threeMonthsAgo.getTime() +
-    Math.random() * (now.getTime() - threeMonthsAgo.getTime());
-  return new Date(randomTime);
+function getRandomAge(): { years: number; months: number } {
+  const years = Math.floor(Math.random() * 3); // 0-2 years
+  const months = Math.floor(Math.random() * 12); // 0-11 months
+  return { years, months };
 }
 
 function getRandomElement<T>(array: T[]): T {
@@ -152,11 +150,13 @@ function generatePuppiesData(
 
   for (let categoryId = 1; categoryId <= categoriesCount; categoryId++) {
     for (let i = 0; i < puppiesPerCategory; i++) {
+      const randomAge = getRandomAge();
       const puppy: PuppyData = {
         name: getRandomElement(puppyNames),
         description_es: getRandomElement(puppyDescriptionsES),
         description_en: getRandomElement(puppyDescriptionsEN),
-        birthDate: getRandomBirthDate(),
+        ageYears: randomAge.years,
+        ageMonths: randomAge.months,
         gender: Math.random() > 0.5 ? 'male' : 'female',
         categoryId: categoryId,
         fatherImage: getRandomElement(fatherImages),
@@ -200,7 +200,8 @@ export async function seedPuppies(prisma: PrismaClient) {
           name: puppyData.name,
           description_es: puppyData.description_es,
           description_en: puppyData.description_en,
-          birthDate: puppyData.birthDate,
+          ageYears: puppyData.ageYears,
+          ageMonths: puppyData.ageMonths,
           gender: puppyData.gender,
           categoryId: puppyData.categoryId,
           fatherImage: puppyData.fatherImage,

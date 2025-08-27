@@ -22,7 +22,14 @@ model Puppy {
   name            String   @db.VarChar(255)
   description_es  String   @db.VarChar(1000)
   description_en  String   @db.VarChar(1000)
-  birthDate       DateTime
+  
+  // New age fields
+  ageYears        Int      @default(0)
+  ageMonths       Int      @default(0)
+  
+  // Keep for compatibility during migration
+  birthDate       DateTime?
+  
   gender          String   @db.VarChar(10) @default("male") 
   categoryId      Int
   fatherImage     String?  @db.VarChar(500)

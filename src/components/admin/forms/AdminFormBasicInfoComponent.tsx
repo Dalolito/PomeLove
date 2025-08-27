@@ -9,7 +9,8 @@ interface FormData {
   name: string;
   description_es: string;
   description_en: string;
-  birthDate: string;
+  ageYears: number;
+  ageMonths: number;
   gender: 'male' | 'female';
   categoryId: number | '';
 }
@@ -57,13 +58,28 @@ export default function AdminFormBasicInfoComponent({
           required
         />
 
-        <FormInputComponent
-          type="date"
-          value={data.birthDate}
-          onChange={value => onChange('birthDate', value)}
-          label={dict.admin.forms.fields.birthDate}
-          required
-        />
+        <div className="grid grid-cols-2 gap-2">
+          <FormInputComponent
+            type="number"
+            value={data.ageYears.toString()}
+            onChange={value => onChange('ageYears', parseInt(value) || 0)}
+            label={dict.admin.forms.fields.ageYears}
+            placeholder="0"
+            min="0"
+            max="20"
+            required
+          />
+          <FormInputComponent
+            type="number"
+            value={data.ageMonths.toString()}
+            onChange={value => onChange('ageMonths', parseInt(value) || 0)}
+            label={dict.admin.forms.fields.ageMonths}
+            placeholder="0"
+            min="0"
+            max="11"
+            required
+          />
+        </div>
 
         <FormSelectComponent
           value={data.gender}

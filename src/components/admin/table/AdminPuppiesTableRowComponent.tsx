@@ -4,7 +4,7 @@ import AdminPuppiesTableButtonsComponent from '@/components/admin/table/AdminPup
 import PuppyImageComponent from '@/components/ui/PuppyImageComponent';
 import { Dictionary } from '@/lib/types/dictionary';
 import { Puppy } from '@/domain/entities/Puppy';
-import { calculatePuppyAgeUtil } from '@/lib/utils/calculatePuppyAgeUtil';
+import { formatAge } from '@/lib/utils/formatAgeUtil';
 import { getLocalizedDescription } from '@/lib/utils/getLocalizedDescription';
 
 interface AdminPuppiesTableRowProps {
@@ -68,14 +68,14 @@ export default function AdminPuppiesTableRowComponent({
       <td className="px-2 py-3 sm:px-4">
         <div className="font-medium text-gray-900">{puppy.name}</div>
         <div className="text-sm text-gray-500">
-          {calculatePuppyAgeUtil(puppy.birthDate, dict)}
+          {formatAge(puppy.ageYears, puppy.ageMonths, dict)}
         </div>
         <div className="mt-1 flex items-center gap-2 text-xs text-gray-400 sm:hidden">
           <span>{puppy.category.name}</span>
           <span>•</span>
           <span>{dict.admin.forms.gender[puppy.gender]}</span>
           <span>•</span>
-          <span>{formatDate(puppy.birthDate, locale)}</span>
+          <span>{formatAge(puppy.ageYears, puppy.ageMonths, dict)}</span>
         </div>
       </td>
 
@@ -92,7 +92,7 @@ export default function AdminPuppiesTableRowComponent({
       </td>
 
       <td className="hidden px-2 py-3 text-sm text-gray-900 sm:px-4 md:table-cell">
-        {formatDate(puppy.birthDate, locale)}
+        {formatAge(puppy.ageYears, puppy.ageMonths, dict)}
       </td>
 
       <td className="hidden max-w-xs px-2 py-3 sm:px-4 lg:table-cell">

@@ -4,7 +4,7 @@ import { useState, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { Puppy } from '@/domain/entities/Puppy';
 import { Dictionary } from '@/lib/types/dictionary';
-import { calculatePuppyAgeUtil } from '@/lib/utils/calculatePuppyAgeUtil';
+import { formatAge } from '@/lib/utils/formatAgeUtil';
 import { openWhatsAppContact } from '@/lib/utils/whatsappUtils';
 import { getLocalizedDescription } from '@/lib/utils/getLocalizedDescription';
 import PuppyCardImageComponent from '@/components/ui/PuppyCardImageComponent';
@@ -119,7 +119,7 @@ export default function PuppyCardComponent({
             {puppy.name || dict.utils.fallbacks.noName}
           </h3>
           <span className="ml-2 whitespace-nowrap text-sm text-gray-500">
-            {calculatePuppyAgeUtil(puppy.birthDate, dict)}
+            {formatAge(puppy.ageYears, puppy.ageMonths, dict)}
           </span>
         </div>
 

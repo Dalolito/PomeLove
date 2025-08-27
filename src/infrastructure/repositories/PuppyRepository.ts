@@ -17,7 +17,8 @@ export class PuppyRepository implements IPuppyRepository {
           name: data.name,
           description_es: data.description_es,
           description_en: data.description_en,
-          birthDate: new Date(data.birthDate),
+          ageYears: data.ageYears,
+          ageMonths: data.ageMonths,
           gender: data.gender,
           categoryId: data.categoryId,
           fatherImage: data.fatherImage,
@@ -118,7 +119,8 @@ export class PuppyRepository implements IPuppyRepository {
           name: data.name,
           description_es: data.description_es,
           description_en: data.description_en,
-          birthDate: data.birthDate ? new Date(data.birthDate) : undefined,
+          ageYears: data.ageYears,
+          ageMonths: data.ageMonths,
           gender: data.gender,
           categoryId: data.categoryId,
           fatherImage: data.fatherImage,
@@ -277,7 +279,8 @@ export class PuppyRepository implements IPuppyRepository {
     name: string;
     description_es: string;
     description_en: string;
-    birthDate: Date;
+    ageYears: number;
+    ageMonths: number;
     gender: string;
     fatherImage: string | null;
     motherImage: string | null;
@@ -308,7 +311,8 @@ export class PuppyRepository implements IPuppyRepository {
       name: puppy.name,
       description_es: puppy.description_es,
       description_en: puppy.description_en,
-      birthDate: puppy.birthDate,
+      ageYears: puppy.ageYears,
+      ageMonths: puppy.ageMonths,
       gender: puppy.gender as 'male' | 'female',
       fatherImage: puppy.fatherImage,
       motherImage: puppy.motherImage,

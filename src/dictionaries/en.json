@@ -108,7 +108,8 @@
       "fields": {
         "name": "Name",
         "description": "Description",
-        "birthDate": "Birth Date",
+        "ageYears": "Years",
+        "ageMonths": "Months",
         "gender": "Gender",
         "category": "Category",
         "fatherImage": "Father Image",
@@ -118,6 +119,8 @@
       "placeholders": {
         "name": "Enter the puppy's name",
         "description": "Describe the puppy's characteristics",
+        "ageYears": "Years old",
+        "ageMonths": "Additional months",
         "gender": "Select gender",
         "category": "Select a category"
       },
@@ -232,7 +235,7 @@
         "age": "Age",
         "category": "Category",
         "gender": "Gender",
-        "birthDate": "Birth Date",
+        "age": "Age",
         "description": "Description",
         "available": "Available",
         "actions": "Actions"

@@ -7,7 +7,8 @@ import { Category } from './Category';
  * @property {string} name - Name of the puppy (required)
  * @property {string} description_es - Spanish description of the puppy
  * @property {string} description_en - English description of the puppy
- * @property {Date} birthDate - Date when the puppy was born (required)
+ * @property {number} ageYears - Age in years (required)
+ * @property {number} ageMonths - Age in months (required)
  * @property {string} gender - Gender of the puppy: 'male' or 'female' (required)
  * @property {MediaFile[]} media - Array of media files (images/videos) of the puppy
  * @property {string | null} fatherImage - URL/path to the father's image (optional)
@@ -22,7 +23,8 @@ export interface Puppy {
   name: string;
   description_es: string;
   description_en: string;
-  birthDate: Date;
+  ageYears: number;
+  ageMonths: number;
   gender: 'male' | 'female';
   media: MediaFile[];
   fatherImage: string | null;
@@ -37,7 +39,8 @@ export interface CreatePuppyData {
   name: string;
   description_es: string;
   description_en: string;
-  birthDate: string;
+  ageYears: number;
+  ageMonths: number;
   gender: 'male' | 'female';
   categoryId: number;
   media: MediaFile[];
@@ -50,7 +53,8 @@ export interface UpdatePuppyData {
   name?: string;
   description_es?: string;
   description_en?: string;
-  birthDate?: string;
+  ageYears?: number;
+  ageMonths?: number;
   gender?: 'male' | 'female';
   categoryId?: number;
   media?: MediaFile[];
