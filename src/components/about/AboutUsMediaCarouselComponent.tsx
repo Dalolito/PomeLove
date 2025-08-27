@@ -102,14 +102,19 @@ export default function AboutUsMediaCarouselComponent({
 
     if (!currentVideo || currentMediaItem?.type !== 'video') return;
 
-    const handleVideoPlay = () => {
+    const handleVideoCanPlay = () => {
       setVideoLoaded(true);
+      
+      if (!isMobile) {
+        currentVideo.play().catch(() => {
+          console.log('Autoplay prevented by browser - desktop');
+        });
+      }
     };
 
-    const handleVideoPause = () => {
-      if (currentVideo.currentTime < currentVideo.duration - 0.1) {
-        setIsPlaying(autoPlay);
-      }
+    const handleVideoError = () => {
+      console.error('Video error for:', currentMediaItem.url);
+      setVideoLoaded(true);
     };
 
     const handleVideoEnded = () => {
@@ -118,61 +123,16 @@ export default function AboutUsMediaCarouselComponent({
       }
     };
 
-    const handleVideoCanPlay = () => {
-      setVideoLoaded(true);
-
-      if (isMobile) {
-        currentVideo.muted = true;
-        currentVideo.playsInline = true;
-
-        setTimeout(() => {
-          currentVideo.play().catch(() => {
-            console.log('Autoplay prevented by browser - mobile');
-          });
-        }, 50);
-      } else {
-        currentVideo.play().catch(() => {
-          console.log('Autoplay prevented by browser - desktop');
-        });
-      }
-    };
-
-    const handleVideoLoadStart = () => {
-      setVideoLoaded(false);
-    };
-
-    const handleVideoError = () => {
-      console.error('Video error for:', currentMediaItem.url);
-      setVideoLoaded(true);
-    };
-
-    const handleVideoLoadedMetadata = () => {
-      if (isMobile) {
-        setVideoLoaded(true);
-      }
-    };
-
-    currentVideo.addEventListener('play', handleVideoPlay);
-    currentVideo.addEventListener('pause', handleVideoPause);
-    currentVideo.addEventListener('ended', handleVideoEnded);
     currentVideo.addEventListener('canplay', handleVideoCanPlay);
-    currentVideo.addEventListener('loadstart', handleVideoLoadStart);
     currentVideo.addEventListener('error', handleVideoError);
-    currentVideo.addEventListener('loadedmetadata', handleVideoLoadedMetadata);
+    currentVideo.addEventListener('ended', handleVideoEnded);
 
     return () => {
-      currentVideo.removeEventListener('play', handleVideoPlay);
-      currentVideo.removeEventListener('pause', handleVideoPause);
-      currentVideo.removeEventListener('ended', handleVideoEnded);
       currentVideo.removeEventListener('canplay', handleVideoCanPlay);
-      currentVideo.removeEventListener('loadstart', handleVideoLoadStart);
       currentVideo.removeEventListener('error', handleVideoError);
-      currentVideo.removeEventListener(
-        'loadedmetadata',
-        handleVideoLoadedMetadata
-      );
+      currentVideo.removeEventListener('ended', handleVideoEnded);
     };
-  }, [currentIndex, media, autoPlay, nextSlide, isPlaying, isMobile]);
+  }, [currentIndex, media, isPlaying, nextSlide, isMobile]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     e.preventDefault();
@@ -216,8 +176,13 @@ export default function AboutUsMediaCarouselComponent({
   const handleVideoClick = () => {
     if (currentItem?.type === 'video' && videoRef.current) {
       const video = videoRef.current;
+      
       if (video.paused) {
-        video.play().catch(console.log);
+        video.muted = true;
+        video.playsInline = true;
+        video.play().catch((error) => {
+          console.log('Video play failed:', error);
+        });
       } else {
         video.pause();
       }
@@ -281,7 +246,7 @@ export default function AboutUsMediaCarouselComponent({
               <video
                 ref={videoRef}
                 key={`${currentItem.id}-${currentIndex}`}
-                autoPlay={!isMobile}
+                autoPlay={false}
                 muted={true}
                 loop
                 playsInline={true}
@@ -297,7 +262,7 @@ export default function AboutUsMediaCarouselComponent({
                 onCanPlay={handleVideoLoad}
                 onClick={handleVideoClick}
                 style={{
-                  pointerEvents: isMobile ? 'auto' : 'none',
+                  pointerEvents: 'auto',
                   WebkitUserSelect: 'none',
                   userSelect: 'none',
                 }}
@@ -315,13 +280,13 @@ export default function AboutUsMediaCarouselComponent({
 
               {isMobile && (
                 <button
-                  className="absolute inset-0 z-30 flex items-center justify-center bg-black bg-opacity-20 opacity-0 transition-opacity duration-300 hover:opacity-100"
+                  className="absolute inset-0 z-30 flex items-center justify-center bg-black bg-opacity-30 opacity-100 transition-opacity duration-300"
                   onClick={handleVideoClick}
                   aria-label="Play/Pause video"
                 >
-                  <div className="rounded-full bg-white bg-opacity-80 p-3">
+                  <div className="rounded-full bg-white bg-opacity-90 p-4">
                     <svg
-                      className="h-8 w-8 text-gray-800"
+                      className="h-10 w-10 text-gray-800"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
