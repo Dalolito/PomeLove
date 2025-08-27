@@ -1,7 +1,6 @@
 'use server';
 
-import { writeFile } from 'fs/promises';
-import { join } from 'path';
+import cloudinary from '@/lib/cloudinary';
 
 const ALLOWED_MIME_TYPES = [
   'image/jpeg',
@@ -40,22 +39,30 @@ export async function uploadMediaAction(
       return { success: false, error: 'FILE_TOO_LARGE' };
     }
 
+    // Convert file to buffer
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    // Generate unique filename
     const timestamp = Date.now();
     const random = Math.random().toString(36).substring(2, 15);
     const extension = file.name.split('.').pop();
-    const filename = `${timestamp}_${random}.${extension}`;
+    const filename = `${timestamp}_${random}`;
 
+    // Upload to Cloudinary
     const uploadType = (formData.get('type') as string) || 'puppies';
-    const uploadDir = uploadType === 'parents' ? 'parents' : 'puppies';
-    const uploadPath = join(process.cwd(), 'public', 'uploads', uploadDir);
-    const filePath = join(uploadPath, filename);
+    const folder = uploadType === 'parents' ? 'pomelove/parents' : 'pomelove/puppies';
+    
+    const uploadResult = await cloudinary.uploader.upload(
+      `data:${file.type};base64,${buffer.toString('base64')}`,
+      {
+        public_id: `${folder}/${filename}`,
+        resource_type: 'auto',
+        folder: folder,
+      }
+    );
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    await writeFile(filePath, buffer);
-
-    const url = `/uploads/${uploadDir}/${filename}`;
-    return { success: true, url };
+    return { success: true, url: uploadResult.secure_url };
   } catch (error) {
     console.error('Error uploading media:', error);
     return { success: false, error: 'UPLOAD_FAILED' };
