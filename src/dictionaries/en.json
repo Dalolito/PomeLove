@@ -204,6 +204,7 @@
         "maxFilesText": "Maximum {count} files allowed",
         "uploadedFiles": "Uploaded Files ({current}/{max})",
         "removeFile": "Remove file",
+        "uploading": "Uploading...",
         "fileTypes": {
           "image": "Image",
           "video": "Video"
@@ -211,7 +212,8 @@
         "errors": {
           "fileSize": "File size must be less than {size}MB",
           "fileType": "File type not supported",
-          "maxFiles": "Maximum {count} files allowed"
+          "maxFiles": "Maximum {count} files allowed",
+          "uploadFailed": "Upload failed"
         }
       }
     },
@@ -237,6 +239,7 @@
       },
       "actions": {
         "newPet": "New Pet",
+        "view": "View",
         "edit": "Edit",
         "delete": "Delete"
       },
