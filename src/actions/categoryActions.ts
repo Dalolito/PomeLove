@@ -32,7 +32,7 @@ export async function getFilteredCategoriesAction(filters: CategoryFilters) {
     const result = await getFilteredCategoriesUseCase.execute(filters);
     return result;
   } catch (error) {
-    console.error('Error getting filtered categories:', error);
+    console.error('Error getting the filtered categories:', error);
     return { success: false, error: 'GET_FILTERED_CATEGORIES_FAILED' };
   }
 }
