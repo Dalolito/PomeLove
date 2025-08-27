@@ -46,7 +46,9 @@ export default function PuppyDetailInfoComponent({
         </div>
 
         <div className="flex items-center justify-between">
-          <span className="font-medium text-gray-700">Age:</span>
+          <span className="font-medium text-gray-700">
+            {dict.admin.table.headers.age}:
+          </span>
           <span className="text-gray-900">{age}</span>
         </div>
 
