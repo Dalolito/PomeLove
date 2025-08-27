@@ -3,7 +3,7 @@
   "short_name": "POMELOVE",
   "description": "Criadores especializados de Pomerania de alta calidad con 15+ años de experiencia",
   "start_url": "/",
-  "display": "standalone",
+  "display": "browser",
   "background_color": "#ffffff",
   "theme_color": "#ef4444",
   "orientation": "portrait-primary",
