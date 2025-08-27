@@ -8,6 +8,7 @@ import { Dictionary } from '@/lib/types/dictionary';
 interface UploadAreaProps {
   dict: Dictionary;
   maxFiles: number;
+  maxFileSize?: number;
   isDragOver: boolean;
   onDragOver: (event: React.DragEvent) => void;
   onDragLeave: (event: React.DragEvent) => void;
@@ -19,6 +20,7 @@ interface UploadAreaProps {
 export default function UploadAreaComponent({
   dict,
   maxFiles,
+  maxFileSize = 50,
   isDragOver,
   onDragOver,
   onDragLeave,
@@ -63,7 +65,9 @@ export default function UploadAreaComponent({
             {dict.admin.media.upload.dropText}
           </p>
           <p className="text-sm text-gray-500">
-            {dict.admin.media.upload.supportText}
+            {replaceText(dict.admin.media.upload.supportText, {
+              size: maxFileSize,
+            })}
           </p>
           <p className="mt-1 text-xs text-gray-400">
             {replaceText(dict.admin.media.upload.maxFilesText, {

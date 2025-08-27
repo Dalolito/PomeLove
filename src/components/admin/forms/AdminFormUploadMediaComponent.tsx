@@ -37,7 +37,6 @@ export default function UploadMediaComponent({
     setInitialFiles,
   } = useFileUpload({
     maxFiles,
-    maxFileSize,
     onMediaChange,
   });
 
