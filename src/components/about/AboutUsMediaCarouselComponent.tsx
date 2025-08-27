@@ -87,7 +87,17 @@ export default function AboutUsMediaCarouselComponent({
       slideDelay = isMobile ? 6000 : 5000;
     }
 
-    intervalRef.current = setTimeout(nextSlide, slideDelay);
+    intervalRef.current = setTimeout(() => {
+      const currentVideo = videoRef.current;
+      const isVideoCurrentlyPlaying =
+        currentVideo && !currentVideo.paused && currentVideo.currentTime > 0;
+
+      if (currentMediaItem.type === 'video' && isVideoCurrentlyPlaying) {
+        return;
+      }
+
+      nextSlide();
+    }, slideDelay);
 
     return () => {
       if (intervalRef.current) {
@@ -121,7 +131,9 @@ export default function AboutUsMediaCarouselComponent({
     const handleVideoEnded = () => {
       setIsVideoPlaying(false);
       if (isPlaying) {
-        nextSlide();
+        setTimeout(() => {
+          nextSlide();
+        }, 1000);
       }
     };
 
@@ -131,10 +143,32 @@ export default function AboutUsMediaCarouselComponent({
 
     const handleVideoPause = () => {
       setIsVideoPlaying(false);
+
+      if (isPlaying && media.length > 1) {
+        const currentMediaItem = media[currentIndex];
+        let slideDelay = isMobile ? 3000 : 4000;
+
+        if (currentMediaItem.type === 'video') {
+          slideDelay = isMobile ? 6000 : 5000;
+        }
+
+        if (intervalRef.current) {
+          clearTimeout(intervalRef.current);
+        }
+
+        intervalRef.current = setTimeout(() => {
+          nextSlide();
+        }, slideDelay);
+      }
     };
 
     const handleVideoPlay = () => {
       setIsVideoPlaying(true);
+
+      if (intervalRef.current) {
+        clearTimeout(intervalRef.current);
+        intervalRef.current = null;
+      }
     };
 
     const handleVideoLoadStart = () => {
@@ -215,6 +249,11 @@ export default function AboutUsMediaCarouselComponent({
           .play()
           .then(() => {
             setIsVideoPlaying(true);
+
+            if (intervalRef.current) {
+              clearTimeout(intervalRef.current);
+              intervalRef.current = null;
+            }
           })
           .catch(error => {
             console.error('Video play failed:', error);
@@ -222,6 +261,23 @@ export default function AboutUsMediaCarouselComponent({
       } else {
         video.pause();
         setIsVideoPlaying(false);
+
+        if (isPlaying && media.length > 1) {
+          const currentMediaItem = media[currentIndex];
+          let slideDelay = isMobile ? 3000 : 4000;
+
+          if (currentMediaItem.type === 'video') {
+            slideDelay = isMobile ? 6000 : 5000;
+          }
+
+          if (intervalRef.current) {
+            clearTimeout(intervalRef.current);
+          }
+
+          intervalRef.current = setTimeout(() => {
+            nextSlide();
+          }, slideDelay);
+        }
       }
     }
   };
