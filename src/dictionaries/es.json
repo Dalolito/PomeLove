@@ -40,7 +40,7 @@
     "search_puppy": "Buscar un peludo",
     "about_us": "Sobre nosotros",
     "view_details": "Ver detalles",
-    "ask_about_puppy": "Preguntar sobre este perro",
+    "ask_about_puppy": "Preguntar sobre este peludo",
     "back_to_catalog": "Volver al catálogo"
   },
   "utils": {
@@ -243,6 +243,7 @@
         "age": "Edad",
         "description": "Descripción",
         "available": "Disponible",
+        "categoryPrice": "categoría",
         "actions": "Acciones"
       },
       "actions": {
@@ -302,8 +303,8 @@
     "subtitle": "Explora nuestra selección de adorables mascotas",
     "loading": "Cargando catálogo...",
     "fromPrice": "desde",
-    "resultsCount": "{count} {status} {count, plural, one {mascota} other {mascotas}}",
-    "filtered": "encontradas",
+    "resultsCount": "{count} peludos {status}",
+    "filtered": "encontrados",
     "total": "disponibles",
     "empty": {
       "title": "No hay mascotas disponibles",

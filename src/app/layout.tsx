@@ -35,9 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
         { url: '/logo-2.png?v=1', sizes: '48x48', type: 'image/png' },
       ],
       shortcut: '/favicon.ico',
-      apple: [
-        { url: '/logo-2.png?v=1', sizes: '180x180', type: 'image/png' },
-      ],
+      apple: [{ url: '/logo-2.png?v=1', sizes: '180x180', type: 'image/png' }],
       other: [
         {
           rel: 'icon',
@@ -60,11 +58,11 @@ export default function RootLayout({
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="icon" href="/logo-2.png?v=1" type="image/png" />
         <link rel="apple-touch-icon" href="/logo-2.png?v=1" />
-        
+
         <meta name="theme-color" content="#ffffff" />
         <meta name="msapplication-TileImage" content="/logo-2.png?v=1" />
         <meta name="msapplication-TileColor" content="#ffffff" />
-        
+
         <script
           async
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}

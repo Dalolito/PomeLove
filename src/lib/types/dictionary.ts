@@ -224,6 +224,7 @@ export interface Dictionary {
         age: string;
         description: string;
         available: string;
+        categoryPrice: string;
         actions: string;
       };
       actions: {

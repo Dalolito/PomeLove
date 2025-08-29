@@ -40,7 +40,7 @@
     "search_puppy": "Find a puppy",
     "about_us": "About us",
     "view_details": "View details",
-    "ask_about_puppy": "Ask about this puppy",
+    "ask_about_puppy": "Ask about this pet",
     "back_to_catalog": "Back to catalog"
   },
   "utils": {
@@ -238,6 +238,7 @@
         "age": "Age",
         "description": "Description",
         "available": "Available",
+        "categoryPrice": "category",
         "actions": "Actions"
       },
       "actions": {
@@ -297,7 +298,7 @@
     "subtitle": "Explore our selection of adorable pets",
     "loading": "Loading catalog...",
     "fromPrice": "from",
-    "resultsCount": "{count} {status} {count, plural, one {pet} other {pets}}",
+    "resultsCount": "{count} pets {status}",
     "filtered": "found",
     "total": "available",
     "empty": {

@@ -68,6 +68,25 @@ export default function PuppyCardComponent({
     [locale]
   );
 
+  const formatCategoryPrice = useCallback((): string => {
+    if (!puppy.category) return '';
+
+    const price =
+      locale === 'es' ? puppy.category.minPriceCOP : puppy.category.minPriceUSD;
+    const currency = locale === 'es' ? 'COP' : 'USD';
+
+    const formattedPrice = new Intl.NumberFormat(
+      locale === 'es' ? 'es-CO' : 'en-US',
+      {
+        style: 'currency',
+        currency: currency,
+        minimumFractionDigits: 0,
+      }
+    ).format(price);
+
+    return formattedPrice + (locale === 'es' ? ' COP' : ' USD');
+  }, [puppy.category, locale]);
+
   const handleContactClick = useCallback(
     (e: React.MouseEvent) => {
       e.preventDefault();
@@ -113,7 +132,7 @@ export default function PuppyCardComponent({
         )}
       </div>
 
-      <div className="space-y-3 p-4">
+      <div className="space-y-4 p-5">
         <div className="flex items-center justify-between">
           <h3 className="truncate text-lg font-semibold text-gray-900">
             {puppy.name || dict.utils.fallbacks.noName}
@@ -123,24 +142,36 @@ export default function PuppyCardComponent({
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="inline-flex items-center rounded-full border border-sky-200 bg-sky-100 px-2.5 py-0.5 text-xs font-medium text-sky-800">
-            {puppy.category?.name || dict.utils.fallbacks.noCategory}
-          </span>
-          <span className="inline-flex items-center rounded-full border border-rose-200 bg-rose-100 px-2.5 py-0.5 text-xs font-medium text-rose-800">
-            {dict.admin.forms.gender[puppy.gender] || puppy.gender}
-          </span>
+        <div className="space-y-3">
+          <div className="w-full">
+            <div className="flex flex-col items-center rounded-lg border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-sky-50 px-4 py-3 shadow-sm">
+              <span className="mb-1 text-center text-base font-semibold text-blue-900">
+                {puppy.category?.name || dict.utils.fallbacks.noCategory}
+              </span>
+              {puppy.category && (
+                <span className="text-center text-sm font-bold text-emerald-700">
+                  {dict.catalog.fromPrice} {formatCategoryPrice()}
+                </span>
+              )}
+            </div>
+          </div>
+
+          <div className="flex justify-center">
+            <span className="inline-flex items-center rounded-full border-2 border-pink-200 bg-gradient-to-r from-pink-50 to-rose-50 px-4 py-2 text-sm font-semibold text-pink-800 shadow-sm">
+              {dict.admin.forms.gender[puppy.gender] || puppy.gender}
+            </span>
+          </div>
         </div>
 
         <p
-          className="line-clamp-2 text-sm text-gray-600"
+          className="line-clamp-2 text-sm leading-relaxed text-gray-600"
           title={getLocalizedDescription(puppy, locale) || ''}
         >
           {getLocalizedDescription(puppy, locale) ||
             dict.utils.fallbacks.noDescription}
         </p>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3 pt-2">
           <div className="text-center">
             <span className="inline-flex w-full items-center justify-center rounded-md border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-medium text-blue-600 transition-colors duration-200 hover:bg-blue-100">
               {dict.buttons.view_details}

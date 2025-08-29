@@ -29,6 +29,25 @@ export default function PuppyDetailInfoComponent({
 
   const age = formatAge(puppy.ageYears, puppy.ageMonths, dict);
 
+  const formatCategoryPrice = (): string => {
+    if (!puppy.category) return '';
+
+    const price =
+      locale === 'es' ? puppy.category.minPriceCOP : puppy.category.minPriceUSD;
+    const currency = locale === 'es' ? 'COP' : 'USD';
+
+    const formattedPrice = new Intl.NumberFormat(
+      locale === 'es' ? 'es-CO' : 'en-US',
+      {
+        style: 'currency',
+        currency: currency,
+        minimumFractionDigits: 0,
+      }
+    ).format(price);
+
+    return formattedPrice + (locale === 'es' ? ' COP' : ' USD');
+  };
+
   return (
     <div
       className={`rounded-lg border border-gray-200 bg-white p-6 shadow-sm ${className}`}
@@ -69,6 +88,17 @@ export default function PuppyDetailInfoComponent({
             {puppy.category.name}
           </span>
         </div>
+
+        {puppy.category && (
+          <div className="flex items-center justify-between">
+            <span className="font-medium text-gray-700">
+              Precio de {dict.admin.table.headers.categoryPrice}:
+            </span>
+            <span className="font-semibold text-emerald-600">
+              {dict.catalog.fromPrice} {formatCategoryPrice()}
+            </span>
+          </div>
+        )}
 
         <div className="flex items-center justify-between">
           <span className="font-medium text-gray-700">
