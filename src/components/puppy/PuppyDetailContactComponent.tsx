@@ -41,14 +41,18 @@ export default function PuppyDetailContactComponent({
           onClick={handleWhatsAppContact}
           fullWidth
           size="lg"
-          className="!hover:bg-green-600 !flex !items-center !justify-center !bg-green-500 !text-base"
+          className="!hover:bg-green-600 !flex !items-center !justify-center !whitespace-nowrap !bg-green-500 !text-base"
         >
           <img
             src="/icons/icon-whatsapp.png"
             alt="WhatsApp"
             className="mr-2 h-7 w-7"
           />
-          {dict.buttons.ask_about_puppy}
+          <span className="whitespace-nowrap">
+            {puppy.available
+              ? dict.buttons.ask_about_puppy
+              : dict.buttons.ask_about_similar}
+          </span>
         </PrimaryButtonComponent>
 
         <PrimaryButtonComponent

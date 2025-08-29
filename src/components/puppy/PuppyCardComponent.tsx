@@ -119,13 +119,13 @@ export default function PuppyCardComponent({
 
         {puppy.available ? (
           <div className="absolute left-3 top-3 z-10">
-            <span className="inline-flex items-center rounded-full bg-emerald-500 px-2.5 py-0.5 text-xs font-medium text-white shadow-sm">
+            <span className="inline-flex items-center rounded-full bg-emerald-500 px-3 py-1 text-sm font-medium text-white shadow-sm">
               {dict.admin.table.status.available}
             </span>
           </div>
         ) : (
           <div className="absolute left-3 top-3 z-10">
-            <span className="inline-flex items-center rounded-full bg-gray-500 px-2.5 py-0.5 text-xs font-medium text-white shadow-sm">
+            <span className="inline-flex items-center rounded-full bg-gray-500 px-3 py-1 text-sm font-medium text-white shadow-sm">
               {dict.admin.table.status.unavailable}
             </span>
           </div>
@@ -178,19 +178,21 @@ export default function PuppyCardComponent({
             </span>
           </div>
 
-          {puppy.available && (
-            <button
-              onClick={handleContactClick}
-              className="w-full transform rounded-md border border-transparent bg-emerald-500 px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 active:scale-95"
-            >
-              <img
-                src="/icons/icon-whatsapp.png"
-                alt="WhatsApp"
-                className="mr-2 inline h-7 w-7"
-              />
-              {dict.buttons.ask_about_puppy}
-            </button>
-          )}
+          <button
+            onClick={handleContactClick}
+            className="flex w-full transform items-center justify-center rounded-md border border-transparent bg-emerald-500 px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 active:scale-95"
+          >
+            <img
+              src="/icons/icon-whatsapp.png"
+              alt="WhatsApp"
+              className="mr-2 h-7 w-7"
+            />
+            <span className="whitespace-nowrap">
+              {puppy.available
+                ? dict.buttons.ask_about_puppy
+                : dict.buttons.ask_about_similar}
+            </span>
+          </button>
         </div>
       </div>
     </Link>

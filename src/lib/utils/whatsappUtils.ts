@@ -23,10 +23,14 @@ function generateWhatsAppMessage(
   dict: Dictionary,
   locale: string
 ): string {
-  const messageTemplate =
-    dict.whatsapp?.messageTemplate ||
-    dict.whatsapp?.basicMessage ||
-    dict.utils.errors.unexpected;
+  const messageTemplate = puppy.available
+    ? dict.whatsapp?.messageTemplate ||
+      dict.whatsapp?.basicMessage ||
+      dict.utils.errors.unexpected
+    : dict.whatsapp?.messageTemplateUnavailable ||
+      dict.whatsapp?.messageTemplate ||
+      dict.whatsapp?.basicMessage ||
+      dict.utils.errors.unexpected;
 
   const genderText = dict.admin.forms.gender[puppy.gender] || puppy.gender;
 

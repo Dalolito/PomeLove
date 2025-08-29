@@ -41,6 +41,7 @@
     "about_us": "About us",
     "view_details": "View details",
     "ask_about_puppy": "Ask about this pet",
+    "ask_about_similar": "Ask about similar pets",
     "back_to_catalog": "Back to catalog"
   },
   "utils": {
@@ -320,6 +321,7 @@
   },
   "whatsapp": {
     "messageTemplate": "Hello! I'm interested in {puppyName} ({category} - {gender}), could you give me more information?",
+    "messageTemplateUnavailable": "Hello! I would like to ask about pets similar to {puppyName} ({category} - {gender}), do you have others available?",
     "basicMessage": "Hello! I would like to get information about your available pets."
   },
   "about": {

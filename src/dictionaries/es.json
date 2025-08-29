@@ -41,6 +41,7 @@
     "about_us": "Sobre nosotros",
     "view_details": "Ver detalles",
     "ask_about_puppy": "Preguntar sobre este peludo",
+    "ask_about_similar": "Preguntar por peludos similares",
     "back_to_catalog": "Volver al catálogo"
   },
   "utils": {
@@ -325,6 +326,7 @@
   },
   "whatsapp": {
     "messageTemplate": "¡Hola! Estoy interesado en {puppyName} ({category} - {gender}), ¿me podrías dar más información?",
+    "messageTemplateUnavailable": "¡Hola! Me gustaría preguntar por peludos similares a {puppyName} ({category} - {gender}), ¿tienen otros disponibles?",
     "basicMessage": "Hola! Me gustaría obtener información sobre sus mascotas disponibles."
   },
   "about": {

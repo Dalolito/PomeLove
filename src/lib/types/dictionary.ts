@@ -41,6 +41,7 @@ export interface Dictionary {
     about_us: string;
     view_details: string;
     ask_about_puppy: string;
+    ask_about_similar: string;
     back_to_catalog: string;
   };
   utils: {
@@ -300,6 +301,7 @@ export interface Dictionary {
   };
   whatsapp?: {
     messageTemplate: string;
+    messageTemplateUnavailable: string;
     basicMessage: string;
   };
   about?: {
