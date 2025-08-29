@@ -132,7 +132,7 @@ export default function PuppyCardComponent({
         )}
       </div>
 
-      <div className="space-y-4 p-5">
+      <div className="space-y-3 p-4">
         <div className="flex items-center justify-between">
           <h3 className="truncate text-lg font-semibold text-gray-900">
             {puppy.name || dict.utils.fallbacks.noName}
@@ -142,7 +142,7 @@ export default function PuppyCardComponent({
           </span>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-2">
           <div className="w-full">
             <div className="flex flex-col items-center rounded-lg border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-sky-50 px-4 py-3 shadow-sm">
               <span className="mb-1 text-center text-base font-semibold text-blue-900">
@@ -164,14 +164,14 @@ export default function PuppyCardComponent({
         </div>
 
         <p
-          className="line-clamp-2 text-sm leading-relaxed text-gray-600"
+          className="line-clamp-2 text-sm leading-tight text-gray-600"
           title={getLocalizedDescription(puppy, locale) || ''}
         >
           {getLocalizedDescription(puppy, locale) ||
             dict.utils.fallbacks.noDescription}
         </p>
 
-        <div className="flex flex-col gap-3 pt-2">
+        <div className="flex flex-col gap-2 pt-1">
           <div className="text-center">
             <span className="inline-flex w-full items-center justify-center rounded-md border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-medium text-blue-600 transition-colors duration-200 hover:bg-blue-100">
               {dict.buttons.view_details}
