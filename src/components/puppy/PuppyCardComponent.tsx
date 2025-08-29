@@ -109,7 +109,7 @@ export default function PuppyCardComponent({
       href={`/${locale}/puppy/${puppy.id}`}
       className={`group block overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:scale-[1.02] hover:border-blue-300 hover:shadow-xl ${className}`}
     >
-      <div className="relative aspect-square">
+      <div className="relative aspect-[4/3] sm:aspect-square">
         <PuppyCardImageComponent
           src={mainImage}
           alt={`${puppy.name} - ${puppy.category?.name || dict.utils.fallbacks.pet}`}
@@ -132,7 +132,7 @@ export default function PuppyCardComponent({
         )}
       </div>
 
-      <div className="space-y-3 p-4">
+      <div className="space-y-2 p-3 sm:space-y-3 sm:p-4">
         <div className="flex items-center justify-between">
           <h3 className="truncate text-lg font-semibold text-gray-900">
             {puppy.name || dict.utils.fallbacks.noName}
@@ -142,9 +142,9 @@ export default function PuppyCardComponent({
           </span>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-1.5 sm:space-y-2">
           <div className="w-full">
-            <div className="flex flex-col items-center rounded-lg border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-sky-50 px-4 py-3 shadow-sm">
+            <div className="flex flex-col items-center rounded-lg border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-sky-50 px-3 py-2 sm:px-4 sm:py-3 shadow-sm">
               <span className="mb-1 text-center text-base font-semibold text-blue-900">
                 {puppy.category?.name || dict.utils.fallbacks.noCategory}
               </span>
@@ -157,7 +157,7 @@ export default function PuppyCardComponent({
           </div>
 
           <div className="flex justify-center">
-            <span className="inline-flex items-center rounded-full border-2 border-pink-200 bg-gradient-to-r from-pink-50 to-rose-50 px-4 py-2 text-sm font-semibold text-pink-800 shadow-sm">
+            <span className="inline-flex items-center rounded-full border-2 border-pink-200 bg-gradient-to-r from-pink-50 to-rose-50 px-3 py-1.5 sm:px-4 sm:py-2 text-sm font-semibold text-pink-800 shadow-sm">
               {dict.admin.forms.gender[puppy.gender] || puppy.gender}
             </span>
           </div>
@@ -171,16 +171,16 @@ export default function PuppyCardComponent({
             dict.utils.fallbacks.noDescription}
         </p>
 
-        <div className="flex flex-col gap-2 pt-1">
+        <div className="flex flex-col gap-1.5 pt-0.5 sm:gap-2 sm:pt-1">
           <div className="text-center">
-            <span className="inline-flex w-full items-center justify-center rounded-md border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-medium text-blue-600 transition-colors duration-200 hover:bg-blue-100">
+            <span className="inline-flex w-full items-center justify-center rounded-md border border-blue-200 bg-blue-50 px-3 py-1.5 sm:px-4 sm:py-2 text-sm font-medium text-blue-600 transition-colors duration-200 hover:bg-blue-100">
               {dict.buttons.view_details}
             </span>
           </div>
 
           <button
             onClick={handleContactClick}
-            className="flex w-full transform items-center justify-center rounded-md border border-transparent bg-emerald-500 px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 active:scale-95"
+            className="flex w-full transform items-center justify-center rounded-md border border-transparent bg-emerald-500 px-3 py-1.5 sm:px-4 sm:py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 active:scale-95"
           >
             <img
               src="/icons/icon-whatsapp.png"
