@@ -30,9 +30,12 @@ function PuppyGridComponent({
       if (!puppy || !puppy.id) {
         return false;
       }
+      if (isPublic && !puppy.available) {
+        return false;
+      }
       return true;
     });
-  }, [puppies]);
+  }, [puppies, isPublic]);
 
   const handleCardError = useCallback((puppyId: string, error: any) => {
     console.error(`Error rendering puppy card ${puppyId}:`, error);
