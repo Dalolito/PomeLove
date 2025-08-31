@@ -59,7 +59,8 @@ export default function CatalogContentComponent({
     <div className={`container mx-auto px-4 py-8 ${className}`}>
       <CatalogHeaderComponent
         selectedCategory={selectedCategory}
-        totalPuppies={
+        totalPuppies={filteredPuppies?.length || 0}
+        availablePuppies={
           (filteredPuppies?.filter(puppy => puppy.available) || []).length
         }
         hasActiveFilters={hasActiveFilters}

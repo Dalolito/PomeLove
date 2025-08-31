@@ -5,6 +5,7 @@ import { replaceText } from '@/lib/utils/textUtils';
 interface CatalogHeaderComponentProps {
   selectedCategory: Category | null;
   totalPuppies: number;
+  availablePuppies: number;
   hasActiveFilters: boolean;
   dict: Dictionary;
   locale: string;
@@ -14,6 +15,7 @@ interface CatalogHeaderComponentProps {
 export default function CatalogHeaderComponent({
   selectedCategory,
   totalPuppies,
+  availablePuppies,
   hasActiveFilters,
   dict,
   locale,
@@ -65,12 +67,12 @@ export default function CatalogHeaderComponent({
       <div className="inline-flex items-center rounded-full bg-gray-100 px-4 py-2">
         <span className="text-sm font-medium text-gray-700">
           {hasActiveFilters
-            ? `${totalPuppies} ${locale === 'es' ? 'peludos' : 'pets'} ${dict.catalog.filtered}`
-            : totalPuppies === 0
-            ? dict.catalog.resultsCountZero
-            : replaceText(dict.catalog.resultsCount, {
-                count: totalPuppies,
-              })}
+            ? `${totalPuppies} ${locale === 'es' ? 'peludos' : 'pets'} ${dict.catalog.filtered}, ${availablePuppies} ${locale === 'es' ? 'disponibles' : 'available'}`
+            : availablePuppies === 0
+              ? dict.catalog.resultsCountZero
+              : replaceText(dict.catalog.resultsCount, {
+                  count: availablePuppies,
+                })}
         </span>
       </div>
     </div>
