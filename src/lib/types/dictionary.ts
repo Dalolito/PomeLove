@@ -280,6 +280,7 @@ export interface Dictionary {
     loading: string;
     fromPrice: string;
     resultsCount: string;
+    resultsCountZero: string;
     filtered: string;
     total: string;
     empty: {

@@ -305,6 +305,7 @@
     "loading": "Cargando catálogo...",
     "fromPrice": "desde",
     "resultsCount": "solo quedan {count} peludos disponibles",
+    "resultsCountZero": "no nos quedan peludos disponibles",
     "filtered": "encontrados",
     "total": "disponibles",
     "empty": {

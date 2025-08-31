@@ -300,6 +300,7 @@
     "loading": "Loading catalog...",
     "fromPrice": "from",
     "resultsCount": "only {count} pets available",
+    "resultsCountZero": "no pets available",
     "filtered": "found",
     "total": "available",
     "empty": {
