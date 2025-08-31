@@ -31,12 +31,16 @@ export async function generateMetadata(): Promise<Metadata> {
     icons: {
       icon: [
         { url: '/favicon.ico', sizes: 'any' },
-        { url: '/logo-2.png?v=1', sizes: '16x16', type: 'image/png' },
-        { url: '/logo-2.png?v=1', sizes: '32x32', type: 'image/png' },
-        { url: '/logo-2.png?v=1', sizes: '48x48', type: 'image/png' },
+        { url: '/logo.png', sizes: '16x16', type: 'image/png' },
+        { url: '/logo.png', sizes: '32x32', type: 'image/png' },
+        { url: '/logo.png', sizes: '48x48', type: 'image/png' },
+        { url: '/logo.png', sizes: '64x64', type: 'image/png' },
+        { url: '/logo.png', sizes: '96x96', type: 'image/png' },
+        { url: '/logo.png', sizes: '128x128', type: 'image/png' },
+        { url: '/logo.png', sizes: '256x256', type: 'image/png' },
       ],
       shortcut: '/favicon.ico',
-      apple: [{ url: '/logo-2.png?v=1', sizes: '180x180', type: 'image/png' }],
+      apple: [{ url: '/logo.png', sizes: '180x180', type: 'image/png' }],
       other: [
         {
           rel: 'icon',
@@ -57,11 +61,11 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="icon" href="/logo-2.png?v=1" type="image/png" />
-        <link rel="apple-touch-icon" href="/logo-2.png?v=1" />
+        <link rel="icon" href="/logo.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/logo.png" />
 
         <meta name="theme-color" content="#ffffff" />
-        <meta name="msapplication-TileImage" content="/logo-2.png?v=1" />
+        <meta name="msapplication-TileImage" content="/logo.png" />
         <meta name="msapplication-TileColor" content="#ffffff" />
 
         <script
