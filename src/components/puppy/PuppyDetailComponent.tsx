@@ -1,5 +1,7 @@
+import React from 'react';
 import { Puppy } from '@/domain/entities/Puppy';
 import { Dictionary } from '@/lib/types/dictionary';
+import { trackViewItem } from '@/lib/utils/analyticsUtils';
 import PuppyDetailHeaderComponent from '@/components/puppy/PuppyDetailHeaderComponent';
 import PuppyDetailGalleryComponent from '@/components/puppy/PuppyDetailGalleryComponent';
 import PuppyDetailInfoComponent from '@/components/puppy/PuppyDetailInfoComponent';
@@ -19,6 +21,12 @@ export default function PuppyDetailComponent({
   locale,
   className = '',
 }: PuppyDetailComponentProps) {
+  React.useEffect(() => {
+    if (puppy.id && puppy.name) {
+      trackViewItem(puppy.name, puppy.id, puppy.category?.name || 'puppy');
+    }
+  }, [puppy.id, puppy.name, puppy.category?.name]);
+
   return (
     <div className={`container mx-auto px-4 py-6 ${className}`}>
       <PuppyDetailHeaderComponent

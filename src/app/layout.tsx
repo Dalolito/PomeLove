@@ -2,6 +2,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import type { Metadata } from 'next';
 import { generateMetadata as generatePageMetadata } from '@/lib/utils/metadataUtils';
+import AnalyticsProvider from '@/components/providers/AnalyticsProvider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -65,7 +66,7 @@ export default function RootLayout({
 
         <script
           async
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+          src="https://www.googletagmanager.com/gtag/js?id=AW-17521038351"
         />
         <script
           dangerouslySetInnerHTML={{
@@ -73,10 +74,7 @@ export default function RootLayout({
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
-                page_title: document.title,
-                page_location: window.location.href,
-              });
+              gtag('config', 'AW-17521038351');
             `,
           }}
         />
@@ -85,7 +83,7 @@ export default function RootLayout({
         className={`${inter.variable} font-sans antialiased`}
         suppressHydrationWarning
       >
-        {children}
+        <AnalyticsProvider>{children}</AnalyticsProvider>
       </body>
     </html>
   );

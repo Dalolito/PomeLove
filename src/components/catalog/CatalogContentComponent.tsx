@@ -5,6 +5,7 @@ import { Puppy } from '@/domain/entities/Puppy';
 import { Category } from '@/domain/entities/Category';
 import { Dictionary } from '@/lib/types/dictionary';
 import { useCatalogFilters } from '@/hooks/useCatalogFilters';
+import { trackCatalogView } from '@/lib/utils/analyticsUtils';
 import CatalogHeaderComponent from '@/components/catalog/CatalogHeaderComponent';
 import CatalogFiltersComponent from '@/components/catalog/CatalogFiltersComponent';
 import PuppyGridComponent from '@/components/puppy/PuppyGridComponent';
@@ -54,6 +55,10 @@ export default function CatalogContentComponent({
 
     return () => clearTimeout(timer);
   }, [cleanedPuppies]);
+
+  useEffect(() => {
+    trackCatalogView();
+  }, []);
 
   return (
     <div className={`container mx-auto px-4 py-8 ${className}`}>

@@ -1,5 +1,6 @@
 import { Puppy } from '@/domain/entities/Puppy';
 import { Dictionary } from '@/lib/types/dictionary';
+import { trackWhatsAppContact } from '@/lib/utils/analyticsUtils';
 import { replaceText } from '@/lib/utils/textUtils';
 
 export function openWhatsAppContact(
@@ -7,6 +8,8 @@ export function openWhatsAppContact(
   dict: Dictionary,
   locale: string = 'es'
 ): void {
+  trackWhatsAppContact(puppy.name);
+
   try {
     const message = generateWhatsAppMessage(puppy, dict, locale);
     const whatsappUrl = buildWhatsAppUrl(message);
@@ -49,6 +52,8 @@ function buildWhatsAppUrl(message: string): string {
 }
 
 export function openBasicWhatsAppContact(dict: Dictionary): void {
+  trackWhatsAppContact();
+
   const basicMessage =
     dict.whatsapp?.basicMessage || dict.utils.errors.unexpected;
   const whatsappUrl = buildWhatsAppUrl(basicMessage);

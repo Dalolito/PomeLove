@@ -414,30 +414,30 @@ export default function SimpleCarouselComponent({
             </svg>
           </button>
 
-                     <div className="relative flex h-[90vh] w-[90vw] items-center justify-center p-4">
-             {currentMedia.type === 'video' ? (
-               <video
-                 src={currentMedia.url}
-                 autoPlay={!isMobile}
-                 muted
-                 loop
-                 playsInline
-                 className="h-full w-full object-contain"
-                 onClick={(event) => {
-                   if (isMobile) {
-                     // Permitir controles nativos en el modal para móvil
-                     const video = event.target as HTMLVideoElement;
-                     if (video.paused) {
-                       video.play();
-                     } else {
-                       video.pause();
-                     }
-                   }
-                 }}
-               >
-                 Tu navegador no soporta el elemento de video.
-               </video>
-             ) : (
+          <div className="relative flex h-[90vh] w-[90vw] items-center justify-center p-4">
+            {currentMedia.type === 'video' ? (
+              <video
+                src={currentMedia.url}
+                autoPlay={!isMobile}
+                muted
+                loop
+                playsInline
+                className="h-full w-full object-contain"
+                onClick={event => {
+                  if (isMobile) {
+                    // Permitir controles nativos en el modal para móvil
+                    const video = event.target as HTMLVideoElement;
+                    if (video.paused) {
+                      video.play();
+                    } else {
+                      video.pause();
+                    }
+                  }
+                }}
+              >
+                Tu navegador no soporta el elemento de video.
+              </video>
+            ) : (
               <PuppyCarouselImageComponent
                 src={currentMedia.url}
                 alt={`${puppyName} - Enlarged view`}
