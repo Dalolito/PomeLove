@@ -66,9 +66,6 @@ export default function CatalogHeaderComponent({
         <span className="text-sm font-medium text-gray-700">
           {replaceText(dict.catalog.resultsCount, {
             count: totalPuppies,
-            status: hasActiveFilters
-              ? dict.catalog.filtered
-              : dict.catalog.total,
           })}
         </span>
       </div>

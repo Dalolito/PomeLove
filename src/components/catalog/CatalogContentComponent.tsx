@@ -85,7 +85,7 @@ export default function CatalogContentComponent({
         locale={locale}
         loading={isLoading}
         className="mt-8"
-        isPublic={true}
+        isPublic={false}
       />
     </div>
   );

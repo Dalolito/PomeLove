@@ -299,7 +299,7 @@
     "subtitle": "Explore our selection of adorable pets",
     "loading": "Loading catalog...",
     "fromPrice": "from",
-    "resultsCount": "{count} pets {status}",
+    "resultsCount": "only {count} pets available",
     "filtered": "found",
     "total": "available",
     "empty": {
