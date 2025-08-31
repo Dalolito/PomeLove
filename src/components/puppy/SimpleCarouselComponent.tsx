@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { MediaFile } from '@/application/useCases/utils/MediaUploadUseCase';
 import PuppyCarouselImageComponent from '@/components/ui/PuppyCarouselImageComponent';
 
@@ -19,6 +19,9 @@ export default function SimpleCarouselComponent({
   const [showModal, setShowModal] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (showModal) {
@@ -31,6 +34,18 @@ export default function SimpleCarouselComponent({
       document.body.style.overflow = 'unset';
     };
   }, [showModal]);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(
+        window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent)
+      );
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const validMedia =
     media?.filter(
@@ -52,6 +67,8 @@ export default function SimpleCarouselComponent({
     if (selectedIndex >= validMedia.length && validMedia.length > 0) {
       setSelectedIndex(0);
     }
+    // Resetear estado del video cuando cambia el media
+    setIsVideoPlaying(false);
   }, [selectedIndex, validMedia.length]);
 
   if (!hasMedia) {
@@ -141,6 +158,30 @@ export default function SimpleCarouselComponent({
     return null;
   };
 
+  const handleVideoClick = () => {
+    if (currentMedia?.type === 'video' && videoRef.current) {
+      const video = videoRef.current;
+
+      if (video.paused) {
+        video.muted = true;
+        video.playsInline = true;
+        video.volume = 0;
+
+        video
+          .play()
+          .then(() => {
+            setIsVideoPlaying(true);
+          })
+          .catch(error => {
+            console.error('Video play failed:', error);
+          });
+      } else {
+        video.pause();
+        setIsVideoPlaying(false);
+      }
+    }
+  };
+
   const currentMedia = getCurrentMedia();
 
   if (!currentMedia) {
@@ -170,17 +211,47 @@ export default function SimpleCarouselComponent({
           onTouchEnd={handleTouchEnd}
         >
           {currentMedia.type === 'video' ? (
-            <video
-              src={currentMedia.url}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="h-full w-full cursor-pointer object-contain"
-              onClick={() => setShowModal(true)}
-            >
-              Tu navegador no soporta el elemento de video.
-            </video>
+            <>
+              <video
+                ref={videoRef}
+                src={currentMedia.url}
+                autoPlay={!isMobile} // Solo autoplay en desktop
+                muted
+                loop
+                playsInline
+                className="h-full w-full cursor-pointer object-contain"
+                onClick={() => {
+                  if (isMobile) {
+                    handleVideoClick();
+                  } else {
+                    setShowModal(true);
+                  }
+                }}
+                onPlay={() => setIsVideoPlaying(true)}
+                onPause={() => setIsVideoPlaying(false)}
+              >
+                Tu navegador no soporta el elemento de video.
+              </video>
+
+              {/* Overlay de play para móvil cuando el video no se reproduce */}
+              {isMobile && !isVideoPlaying && (
+                <button
+                  className="absolute inset-0 z-30 flex items-center justify-center bg-black bg-opacity-30 opacity-100 transition-opacity duration-300"
+                  onClick={handleVideoClick}
+                  aria-label="Play video"
+                >
+                  <div className="rounded-full bg-white bg-opacity-90 p-4">
+                    <svg
+                      className="h-10 w-10 text-gray-800"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M8 5v10l8-5-8-5z" />
+                    </svg>
+                  </div>
+                </button>
+              )}
+            </>
           ) : (
             <PuppyCarouselImageComponent
               src={currentMedia.url}
@@ -343,19 +414,30 @@ export default function SimpleCarouselComponent({
             </svg>
           </button>
 
-          <div className="relative flex h-[90vh] w-[90vw] items-center justify-center p-4">
-            {currentMedia.type === 'video' ? (
-              <video
-                src={currentMedia.url}
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="h-full w-full object-contain"
-              >
-                Tu navegador no soporta el elemento de video.
-              </video>
-            ) : (
+                     <div className="relative flex h-[90vh] w-[90vw] items-center justify-center p-4">
+             {currentMedia.type === 'video' ? (
+               <video
+                 src={currentMedia.url}
+                 autoPlay={!isMobile}
+                 muted
+                 loop
+                 playsInline
+                 className="h-full w-full object-contain"
+                 onClick={(event) => {
+                   if (isMobile) {
+                     // Permitir controles nativos en el modal para móvil
+                     const video = event.target as HTMLVideoElement;
+                     if (video.paused) {
+                       video.play();
+                     } else {
+                       video.pause();
+                     }
+                   }
+                 }}
+               >
+                 Tu navegador no soporta el elemento de video.
+               </video>
+             ) : (
               <PuppyCarouselImageComponent
                 src={currentMedia.url}
                 alt={`${puppyName} - Enlarged view`}
