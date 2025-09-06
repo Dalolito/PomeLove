@@ -10,6 +10,11 @@ export function openWhatsAppContact(
 ): void {
   trackWhatsAppContact(puppy.name);
 
+  // Facebook Pixel - Track Contact event
+  if (typeof window !== 'undefined' && (window as any).fbq) {
+    (window as any).fbq('track', 'Contact');
+  }
+
   try {
     const message = generateWhatsAppMessage(puppy, dict, locale);
     const whatsappUrl = buildWhatsAppUrl(message);
@@ -53,6 +58,11 @@ function buildWhatsAppUrl(message: string): string {
 
 export function openBasicWhatsAppContact(dict: Dictionary): void {
   trackWhatsAppContact();
+
+  // Facebook Pixel - Track Contact event
+  if (typeof window !== 'undefined' && (window as any).fbq) {
+    (window as any).fbq('track', 'Contact');
+  }
 
   const basicMessage =
     dict.whatsapp?.basicMessage || dict.utils.errors.unexpected;
