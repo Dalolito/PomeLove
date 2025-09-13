@@ -153,10 +153,14 @@ export default function HomePage({
             </p>
 
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center sm:gap-6">
-              <a
-                href="https://wa.me/573004439574"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => {
+                  // Google Ads - Track conversion
+                  if (typeof window !== 'undefined' && (window as any).gtag_report_conversion) {
+                    (window as any).gtag_report_conversion();
+                  }
+                  window.open('https://wa.me/573004439574', '_blank', 'noopener,noreferrer');
+                }}
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-8 py-4 text-lg font-medium text-red-500 shadow-lg transition-all hover:scale-105 hover:bg-gray-100 hover:shadow-xl active:scale-95"
               >
                 <Image
@@ -167,7 +171,7 @@ export default function HomePage({
                   className="h-10 w-10"
                 />
                 {dict.home.whatsappText}
-              </a>
+              </button>
 
               <a
                 href="https://www.instagram.com/pomelove_korea?igsh=dTA4Njl5aXY5bnRk&utm_source=qr"

@@ -110,6 +110,29 @@ export default function RootLayout({
           />
         </noscript>
         {/* End Meta Pixel Code */}
+
+        {/* Google Ads Conversion Script */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              function gtag_report_conversion(url) {
+                var callback = function () {
+                  if (typeof(url) != 'undefined') {
+                    window.location = url;
+                  }
+                };
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-17521038351/z_RSCNGhjZobEI-o16JB',
+                    'value': 3000.0,
+                    'currency': 'COP',
+                    'event_callback': callback
+                });
+                return false;
+              }
+            `,
+          }}
+        />
+        {/* End Google Ads Conversion Script */}
       </head>
       <body
         className={`${inter.variable} font-sans antialiased`}

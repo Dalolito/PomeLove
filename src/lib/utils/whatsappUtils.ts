@@ -15,6 +15,11 @@ export function openWhatsAppContact(
     (window as any).fbq('track', 'Contact');
   }
 
+  // Google Ads - Track conversion
+  if (typeof window !== 'undefined' && (window as any).gtag_report_conversion) {
+    (window as any).gtag_report_conversion();
+  }
+
   try {
     const message = generateWhatsAppMessage(puppy, dict, locale);
     const whatsappUrl = buildWhatsAppUrl(message);
@@ -62,6 +67,11 @@ export function openBasicWhatsAppContact(dict: Dictionary): void {
   // Facebook Pixel - Track Contact event
   if (typeof window !== 'undefined' && (window as any).fbq) {
     (window as any).fbq('track', 'Contact');
+  }
+
+  // Google Ads - Track conversion
+  if (typeof window !== 'undefined' && (window as any).gtag_report_conversion) {
+    (window as any).gtag_report_conversion();
   }
 
   const basicMessage =

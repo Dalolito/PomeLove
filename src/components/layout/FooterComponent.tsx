@@ -129,14 +129,18 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
                   height={16}
                   className="h-4 w-4"
                 />
-                <a
-                  href="https://wa.me/573004439574"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-colors hover:text-white"
+                <button
+                  onClick={() => {
+                    // Google Ads - Track conversion
+                    if (typeof window !== 'undefined' && (window as any).gtag_report_conversion) {
+                      (window as any).gtag_report_conversion();
+                    }
+                    window.open('https://wa.me/573004439574', '_blank', 'noopener,noreferrer');
+                  }}
+                  className="transition-colors hover:text-white text-left"
                 >
                   +57 300 443 9574
-                </a>
+                </button>
               </p>
               <p className="flex items-center gap-2">
                 <svg
