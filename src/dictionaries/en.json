@@ -63,7 +63,7 @@
     "contactTitle": "Did you find your perfect companion?",
     "contactDescription": "Contact us now and we'll help you learn more about our adorable puppies",
     "whatsappText": "WhatsApp: +57 300 443 9574",
-    "instagramText": "Follow us on Instagram"
+    "facebookText": "Follow us on Facebook"
   },
   "footer": {
     "sections": {
@@ -75,7 +75,7 @@
     },
     "copyright": "All rights reserved.",
     "phone": "+57 300 443 9574",
-    "instagramUrl": "https://www.instagram.com/pomelove_korea?igsh=dTA4Njl5aXY5bnRk&utm_source=qr"
+    "facebookUrl": "https://www.facebook.com/catalina.londonoagudelo"
   },
   "admin": {
     "menu": "Admin Menu",
@@ -256,7 +256,7 @@
       },
       "status": {
         "available": "Available",
-        "unavailable": "Unavailable"
+        "unavailable": "With a family"
       }
     },
     "filters": {
@@ -317,7 +317,7 @@
       "allGenders": "Both genders",
       "allAvailability": "All",
       "available": "Available",
-      "unavailable": "Unavailable"
+      "unavailable": "With a family"
     }
   },
   "whatsapp": {

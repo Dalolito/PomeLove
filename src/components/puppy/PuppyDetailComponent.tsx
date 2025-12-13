@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Puppy } from '@/domain/entities/Puppy';
 import { Dictionary } from '@/lib/types/dictionary';

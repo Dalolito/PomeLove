@@ -63,7 +63,7 @@
     "contactTitle": "¿Encontraste a tu compañero perfecto?",
     "contactDescription": "Contáctanos ahora y te ayudaremos a conocer más sobre nuestros adorables cachorros",
     "whatsappText": "WhatsApp: +57 300 443 9574",
-    "instagramText": "Síguenos en Instagram"
+    "facebookText": "Síguenos en Facebook"
   },
   "footer": {
     "sections": {
@@ -76,7 +76,7 @@
     "copyright": "Todos los derechos reservados.",
     "location": "Medellín, Colombia",
     "phone": "+57 300 443 9574",
-    "instagramUrl": "https://www.instagram.com/pomelove_korea?igsh=dTA4Njl5aXY5bnRk&utm_source=qr"
+    "facebookUrl": "https://www.facebook.com/catalina.londonoagudelo"
   },
   "admin": {
     "menu": "Menú Admin",
@@ -261,7 +261,7 @@
       },
       "status": {
         "available": "Disponible",
-        "unavailable": "No Disponible"
+        "unavailable": "Con una familia"
       }
     },
     "filters": {
@@ -322,7 +322,7 @@
       "allGenders": "Ambos géneros",
       "allAvailability": "Todas",
       "available": "Disponibles",
-      "unavailable": "No disponibles"
+      "unavailable": "Con una familia"
     }
   },
   "whatsapp": {

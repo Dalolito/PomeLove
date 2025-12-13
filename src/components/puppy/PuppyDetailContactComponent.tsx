@@ -22,8 +22,8 @@ export default function PuppyDetailContactComponent({
     openWhatsAppContact(puppy, dict, locale);
   };
 
-  const handleInstagramContact = () => {
-    window.open(dict.footer.instagramUrl, '_blank');
+  const handleFacebookContact = () => {
+    window.open(dict.footer.facebookUrl, '_blank');
   };
 
   return (
@@ -56,17 +56,17 @@ export default function PuppyDetailContactComponent({
         </PrimaryButtonComponent>
 
         <PrimaryButtonComponent
-          onClick={handleInstagramContact}
+          onClick={handleFacebookContact}
           fullWidth
           size="lg"
-          className="!flex !items-center !justify-center !border-0 !bg-gradient-to-r !from-purple-500 !to-pink-500 !text-base !text-white hover:!from-purple-600 hover:!to-pink-600"
+          className="!flex !items-center !justify-center !border-0 !bg-blue-600 !text-base !text-white hover:!bg-blue-700"
         >
           <img
-            src="/icons/icon-instagram.png"
-            alt="Instagram"
+            src="/icons/icon-facebook.png"
+            alt="Facebook"
             className="mr-2 h-7 w-7"
           />
-          {dict.home.instagramText}
+          {dict.home.facebookText}
         </PrimaryButtonComponent>
       </div>
 

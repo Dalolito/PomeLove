@@ -63,7 +63,7 @@ export interface Dictionary {
     contactTitle: string;
     contactDescription: string;
     whatsappText: string;
-    instagramText: string;
+    facebookText: string;
   };
   footer: {
     sections: {
@@ -76,7 +76,7 @@ export interface Dictionary {
     copyright: string;
     location?: string;
     phone: string;
-    instagramUrl: string;
+    facebookUrl: string;
   };
   admin: {
     menu: string;

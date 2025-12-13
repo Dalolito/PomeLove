@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Dictionary } from '@/lib/types/dictionary';
 import WhatsAppContactButton from '@/components/layout/WhatsAppContactButton';
+import FooterPhoneButton from '@/components/layout/FooterPhoneButton';
 
 interface FooterProps {
   title: string;
@@ -13,15 +14,6 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   const staticContactLinks = [
-    {
-      name: 'Instagram',
-      url: 'https://www.instagram.com/pomelove_korea?igsh=dTA4Njl5aXY5bnRk&utm_source=qr',
-      icon: (
-        <div className="flex h-5 w-5 items-center justify-center rounded bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 text-xs font-bold text-white">
-          IG
-        </div>
-      ),
-    },
     {
       name: 'Facebook',
       url: 'https://www.facebook.com/catalina.londonoagudelo',
@@ -35,19 +27,19 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
 
   const footerLinks = [
     {
-      title: dict.footer?.sections?.company || 'Company',
+      title: dict.footer.sections.company,
       links: [
         {
-          name: dict.navigation?.about || 'About Us',
+          name: dict.navigation.about,
           href: `/${currentLocale}/about`,
         },
       ],
     },
     {
-      title: dict.footer?.sections?.services || 'Services',
+      title: dict.footer.sections.services,
       links: [
         {
-          name: dict.navigation?.catalog || 'Find a Puppy',
+          name: dict.navigation.catalog,
           href: `/${currentLocale}/catalog`,
         },
       ],
@@ -68,8 +60,7 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
             </div>
 
             <p className="mb-6 max-w-md text-slate-300">
-              {dict.header?.experience ||
-                'Specialized breeders with 15+ years of experience'}
+              {dict.header.experience}
             </p>
 
             {/* Social links */}
@@ -83,15 +74,7 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
                   className="group flex h-10 w-10 items-center justify-center rounded-lg bg-slate-700 transition-colors hover:bg-red-500"
                   title={contact.name}
                 >
-                  {contact.name === 'Instagram' ? (
-                    <Image
-                      src="/icons/icon-instagram.png"
-                      alt="Instagram"
-                      width={20}
-                      height={20}
-                      className="h-5 w-5"
-                    />
-                  ) : contact.name === 'Facebook' ? (
+                  {contact.name === 'Facebook' ? (
                     <Image
                       src="/icons/icon-facebook.png"
                       alt="Facebook"
@@ -108,15 +91,7 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
               ))}
 
               {/* WhatsApp button - client component */}
-              <WhatsAppContactButton dict={dict}>
-                <Image
-                  src="/icons/icon-whatsapp.png"
-                  alt="WhatsApp"
-                  width={20}
-                  height={20}
-                  className="h-5 w-5"
-                />
-              </WhatsAppContactButton>
+              <WhatsAppContactButton dict={dict} />
             </div>
 
             {/* Contact info */}
@@ -129,18 +104,7 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
                   height={16}
                   className="h-4 w-4"
                 />
-                <button
-                  onClick={() => {
-                    // Google Ads - Track conversion
-                    if (typeof window !== 'undefined' && (window as any).gtag_report_conversion) {
-                      (window as any).gtag_report_conversion();
-                    }
-                    window.open('https://wa.me/573004439574', '_blank', 'noopener,noreferrer');
-                  }}
-                  className="transition-colors hover:text-white text-left"
-                >
-                  +57 300 443 9574
-                </button>
+                <FooterPhoneButton />
               </p>
               <p className="flex items-center gap-2">
                 <svg
@@ -154,7 +118,7 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span>{dict.footer?.location || 'Medellín, Colombia'}</span>
+                <span>{dict.footer.location}</span>
               </p>
             </div>
           </div>
@@ -182,8 +146,7 @@ export default function Footer({ title, currentLocale, dict }: FooterProps) {
         {/* Bottom bar */}
         <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-slate-700 pt-8 md:flex-row">
           <p className="text-sm text-slate-400">
-            © {currentYear} {title}.{' '}
-            {dict.footer?.copyright || 'All rights reserved.'}
+            © {currentYear} {title}. {dict.footer.copyright}
           </p>
         </div>
       </div>
