@@ -60,6 +60,7 @@ export function generateMetadata({
   }
 
   const metadata: Metadata = {
+    applicationName: 'POMELOVE KOREA',
     title: {
       default: title,
       template: '%s | POMELOVE KOREA',

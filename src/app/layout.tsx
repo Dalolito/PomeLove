@@ -56,6 +56,24 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'POMELOVE KOREA',
+    alternateName: 'POMELOVE',
+    url: 'https://pomeloves.com',
+    inLanguage: ['es-CO', 'en-US'],
+  };
+
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'POMELOVE KOREA',
+    url: 'https://pomeloves.com',
+    logo: 'https://pomeloves.com/logo-2.png',
+    sameAs: ['https://www.facebook.com/catalina.londonoagudelo'],
+  };
+
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
@@ -67,6 +85,16 @@ export default function RootLayout({
         <meta name="theme-color" content="#ffffff" />
         <meta name="msapplication-TileImage" content="/logo.png" />
         <meta name="msapplication-TileColor" content="#ffffff" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema),
+          }}
+        />
 
         {/* Google Pixel */}
         <script
